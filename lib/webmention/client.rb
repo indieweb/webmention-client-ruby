@@ -12,7 +12,7 @@ module Webmention
     def initialize(url)
       @url = URI.parse(url)
 
-      if !@url.is_a? URI::HTTP or !@url.is_a? URI::HTTPS
+      unless @url.is_a? URI::HTTP or @url.is_a? URI::HTTPS
         raise ArgumentError.new "url is not a valid HTTP or HTTPS URI."
       end
     end
