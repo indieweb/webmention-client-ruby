@@ -3,6 +3,7 @@ Webmention Client
 
 A Ruby gem for sending [webmention](http://indiewebcamp.com/webmention) (and [pingback](http://indiewebcamp.com/pingback)) notifications.
 
+[![Build Status](https://travis-ci.org/icco/mention-client-ruby.png?branch=master)](https://travis-ci.org/icco/mention-client-ruby)
 
 Installation
 ------------
@@ -15,7 +16,7 @@ Basic Usage
 
 ```ruby
 client = Webmention::Client.new url
-sent = client.send_supported_mentions
+sent = client.send_mentions
 
 puts "Sent #{sent} mentions"
 ```
