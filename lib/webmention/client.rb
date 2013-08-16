@@ -12,8 +12,8 @@ module Webmention
     def initialize(url)
       @url = URI.parse(url)
 
-      unless @url.is_a? URI::HTTP or @url.is_a? URI::HTTPS
-        raise ArgumentError.new "url is not a valid HTTP or HTTPS URI."
+      unless Webmention::Client.valid_http_url? @url
+        raise ArgumentError.new "#{@url} is not a valid HTTP or HTTPS URI."
       end
     end
 
@@ -21,8 +21,14 @@ module Webmention
     #
     # Returns the number of links found.
     def crawl
-      doc = Nokogiri::HTML(open(self.url))
-      @links = doc.css('a').map {|link| link.attribute('href').to_s }.sort.uniq.delete_if {|href| href.empty? }
+      @links ||= Set.new
+
+      Nokogiri::HTML(open(self.url)).css('a').each do |link|
+        link = link.attribute('href').to_s
+        if Webmention::Client.valid_http_url? link
+          @links.add link
+        end
+      end
 
       return @links.count
     end
@@ -35,7 +41,39 @@ module Webmention
         self.crawl
       end
 
+      p self.links.to_a.map {|a| Webmention::Client.supports_webmention? }
+
       return 0
+    end
+
+    # Public: Curl a url and check if it supports webmention or pingbacks.
+    #
+    # url - URL to check
+    #
+    # Returns a boolean.
+    def self.supports_webmention? url
+      return false if !Webmention::Client.valid_http_url? url
+
+      doc = nil
+      Net::HTTP.start(url) do |http|
+        p http.head
+        doc = Nokogiri::HTML(http.get)
+      end
+
+      return true
+    end
+
+    # Public: Use URI to parse a url and check if it is HTTP or HTTPS.
+    #
+    # url - URL to check
+    #
+    # Returns a boolean.
+    def self.valid_http_url? url
+      if url.is_a? String
+        url = URI.parse(url)
+      end
+
+      return (url.is_a? URI::HTTP or url.is_a? URI::HTTPS)
     end
   end
 end
