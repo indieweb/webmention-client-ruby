@@ -59,24 +59,38 @@ module Webmention
       return false if !Webmention::Client.valid_http_url? url
 
       doc = nil
-      p url
 
-      uri = URI.parse(url)
-      Net::HTTP.new(uri.host, uri.port) do |http|
+      begin
+        uri = URI.parse(url)
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.open_timeout = 3 # in seconds
+        http.read_timeout = 3 # in seconds
+
         request = Net::HTTP::Get.new(uri.request_uri)
         request["User-Agent"] = "Ruby WebMention Gem"
         request["Accept"] = "*/*"
+
         response = http.request(request)
 
-        response.each_header do |key, value|
-          p "#{key} => #{value}"
+        if !response["Link"].nil? and response["Link"].matches %r{<(https?://[^>]+)>; rel="http://webmention.org/"}
+          return true
         end
 
         doc = Nokogiri::HTML(response.body.to_s)
-        p doc
+
+        if !doc.css('link[rel="webmention"]').empty?
+          return true
+        end
+
+        if !doc.css('link[rel="pingback"]').empty?
+          return true
+        end
+
+      rescue EOFError
+      rescue Errno::ECONNRESET
       end
 
-      return true
+      return false
     end
 
     # Public: Use URI to parse a url and check if it is HTTP or HTTPS.
