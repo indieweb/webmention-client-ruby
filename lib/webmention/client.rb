@@ -11,6 +11,7 @@ module Webmention
     # url - The url you want us to crawl.
     def initialize(url)
       @url = URI.parse(url)
+      @links ||= Set.new
 
       unless Webmention::Client.valid_http_url? @url
         raise ArgumentError.new "#{@url} is not a valid HTTP or HTTPS URI."
@@ -22,6 +23,9 @@ module Webmention
     # Returns the number of links found.
     def crawl
       @links ||= Set.new
+      if @url.nil?
+        raise ArgumentError.new "url is nil."
+      end
 
       Nokogiri::HTML(open(self.url)).css('a').each do |link|
         link = link.attribute('href').to_s
@@ -37,11 +41,11 @@ module Webmention
     #
     # Returns the number of links mentioned.
     def send_mentions
-      if self.links.empty?
+      if self.links.nil? or self.links.empty?
         self.crawl
       end
 
-      p self.links.to_a.map {|a| Webmention::Client.supports_webmention? }
+      p self.links.to_a.map {|a| Webmention::Client.supports_webmention? a }
 
       return 0
     end
@@ -55,9 +59,21 @@ module Webmention
       return false if !Webmention::Client.valid_http_url? url
 
       doc = nil
-      Net::HTTP.start(url) do |http|
-        p http.head
-        doc = Nokogiri::HTML(http.get)
+      p url
+
+      uri = URI.parse(url)
+      Net::HTTP.new(uri.host, uri.port) do |http|
+        request = Net::HTTP::Get.new(uri.request_uri)
+        request["User-Agent"] = "Ruby WebMention Gem"
+        request["Accept"] = "*/*"
+        response = http.request(request)
+
+        response.each_header do |key, value|
+          p "#{key} => #{value}"
+        end
+
+        doc = Nokogiri::HTML(response.body.to_s)
+        p doc
       end
 
       return true
