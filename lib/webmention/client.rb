@@ -45,16 +45,48 @@ module Webmention
         self.crawl
       end
 
-      p self.links.to_a.map {|a| Webmention::Client.supports_webmention? a }
+      cnt = 0
+      self.links.each do |link|
+        endpoint = Webmention::Client.supports_webmention? link
+        if endpoint
+          cnt += 1 if Webmention::Client.send_mention endpoint, self.url, link
+        end
+      end
 
-      return 0
+      return cnt
+    end
+
+    # Public: Send a mention to an endoint about a link from a link.
+    #
+    # endpoint - URL to send mention to.
+    # where - Source of mention.
+    # who - The link that was mentioned.
+    #
+    # Returns a boolean.
+    def self.send_mention endpoint, where, who
+      data = {
+        :source => where,
+        :target => who,
+      }
+
+      uri = URI.parse(endpoint)
+      http = Net::HTTP.new(uri.host, uri.port)
+
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request.set_form_data(data)
+      request['Content-Type'] = "application/x-www-form-urlencoded"
+      request['Accept'] = 'application/json'
+      response = http.request(request)
+
+      return response.code == 200
     end
 
     # Public: Curl a url and check if it supports webmention or pingbacks.
     #
     # url - URL to check
     #
-    # Returns a boolean.
+    # Returns false if does not support webmention or pingback, returns string
+    # of url to ping if it does.
     def self.supports_webmention? url
       return false if !Webmention::Client.valid_http_url? url
 
@@ -72,18 +104,20 @@ module Webmention
 
         response = http.request(request)
 
-        if !response["Link"].nil? and response["Link"].matches %r{<(https?://[^>]+)>; rel="http://webmention.org/"}
-          return true
+        if !response["Link"].nil? and response["Link"].matches %r{<(https?://[^>]+)>; rel="http://webmention\.org/"}
+          matches = response["Link"].matches %r{<(https?://[^>]+)>; rel="http://webmention\.org/"}
+          p matches
+          return matches[1]
         end
 
         doc = Nokogiri::HTML(response.body.to_s)
 
         if !doc.css('link[rel="webmention"]').empty?
-          return true
+          return doc.css('link[rel="webmention"]').attribute("href").value
         end
 
         if !doc.css('link[rel="pingback"]').empty?
-          return true
+          return doc.css('link[rel="pingback"]').attribute("href").value
         end
 
       rescue EOFError

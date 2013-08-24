@@ -2,7 +2,7 @@ require_relative '../../test_helper'
 
 describe Webmention::Client do
   before do
-    @client = Webmention::Client.new "http://google.com"
+    @client = Webmention::Client.new "http://aaronparecki.com/"
   end
 
   describe "#crawl" do
