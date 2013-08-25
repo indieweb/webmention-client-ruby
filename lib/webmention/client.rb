@@ -104,9 +104,8 @@ module Webmention
 
         response = http.request(request)
 
-        if !response["Link"].nil? and response["Link"].matches %r{<(https?://[^>]+)>; rel="http://webmention\.org/"}
-          matches = response["Link"].matches %r{<(https?://[^>]+)>; rel="http://webmention\.org/"}
-          p matches
+        if !response["Link"].nil? and response["Link"].match %r{<(https?://[^>]+)>; rel="http://webmention\.org/"}
+          matches = response["Link"].match %r{<(https?://[^>]+)>; rel="http://webmention\.org/"}
           return matches[1]
         end
 
