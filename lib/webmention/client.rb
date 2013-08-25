@@ -78,7 +78,7 @@ module Webmention
       request['Accept'] = 'application/json'
       response = http.request(request)
 
-      return response.code == 200
+      return response.code.to_i == 200
     end
 
     # Public: Curl a url and check if it supports webmention or pingbacks.
