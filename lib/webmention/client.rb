@@ -104,17 +104,21 @@ module Webmention
 
         response = http.request(request)
 
+        # First check the HTTP Headers
         if !response["Link"].nil? and response["Link"].match %r{<(https?://[^>]+)>; rel="http://webmention\.org/"}
           matches = response["Link"].match %r{<(https?://[^>]+)>; rel="http://webmention\.org/"}
           return matches[1]
         end
 
+        # Now parse the body
         doc = Nokogiri::HTML(response.body.to_s)
 
-        if !doc.css('link[rel="webmention"]').empty?
-          return doc.css('link[rel="webmention"]').attribute("href").value
+        # Do we support webmention?
+        if !doc.css('link[rel="http://webmention.org/"]').empty?
+          return doc.css('link[rel="http://webmention.org/"]').attribute("href").value
         end
 
+        # Last chance, do we support Pingback?
         if !doc.css('link[rel="pingback"]').empty?
           return doc.css('link[rel="pingback"]').attribute("href").value
         end
