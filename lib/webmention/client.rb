@@ -59,14 +59,14 @@ module Webmention
     # Public: Send a mention to an endoint about a link from a link.
     #
     # endpoint - URL to send mention to.
-    # where - Source of mention.
-    # who - The link that was mentioned.
+    # source - Source of mention (your page).
+    # target - The link that was mentioned in the source page.
     #
     # Returns a boolean.
-    def self.send_mention endpoint, where, who
+    def self.send_mention endpoint, source, target
       data = {
-        :source => where,
-        :target => who,
+        :source => source,
+        :target => target,
       }
 
       uri = URI.parse(endpoint)
@@ -81,11 +81,11 @@ module Webmention
       return response.code.to_i == 200
     end
 
-    # Public: Curl a url and check if it supports webmention or pingbacks.
+    # Public: Fetch a url and check if it supports webmention
     #
     # url - URL to check
     #
-    # Returns false if does not support webmention or pingback, returns string
+    # Returns false if does not support webmention, returns string
     # of url to ping if it does.
     def self.supports_webmention? url
       return false if !Webmention::Client.valid_http_url? url
@@ -99,34 +99,58 @@ module Webmention
         http.read_timeout = 3 # in seconds
 
         request = Net::HTTP::Get.new(uri.request_uri)
-        request["User-Agent"] = "Ruby WebMention Gem"
+        # Send a user agent like a browser because some sites seem to reject requests made by non-browsers
+        request["User-Agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36 (https://rubygems.org/gems/webmention)"
         request["Accept"] = "*/*"
 
         response = http.request(request)
 
         # First check the HTTP Headers
-        if !response["Link"].nil? and response["Link"].match %r{<(https?://[^>]+)>; rel="http://webmention\.org/"}
-          matches = response["Link"].match %r{<(https?://[^>]+)>; rel="http://webmention\.org/"}
-          return matches[1]
+        if !response['Link'].nil? 
+          endpoint = self.discover_webmention_endpoint_from_header response['Link']
+          return endpoint if endpoint
         end
-
-        # Now parse the body
-        doc = Nokogiri::HTML(response.body.to_s)
 
         # Do we support webmention?
-        if !doc.css('link[rel="http://webmention.org/"]').empty?
-          return doc.css('link[rel="http://webmention.org/"]').attribute("href").value
-        end
+        endpoint = self.discover_webmention_endpoint_from_html response.body.to_s
+        return endpoint if endpoint
 
+        # TODO: Move to supports_pingback? method
         # Last chance, do we support Pingback?
-        if !doc.css('link[rel="pingback"]').empty?
-          return doc.css('link[rel="pingback"]').attribute("href").value
-        end
+        # if !doc.css('link[rel="pingback"]').empty?
+        #   return doc.css('link[rel="pingback"]').attribute("href").value
+        # end
 
       rescue EOFError
       rescue Errno::ECONNRESET
       end
 
+      return false
+    end
+
+    def self.discover_webmention_endpoint_from_html html
+      doc = Nokogiri::HTML(html)
+      if !doc.css('link[rel="webmention"]').empty?
+        doc.css('link[rel="webmention"]').attribute("href").value
+      elsif !doc.css('link[rel="http://webmention.org/"]').empty?
+        doc.css('link[rel="http://webmention.org/"]').attribute("href").value
+      elsif !doc.css('link[rel="http://webmention.org"]').empty?
+        doc.css('link[rel="http://webmention.org"]').attribute("href").value
+      else
+        false
+      end
+    end
+
+    def self.discover_webmention_endpoint_from_header header
+      if matches = header.match(%r{<(https?://[^>]+)>; rel="webmention"})
+        return matches[1]
+      elsif matches = header.match(%r{rel="webmention"; <(https?://[^>]+)>})
+        return matches[1]
+      elsif matches = header.match(%r{<(https?://[^>]+)>; rel="http://webmention\.org/?"})
+        return matches[1]
+      elsif matches = header.match(%r{rel="http://webmention\.org/?"; <(https?://[^>]+)>})
+        return matches[1]
+      end
       return false
     end
 
