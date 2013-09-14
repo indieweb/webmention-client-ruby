@@ -11,8 +11,10 @@ Installation
     gem install webmention
 
 
-Basic Usage
------------
+Usage
+-----
+
+### Send webmentions to all links on a page
 
 ```ruby
 client = Webmention::Client.new url
@@ -27,14 +29,24 @@ for supported servers, if none are found, then it searches the body of the page.
 
 After finding either webmention or pingback endpoints, the request is sent to each.
 
+### Send webmention to a specific URL
+
+```ruby
+# Discover the webmention endpoint of a target and send the mention
+
+source = "http://source.example.com/post/100"   # For example, your page
+target = "http://indiewebcamp.com/"             # The page you linked to
+
+if endpoint = Webmention::Client.supports_webmention?(target)
+  Webmention::Client.send_mention endpoint, source, target
+end
+```
+
 
 Webmention
 ----------
 
 To learn more about Webmention, see [webmention.org](http://webmention.org).
-
-The [pingback.me](http://pingback.me) project can also act as a pingback->webmention
-proxy which will allow you to accept pingbacks as if they were sent as JSON webmentions.
 
 
 License
