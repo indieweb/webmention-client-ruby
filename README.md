@@ -46,7 +46,7 @@ end
 Webmention
 ----------
 
-To learn more about Webmention, see [webmention.org](http://webmention.org).
+To learn more about Webmention, see [webmention.org](http://webmention.org) and [indiewebcamp.com/webmention](http://indiewebcamp.com/webmention).
 
 
 License
