@@ -10,6 +10,15 @@ class SampleData
     eos
   end
 
+  def self.rel_webmention_a_href
+    <<-eos
+      <html>
+        <head>
+          <a rel="webmention" href="http://webmention.io/example/webmention">webmention</a>
+        </head>
+      </html>
+    eos
+  end
   def self.rel_href_webmention
     <<-eos
       <html>
