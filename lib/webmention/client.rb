@@ -63,7 +63,7 @@ module Webmention
     # target - The link that was mentioned in the source page.
     #
     # Returns a boolean.
-    def self.send_mention endpoint, source, target
+    def self.send_mention endpoint, source, target, full_response=false
       data = {
         :source => source,
         :target => target,
@@ -74,7 +74,11 @@ module Webmention
           :body => data
         })
 
-        return response.code == 200 || response.code == 202
+        if full_response
+          return response
+        else
+          return response.code == 200 || response.code == 202
+        end
       rescue
         return false
       end

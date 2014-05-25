@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.join(File.dirname(__FILE__), "/../lib"))
+require "webmention"
+require "link_header"
+
+url = ARGV[0]
+
+if url == nil
+  puts "Usage: webmention http://example.com/post/100"
+  exit 1
+end
+
+if !Webmention::Client.valid_http_url?(url)
+  puts "Not a valid URL"
+  exit 1
+end
+
+client = Webmention::Client.new url
+
+def debug(msg)
+  puts msg
+end
+
+debug "Finding links on #{url}"
+client.crawl
+
+links = client.links
+debug "Found #{links.length} links:"
+debug links.to_a.map{|m| "\t#{m}"}.join("\n")
+
+debug ""
+
+links.each do |link|
+  debug link
+
+  endpoint = Webmention::Client.supports_webmention?(link)
+  if endpoint
+    debug "\tDiscovered Webmention endpoint:"
+    debug "\t#{endpoint}"
+    debug "\tSending webmention..."
+    result = Webmention::Client.send_mention endpoint, url, link, true
+    if result
+      debug "\tReturned HTTP #{result.code}"
+      if result.headers['link']
+        link_headers = LinkHeader.parse result.headers['link']
+        if status_link = link_headers.find_link(['rel', 'status'])
+          debug "\tWebmention status: #{status_link.href}"
+        end
+      end
+    else
+      debug "\tEncountered an unknown error sending this webmention!"
+    end
+  else
+    debug "\tNo webmention endpoint found"
+  end
+
+  debug ""
+end

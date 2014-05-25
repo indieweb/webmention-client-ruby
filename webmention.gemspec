@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'json'
   s.add_dependency 'nokogiri'
   s.add_dependency 'httparty', '~> 0.13.1'
+  s.add_dependency 'link_header', '~> 0.0.8'
 
   s.add_development_dependency 'bundler', '~> 1.3'
   s.add_development_dependency 'rake'
