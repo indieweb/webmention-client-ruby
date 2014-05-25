@@ -75,7 +75,7 @@ class SampleData
         <head>
           <title>Sample Post</title>
         </head>
-        <body>
+        <body class="h-entry">
           <p><a href="http://target.example.com/post/4">Link to Target 4</a></p>
           <p><a href="http://target.example.com/post/5">Link to Target 5</a></p>
         </body>

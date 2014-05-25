@@ -27,7 +27,7 @@ module Webmention
         raise ArgumentError.new "url is nil."
       end
 
-      Nokogiri::HTML(open(self.url)).css('a').each do |link|
+      Nokogiri::HTML(open(self.url)).css('.h-entry a').each do |link|
         link = link.attribute('href').to_s
         if Webmention::Client.valid_http_url? link
           @links.add link
@@ -69,16 +69,20 @@ module Webmention
         :target => target,
       }
 
-      uri = URI.parse(endpoint)
-      http = Net::HTTP.new(uri.host, uri.port)
+      begin
+        uri = URI.parse(endpoint)
+        http = Net::HTTP.new(uri.host, uri.port)
 
-      request = Net::HTTP::Post.new(uri.request_uri)
-      request.set_form_data(data)
-      request['Content-Type'] = "application/x-www-form-urlencoded"
-      request['Accept'] = 'application/json'
-      response = http.request(request)
+        request = Net::HTTP::Post.new(uri.request_uri)
+        request.set_form_data(data)
+        request['Content-Type'] = "application/x-www-form-urlencoded"
+        request['Accept'] = 'application/json'
+        response = http.request(request)
 
-      return response.code.to_i == 200
+        return response.code.to_i == 200
+      rescue
+        return false
+      end
     end
 
     # Public: Fetch a url and check if it supports webmention
