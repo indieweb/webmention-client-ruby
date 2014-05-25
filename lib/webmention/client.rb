@@ -70,16 +70,11 @@ module Webmention
       }
 
       begin
-        uri = URI.parse(endpoint)
-        http = Net::HTTP.new(uri.host, uri.port)
+        response = HTTParty.post(endpoint, {
+          :body => data
+        })
 
-        request = Net::HTTP::Post.new(uri.request_uri)
-        request.set_form_data(data)
-        request['Content-Type'] = "application/x-www-form-urlencoded"
-        request['Accept'] = 'application/json'
-        response = http.request(request)
-
-        return response.code.to_i == 200
+        return response.code == 200 || response.code == 202
       rescue
         return false
       end
@@ -97,21 +92,17 @@ module Webmention
       doc = nil
 
       begin
-        uri = URI.parse(url)
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.open_timeout = 3 # in seconds
-        http.read_timeout = 3 # in seconds
-
-        request = Net::HTTP::Get.new(uri.request_uri)
-        # Send a user agent like a browser because some sites seem to reject requests made by non-browsers
-        request["User-Agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36 (https://rubygems.org/gems/webmention)"
-        request["Accept"] = "*/*"
-
-        response = http.request(request)
+        response = HTTParty.get(url, {
+          :timeout => 3,
+          :headers => {
+            'User-Agent' => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36 (https://rubygems.org/gems/webmention)",
+            'Accept' => '*/*'
+          }
+        })
 
         # First check the HTTP Headers
-        if !response['Link'].nil? 
-          endpoint = self.discover_webmention_endpoint_from_header response['Link']
+        if !response.headers['Link'].nil? 
+          endpoint = self.discover_webmention_endpoint_from_header response.headers['Link']
           return endpoint if endpoint
         end
 

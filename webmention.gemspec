@@ -5,7 +5,7 @@ require 'webmention/version'
 Gem::Specification.new do |s|
   s.name          = 'webmention'
   s.version       = Webmention::VERSION
-  s.date          = '2013-09-14'
+  s.date          = '2014-05-25'
   s.homepage      = 'https://github.com/indieweb/mention-client-ruby'
   s.summary       = 'A gem for sending webmention (and pingback) notifications'
   s.authors       = [
@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'json'
   s.add_dependency 'nokogiri'
+  s.add_dependency 'httparty', '~> 0.13.1'
 
   s.add_development_dependency 'bundler', '~> 1.3'
   s.add_development_dependency 'rake'
