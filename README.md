@@ -42,6 +42,17 @@ if endpoint = Webmention::Client.supports_webmention?(target)
 end
 ```
 
+Command Line Utility
+--------------------
+
+For testing or for sending webmentions manually, you can use the command-line utility provided.
+
+```bash
+$ webmention http://source.example.com/post/100
+```
+
+This will look for an [h-entry](http://indiewebcamp.com/h-entry) on the given URL and attempt to send webmentions to each URL in the entry. 
+
 
 Webmention
 ----------
