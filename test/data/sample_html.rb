@@ -82,5 +82,25 @@ class SampleData
       </html>
     eos
   end
+  
+  def self.rel_webmention_relative_with_path
+    <<-eos
+      <html>
+        <head>
+          <link href="/example/webmention" rel="webmention">
+        </head>
+      </html>
+    eos
+  end
+
+  def self.rel_webmention_relative_without_path
+    <<-eos
+      <html>
+        <head>
+          <link href="webmention.php" rel="webmention">
+        </head>
+      </html>
+    eos
+  end
 
 end
