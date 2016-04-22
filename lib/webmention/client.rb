@@ -69,6 +69,9 @@ module Webmention
         :target => target,
       }
 
+      # Ensure the endpoint is an absolute URL
+      endpoint = absolute_endpoint endpoint, target
+
       begin
         response = HTTParty.post(endpoint, {
           :body => data
@@ -129,8 +132,8 @@ module Webmention
 
     def self.discover_webmention_endpoint_from_html html
       doc = Nokogiri::HTML(html)
-      if !doc.css('[rel="webmention"]').empty?
-        doc.css('[rel="webmention"]').attribute("href").value
+      if !doc.css('[rel~="webmention"]').empty?
+        doc.css('[rel~="webmention"]').attribute("href").value
       elsif !doc.css('[rel="http://webmention.org/"]').empty?
         doc.css('[rel="http://webmention.org/"]').attribute("href").value
       elsif !doc.css('[rel="http://webmention.org"]').empty?
@@ -141,13 +144,17 @@ module Webmention
     end
 
     def self.discover_webmention_endpoint_from_header header
-      if matches = header.match(%r{<(https?://[^>]+)>; rel="webmention"})
+      if matches = header.match(%r{<([^>]+)>; rel="[^"]*\s?webmention\s?[^"]*"})
         return matches[1]
-      elsif matches = header.match(%r{rel="webmention"; <(https?://[^>]+)>})
+      elsif matches = header.match(%r{<([^>]+)>; rel=webmention})
+          return matches[1]
+      elsif matches = header.match(%r{rel="[^"]*\s?webmention\s?[^"]*"; <([^>]+)>})
         return matches[1]
-      elsif matches = header.match(%r{<(https?://[^>]+)>; rel="http://webmention\.org/?"})
+      elsif matches = header.match(%r{rel=webmention; <([^>]+)>})
         return matches[1]
-      elsif matches = header.match(%r{rel="http://webmention\.org/?"; <(https?://[^>]+)>})
+      elsif matches = header.match(%r{<([^>]+)>; rel="http://webmention\.org/?"})
+        return matches[1]
+      elsif matches = header.match(%r{rel="http://webmention\.org/?"; <([^>]+)>})
         return matches[1]
       end
       return false
@@ -164,6 +171,20 @@ module Webmention
       end
 
       return (url.is_a? URI::HTTP or url.is_a? URI::HTTPS)
+    end
+    
+    # Public: Takes an endpoint and ensures an absolute URL is returned
+    #
+    # endpoint - Endpoint which may be an absolute or relative URL
+    # url - URL of the webmention
+    #
+    # Returns original endpoint if it is already an absolute URL; constructs
+    # new absolute URL using relative endpoint if not 
+    def self.absolute_endpoint endpoint, url
+      unless Webmention::Client.valid_http_url? endpoint
+        endpoint = URI.join(url, endpoint).to_s
+      end
+      endpoint
     end
   end
 end

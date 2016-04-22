@@ -36,12 +36,20 @@ describe Webmention::Client do
   end
 
   describe "#discover_webmention_endpoint_from_string" do
-    it "should find rel=webmention followed by href in header" do
+    it "should find rel=\"webmention\" followed by href in header" do
       Webmention::Client.discover_webmention_endpoint_from_header('rel="webmention"; <http://webmention.io/example/webmention>').must_equal "http://webmention.io/example/webmention"
     end
 
-    it "should find href followed by rel=webmention in header" do
+    it "should find rel=webmention followed by href in header" do
+      Webmention::Client.discover_webmention_endpoint_from_header('rel=webmention; <http://webmention.io/example/webmention>').must_equal "http://webmention.io/example/webmention"
+    end
+
+    it "should find href followed by rel=\"webmention\" in header" do
       Webmention::Client.discover_webmention_endpoint_from_header('<http://webmention.io/example/webmention>; rel="webmention"').must_equal "http://webmention.io/example/webmention"
+    end
+
+    it "should find href followed by rel=webmention in header" do
+      Webmention::Client.discover_webmention_endpoint_from_header('<http://webmention.io/example/webmention>; rel=webmention').must_equal "http://webmention.io/example/webmention"
     end
 
     it "should find rel=http://webmention.org followed by href in header" do
@@ -82,6 +90,34 @@ describe Webmention::Client do
 
     it "should find href followed by rel=http://webmention.org/ in html" do
       Webmention::Client.discover_webmention_endpoint_from_html(SampleData.rel_href_webmention_org_slash).must_equal "http://webmention.io/example/webmention"
+    end
+    
+    it "should find rel=webmention followed by relative href with path in header" do
+      Webmention::Client.discover_webmention_endpoint_from_header('</example/webmention>; rel="http://webmention.org"').must_equal "/example/webmention"
+    end
+
+    it "should find rel=webmention followed by relative href with path in html" do
+      Webmention::Client.discover_webmention_endpoint_from_html(SampleData.rel_webmention_relative_with_path).must_equal "/example/webmention"
+    end
+
+    it "should find rel=webmention followed by relative href without path in header" do
+      Webmention::Client.discover_webmention_endpoint_from_header('<webmention.php>; rel="http://webmention.org"').must_equal "webmention.php"
+    end
+
+    it "should find rel=webmention followed by relative href without path in html" do
+      Webmention::Client.discover_webmention_endpoint_from_html(SampleData.rel_webmention_relative_without_path).must_equal "webmention.php"
+    end
+    
+    it "should find webmention in a link tag among multiple rel values" do
+      Webmention::Client.discover_webmention_endpoint_from_html(SampleData.link_tag_multiple_rel_values).must_equal "http://webmention.io/example/webmention"
+    end
+    
+    it "should find webmention in a link header among multiple rel values" do
+      Webmention::Client.discover_webmention_endpoint_from_header('<http://webmention.io/example/webmention>; rel="webmention foo bar"').must_equal "http://webmention.io/example/webmention"
+    end
+
+    it "should find rel=webmention in a link tag with an empty href" do
+      Webmention::Client.discover_webmention_endpoint_from_html(SampleData.empty_link_tag_no_href).must_equal ""
     end
   end
 
