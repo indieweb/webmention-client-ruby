@@ -113,4 +113,13 @@ class SampleData
     eos
   end
 
+  def self.empty_link_tag_no_href
+    <<-eos
+      <html>
+        <head>
+          <link href="" rel="webmention">
+        </head>
+      </html>
+    eos
+  end
 end

@@ -37,5 +37,9 @@ describe Webmention::Client do
     it "should expand an endpoint url without a path to an absolute url based on the webmention url" do
       Webmention::Client.absolute_endpoint('webmention.php', 'http://webmention.io/example/1').must_equal "http://webmention.io/example/webmention.php"
     end
+
+    it "should take an empty endpoint url and return the webmention url" do
+      Webmention::Client.absolute_endpoint('', 'http://webmention.io/example/1').must_equal "http://webmention.io/example/1"
+    end
   end
 end

@@ -115,6 +115,10 @@ describe Webmention::Client do
     it "should find webmention in a link header among multiple rel values" do
       Webmention::Client.discover_webmention_endpoint_from_header('<http://webmention.io/example/webmention>; rel="webmention foo bar"').must_equal "http://webmention.io/example/webmention"
     end
+
+    it "should find rel=webmention in a link tag with an empty href" do
+      Webmention::Client.discover_webmention_endpoint_from_html(SampleData.empty_link_tag_no_href).must_equal ""
+    end
   end
 
 end
