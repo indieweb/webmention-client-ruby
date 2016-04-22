@@ -144,11 +144,11 @@ module Webmention
     end
 
     def self.discover_webmention_endpoint_from_header header
-      if matches = header.match(%r{<([^>]+)>; rel="webmention"})
+      if matches = header.match(%r{<([^>]+)>; rel="[^"]*\s?webmention\s?[^"]*"})
         return matches[1]
       elsif matches = header.match(%r{<([^>]+)>; rel=webmention})
           return matches[1]
-      elsif matches = header.match(%r{rel="webmention"; <([^>]+)>})
+      elsif matches = header.match(%r{rel="[^"]*\s?webmention\s?[^"]*"; <([^>]+)>})
         return matches[1]
       elsif matches = header.match(%r{rel=webmention; <([^>]+)>})
         return matches[1]

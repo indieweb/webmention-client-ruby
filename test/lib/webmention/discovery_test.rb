@@ -110,7 +110,11 @@ describe Webmention::Client do
     
     it "should find webmention in a link tag among multiple rel values" do
       Webmention::Client.discover_webmention_endpoint_from_html(SampleData.link_tag_multiple_rel_values).must_equal "http://webmention.io/example/webmention"
-    end 
+    end
+    
+    it "should find webmention in a link header among multiple rel values" do
+      Webmention::Client.discover_webmention_endpoint_from_header('<http://webmention.io/example/webmention>; rel="webmention foo bar"').must_equal "http://webmention.io/example/webmention"
+    end
   end
 
 end
