@@ -107,6 +107,10 @@ describe Webmention::Client do
     it "should find rel=webmention followed by relative href without path in html" do
       Webmention::Client.discover_webmention_endpoint_from_html(SampleData.rel_webmention_relative_without_path).must_equal "webmention.php"
     end
+    
+    it "should find webmention in a link tag among multiple rel values" do
+      Webmention::Client.discover_webmention_endpoint_from_html(SampleData.link_tag_multiple_rel_values).must_equal "http://webmention.io/example/webmention"
+    end 
   end
 
 end

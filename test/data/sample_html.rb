@@ -102,5 +102,15 @@ class SampleData
       </html>
     eos
   end
+  
+  def self.link_tag_multiple_rel_values
+    <<-eos
+      <html>
+        <head>
+          <link href="http://webmention.io/example/webmention" rel="webmention foo bar">
+        </head>
+      </html>
+    eos
+  end
 
 end
