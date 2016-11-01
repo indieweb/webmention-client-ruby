@@ -132,15 +132,12 @@ module Webmention
 
     def self.discover_webmention_endpoint_from_html html
       doc = Nokogiri::HTML(html)
-      if !doc.css('[rel~="webmention"]').empty? &&
-          !doc.css('[rel~="webmention"]').attribute("href").nil?
-        doc.css('[rel~="webmention"]').attribute("href").value
-      elsif !doc.css('[rel="http://webmention.org/"]').empty? &&
-          !doc.css('[rel="http://webmention.org/"]').attribute("href").nil?
-        doc.css('[rel="http://webmention.org/"]').attribute("href").value
-      elsif !doc.css('[rel="http://webmention.org"]').empty? &&
-          !doc.css('[rel="http://webmention.org"]').attribute("href").nil?
-        doc.css('[rel="http://webmention.org"]').attribute("href").value
+      if !doc.css('[rel~="webmention"]').css('[href]').empty?
+        doc.css('[rel~="webmention"]').css('[href]').attribute("href").value
+      elsif !doc.css('[rel="http://webmention.org/"]').css('[href]').empty?
+        doc.css('[rel="http://webmention.org/"]').css('[href]').attribute("href").value
+      elsif !doc.css('[rel="http://webmention.org"]').css('[href]').empty?
+        doc.css('[rel="http://webmention.org"]').css('[href]').attribute("href").value
       else
         false
       end
