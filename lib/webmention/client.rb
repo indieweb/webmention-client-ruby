@@ -108,7 +108,7 @@ module Webmention
         })
 
         # First check the HTTP Headers
-        if !response.headers['Link'].nil? 
+        if !response.headers['Link'].nil?
           endpoint = self.discover_webmention_endpoint_from_header response.headers['Link']
           return endpoint if endpoint
         end
@@ -132,12 +132,12 @@ module Webmention
 
     def self.discover_webmention_endpoint_from_html html
       doc = Nokogiri::HTML(html)
-      if !doc.css('[rel~="webmention"]').empty?
-        doc.css('[rel~="webmention"]').attribute("href").value
-      elsif !doc.css('[rel="http://webmention.org/"]').empty?
-        doc.css('[rel="http://webmention.org/"]').attribute("href").value
-      elsif !doc.css('[rel="http://webmention.org"]').empty?
-        doc.css('[rel="http://webmention.org"]').attribute("href").value
+      if !doc.css('[rel~="webmention"]').css('[href]').empty?
+        doc.css('[rel~="webmention"]').css('[href]').attribute("href").value
+      elsif !doc.css('[rel="http://webmention.org/"]').css('[href]').empty?
+        doc.css('[rel="http://webmention.org/"]').css('[href]').attribute("href").value
+      elsif !doc.css('[rel="http://webmention.org"]').css('[href]').empty?
+        doc.css('[rel="http://webmention.org"]').css('[href]').attribute("href").value
       else
         false
       end
@@ -172,14 +172,14 @@ module Webmention
 
       return (url.is_a? URI::HTTP or url.is_a? URI::HTTPS)
     end
-    
+
     # Public: Takes an endpoint and ensures an absolute URL is returned
     #
     # endpoint - Endpoint which may be an absolute or relative URL
     # url - URL of the webmention
     #
     # Returns original endpoint if it is already an absolute URL; constructs
-    # new absolute URL using relative endpoint if not 
+    # new absolute URL using relative endpoint if not
     def self.absolute_endpoint endpoint, url
       unless Webmention::Client.valid_http_url? endpoint
         endpoint = URI.join(url, endpoint).to_s
