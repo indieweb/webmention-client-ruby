@@ -1,34 +1,33 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 require 'webmention/version'
 
-Gem::Specification.new do |s|
-  s.name          = 'webmention'
-  s.version       = Webmention::VERSION
-  s.date          = '2014-05-25'
-  s.homepage      = 'https://github.com/indieweb/mention-client-ruby'
-  s.summary       = 'A gem for sending webmention (and pingback) notifications'
-  s.authors       = [
-    'Aaron Parecki',
-    'Nat Welch'
-  ]
+Gem::Specification.new do |spec|
+  spec.required_ruby_version = '>= 1.9.3'
 
-  s.email         = 'aaron@parecki.com'
+  spec.name          = 'webmention'
+  spec.version       = Webmention::VERSION
+  spec.authors       = ['Aaron Parecki', 'Nat Welch']
+  spec.email         = ['aaron@parecki.com']
 
-  s.files         = `git ls-files`.split($/)
-  s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
-  s.require_paths = ['lib']
+  spec.summary       = 'Webmention and pingback notification client'
+  spec.description   = 'A Ruby gem for sending webmention and pingback notifications.'
+  spec.homepage      = 'https://github.com/indieweb/mention-client-ruby'
+  spec.license       = 'Apache-2.0'
 
-  s.required_ruby_version = '>= 1.9.3'
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.bindir        = 'bin'
+  spec.executables   = ['webmention']
+  spec.require_paths = ['lib']
 
-  s.add_dependency 'json'
-  s.add_dependency 'nokogiri'
-  s.add_dependency 'httparty', '~> 0.13.1'
-  s.add_dependency 'link_header', '~> 0.0.8'
+  spec.add_runtime_dependency 'httparty', '~> 0.15.6'
+  spec.add_runtime_dependency 'json', '~> 2.1'
+  spec.add_runtime_dependency 'link_header', '~> 0.0.8'
+  spec.add_runtime_dependency 'nokogiri', '~> 1.8', '>= 1.8.1'
 
-  s.add_development_dependency 'bundler'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'minitest'
-  s.add_development_dependency 'webmock'
+  spec.add_development_dependency 'bundler', '~> 1.16', '>= 1.16.1'
+  spec.add_development_dependency 'minitest', '~> 5.11', '>= 5.11.1'
+  spec.add_development_dependency 'rake', '~> 12.3'
+  spec.add_development_dependency 'webmock', '~> 3.3'
 end
