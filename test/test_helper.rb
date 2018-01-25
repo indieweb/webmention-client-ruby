@@ -1,3 +1,6 @@
+# Require SimpleCov first!
+require 'simplecov'
+
 require 'minitest/autorun'
 require 'webmock/minitest'
 
