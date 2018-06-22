@@ -1,78 +1,82 @@
-Webmention Client
-=================
+# mention-client-ruby
 
-A Ruby gem for sending [webmention](http://indiewebcamp.com/webmention) (and [pingback](http://indiewebcamp.com/pingback)) notifications.
+**A Ruby gem for sending [Webmention](https://indieweb.org/Webmention) and [Pingback](https://indieweb.org/pingback) notifications.**
 
-[![Build Status](https://travis-ci.org/indieweb/webmention-client-ruby.png?branch=master)](https://travis-ci.org/indieweb/webmention-client-ruby)
+[![Gem](https://img.shields.io/gem/v/webmention.svg?style=for-the-badge)](https://rubygems.org/gems/webmention)
+[![Downloads](https://img.shields.io/gem/dt/webmention.svg?style=for-the-badge)](https://rubygems.org/gems/webmention)
+[![Build](https://img.shields.io/travis/indieweb/mention-client-ruby/master.svg?style=for-the-badge)](https://travis-ci.org/indieweb/mention-client-ruby)
 
-Installation
-------------
+## Key Features
 
-    gem install webmention
+- Programatically crawls a given URL for mentioned URLs, performs endpoint discovery on mentioned URLs, and sends webmentions and/or pingbacks to mentioned URLs.
+- Provides a [CLI](https://en.wikipedia.org/wiki/Command-line_interface) for sending webmentions from the given URL to mentioned URLs within a parsed [h-entry](http://microformats.org/wiki/h-entry).
 
+## Getting Started
 
-Usage
------
+Before installing and using mention-client-ruby, you'll want to have [Ruby](https://www.ruby-lang.org) 2.4 (or newer) installed. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm).
 
-### Send webmentions to all links on a page
+mention-client-ruby is developed using Ruby 2.4.4 and is additionally tested against Ruby 2.5.1 using [Travis CI](https://travis-ci.org/indieweb/mention-client-ruby).
+
+## Installation
+
+If you're using [Bundler](https://bundler.io) to manage gem dependencies, add mention-client-ruby to your project's Gemfile:
 
 ```ruby
-client = Webmention::Client.new url
-sent = client.send_mentions
+source 'https://rubygems.org'
 
-puts "Sent #{sent} mentions"
+gem 'webmention', '~> 0.1.6'
 ```
 
-This will find all absolute links on the page at `url` and will attempt to send
-mentions to each. This is accomplished by doing a HEAD request and looking at the headers
-for supported servers, if none are found, then it searches the body of the page.
+…and then run:
 
-After finding either webmention or pingback endpoints, the request is sent to each.
+```sh
+bundle install
+```
 
-### Send webmention to a specific URL
+## Usage
+
+To send webmentions to all URLs mentioned within an h-entry:
 
 ```ruby
-# Discover the webmention endpoint of a target and send the mention
+require 'webmention'
 
-source = "http://source.example.com/post/100"   # For example, your page
-target = "http://indiewebcamp.com/"             # The page you linked to
+client = Webmention::Client.new('https://source.example.com/post/100')
+sent_count = client.send_mentions
 
-if endpoint = Webmention::Client.supports_webmention?(target)
-  Webmention::Client.send_mention endpoint, source, target
+puts "Webmentions sent: #{sent_count}"
+```
+
+This example will crawl `https://source.example.com/post/100`, parse its markup for an h-entry, perform endpoint discovery on mentioned URLs, and attempt to send webmentions and/or pingbacks to mentioned URLs.
+
+To send a webmention from a source URL to a target URL:
+
+```ruby
+require 'webmention'
+
+source = 'https://source.example.com/post/100' # A post on your website
+target = 'https://target.example.com/post/100' # A post on someone else's website
+
+endpoint = Webmention::Client.supports_webmention?(target)
+
+if endpoint
+  Webmention::Client.send_mention(endpoint, source, target)
 end
 ```
 
-Command Line Utility
---------------------
+### Command Line Interface
 
-For testing or for sending webmentions manually, you can use the command-line utility provided.
+mention-client-ruby also includes a command line program for manually sending webmentions and pingbacks from a given URL to all mentioned URLs.
 
-```bash
-$ webmention http://source.example.com/post/100
+```sh
+$ webmention https://source.example.com/post/100
 ```
 
-This will look for an [h-entry](http://indiewebcamp.com/h-entry) on the given URL and attempt to send webmentions to each URL in the entry.
+## Acknowledgments
 
+mention-client-ruby is written and maintained by [Aaron Parecki](https://aaronparecki.com) ([@aaronpk](https://github.com/aaronpk)) and [Nat Welch](https://natwelch.com) ([@icco](https://github.com/icco)) with help from [these additional contributors](https://github.com/indieweb/mention-client-ruby/graphs/contributors).
 
-Webmention
-----------
+To learn more about Webmention, see [indieweb.org/Webmention](https://indieweb.org/Webmention) and [webmention.net](https://webmention.net).
 
-To learn more about Webmention, see [webmention.net](https://webmention.net) and [indieweb.org/webmention](https://indieweb.org/webmention).
+## License
 
-
-License
--------
-
-Copyright 2013 by Aaron Parecki
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+mention-client-ruby is freely available under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html). See [LICENSE](https://github.com/indieweb/mention-client-ruby/blob/master/LICENSE) for more details.
