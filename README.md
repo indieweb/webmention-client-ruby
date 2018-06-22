@@ -57,7 +57,7 @@ This will look for an [h-entry](http://indiewebcamp.com/h-entry) on the given UR
 Webmention
 ----------
 
-To learn more about Webmention, see [webmention.org](http://webmention.org) and [indiewebcamp.com/webmention](http://indiewebcamp.com/webmention).
+To learn more about Webmention, see [webmention.net](https://webmention.net) and [indieweb.org/webmention](https://indieweb.org/webmention).
 
 
 License
