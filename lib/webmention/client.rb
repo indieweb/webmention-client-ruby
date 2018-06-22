@@ -13,9 +13,7 @@ module Webmention
       @url = URI.parse(url)
       @links ||= Set.new
 
-      unless Webmention::Client.valid_http_url? @url
-        raise ArgumentError.new "#{@url} is not a valid HTTP or HTTPS URI."
-      end
+      raise ArgumentError, "`#{@url}` is not a valid URL." unless Webmention::Client.valid_http_url?(@url)
     end
 
     # Public: Crawl the url this client was initialized with.
@@ -23,37 +21,35 @@ module Webmention
     # Returns the number of links found.
     def crawl
       @links ||= Set.new
-      if @url.nil?
-        raise ArgumentError.new "url is nil."
-      end
 
-      Nokogiri::HTML(open(self.url)).css('.h-entry a').each do |link|
+      raise ArgumentError, 'URL cannot be nil.' if @url.nil?
+
+      Nokogiri::HTML(open(url)).css('.h-entry a').each do |link|
         link = link.attribute('href').to_s
-        if Webmention::Client.valid_http_url? link
-          @links.add link
-        end
+
+        @links.add(link) if Webmention::Client.valid_http_url?(link)
       end
 
-      return @links.count
+      @links.count
     end
 
     # Public: Sends mentions to each of the links found in the page.
     #
     # Returns the number of links mentioned.
     def send_mentions
-      if self.links.nil? or self.links.empty?
-        self.crawl
-      end
+      crawl if links.nil? || links.empty?
 
-      cnt = 0
-      self.links.each do |link|
-        endpoint = Webmention::Client.supports_webmention? link
+      sent_mentions_count = 0
+
+      links.each do |link|
+        endpoint = Webmention::Client.supports_webmention?(link)
+
         if endpoint
-          cnt += 1 if Webmention::Client.send_mention endpoint, self.url, link
+          sent_mentions_count += 1 if Webmention::Client.send_mention(endpoint, url, link)
         end
       end
 
-      return cnt
+      sent_mentions_count
     end
 
     # Public: Send a mention to an endoint about a link from a link.
@@ -63,25 +59,21 @@ module Webmention
     # target - The link that was mentioned in the source page.
     #
     # Returns a boolean.
-    def self.send_mention endpoint, source, target, full_response=false
+    def self.send_mention(endpoint, source, target, full_response = false)
       data = {
-        :source => source,
-        :target => target,
+        source: source,
+        target: target
       }
 
       # Ensure the endpoint is an absolute URL
-      endpoint = absolute_endpoint endpoint, target
+      endpoint = absolute_endpoint(endpoint, target)
 
       begin
-        response = HTTParty.post(endpoint, {
-          :body => data
-        })
+        response = HTTParty.post(endpoint, body: data)
 
-        if full_response
-          return response
-        else
-          return response.code == 200 || response.code == 202
-        end
+        return response if full_response
+
+        return response.code == 200 || response.code == 202
       rescue
         return false
       end
@@ -93,28 +85,32 @@ module Webmention
     #
     # Returns false if does not support webmention, returns string
     # of url to ping if it does.
-    def self.supports_webmention? url
-      return false if !Webmention::Client.valid_http_url? url
-
-      doc = nil
+    def self.supports_webmention?(url)
+      return false unless Webmention::Client.valid_http_url?(url)
 
       begin
-        response = HTTParty.get(url, {
-          :timeout => 3,
-          :headers => {
-            'User-Agent' => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36 (https://rubygems.org/gems/webmention)",
+        http_party_opts = {
+          headers: {
+            'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36 (https://rubygems.org/gems/webmention)',
             'Accept' => '*/*'
-          }
-        })
+          },
+          timeout: 3
+        }
+
+        response = HTTParty.get(url, http_party_opts)
 
         # First check the HTTP Headers
-        if !response.headers['Link'].nil?
-          endpoint = self.discover_webmention_endpoint_from_header response.headers['Link']
+        link_headers = response.headers['link']
+
+        unless link_headers.nil?
+          endpoint = discover_webmention_endpoint_from_header(link_headers)
+
           return endpoint if endpoint
         end
 
         # Do we support webmention?
-        endpoint = self.discover_webmention_endpoint_from_html response.body.to_s
+        endpoint = discover_webmention_endpoint_from_html(response.body.to_s)
+
         return endpoint if endpoint
 
         # TODO: Move to supports_pingback? method
@@ -122,42 +118,43 @@ module Webmention
         # if !doc.css('link[rel="pingback"]').empty?
         #   return doc.css('link[rel="pingback"]').attribute("href").value
         # end
-
       rescue EOFError
       rescue Errno::ECONNRESET
       end
 
-      return false
+      false
     end
 
-    def self.discover_webmention_endpoint_from_html html
+    def self.discover_webmention_endpoint_from_html(html)
       doc = Nokogiri::HTML(html)
+
       if !doc.css('[rel~="webmention"]').css('[href]').empty?
-        doc.css('[rel~="webmention"]').css('[href]').attribute("href").value
+        doc.css('[rel~="webmention"]').css('[href]').attribute('href').value
       elsif !doc.css('[rel="http://webmention.org/"]').css('[href]').empty?
-        doc.css('[rel="http://webmention.org/"]').css('[href]').attribute("href").value
+        doc.css('[rel="http://webmention.org/"]').css('[href]').attribute('href').value
       elsif !doc.css('[rel="http://webmention.org"]').css('[href]').empty?
-        doc.css('[rel="http://webmention.org"]').css('[href]').attribute("href").value
+        doc.css('[rel="http://webmention.org"]').css('[href]').attribute('href').value
       else
         false
       end
     end
 
-    def self.discover_webmention_endpoint_from_header header
-      if matches = header.match(%r{<([^>]+)>; rel="[^"]*\s?webmention\s?[^"]*"})
+    def self.discover_webmention_endpoint_from_header(header)
+      if (matches = header.match(/<([^>]+)>; rel="[^"]*\s?webmention\s?[^"]*"/))
         return matches[1]
-      elsif matches = header.match(%r{<([^>]+)>; rel=webmention})
-          return matches[1]
-      elsif matches = header.match(%r{rel="[^"]*\s?webmention\s?[^"]*"; <([^>]+)>})
+      elsif (matches = header.match(/<([^>]+)>; rel=webmention/))
         return matches[1]
-      elsif matches = header.match(%r{rel=webmention; <([^>]+)>})
+      elsif (matches = header.match(/rel="[^"]*\s?webmention\s?[^"]*"; <([^>]+)>/))
         return matches[1]
-      elsif matches = header.match(%r{<([^>]+)>; rel="http://webmention\.org/?"})
+      elsif (matches = header.match(/rel=webmention; <([^>]+)>/))
         return matches[1]
-      elsif matches = header.match(%r{rel="http://webmention\.org/?"; <([^>]+)>})
+      elsif (matches = header.match(%r{<([^>]+)>; rel="http://webmention\.org/?"}))
+        return matches[1]
+      elsif (matches = header.match(%r{rel="http://webmention\.org/?"; <([^>]+)>}))
         return matches[1]
       end
-      return false
+
+      false
     end
 
     # Public: Use URI to parse a url and check if it is HTTP or HTTPS.
@@ -165,12 +162,10 @@ module Webmention
     # url - URL to check
     #
     # Returns a boolean.
-    def self.valid_http_url? url
-      if url.is_a? String
-        url = URI.parse(url)
-      end
+    def self.valid_http_url?(url)
+      url = URI.parse(url) if url.is_a?(String)
 
-      return (url.is_a? URI::HTTP or url.is_a? URI::HTTPS)
+      url.is_a?(URI::HTTP) || url.is_a?(URI::HTTPS)
     end
 
     # Public: Takes an endpoint and ensures an absolute URL is returned
@@ -180,10 +175,11 @@ module Webmention
     #
     # Returns original endpoint if it is already an absolute URL; constructs
     # new absolute URL using relative endpoint if not
-    def self.absolute_endpoint endpoint, url
-      unless Webmention::Client.valid_http_url? endpoint
+    def self.absolute_endpoint(endpoint, url)
+      unless Webmention::Client.valid_http_url?(endpoint)
         endpoint = URI.join(url, endpoint).to_s
       end
+
       endpoint
     end
   end
