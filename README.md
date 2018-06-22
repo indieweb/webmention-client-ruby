@@ -1,10 +1,10 @@
-# mention-client-ruby
+# webmention-client-ruby
 
 **A Ruby gem for sending [Webmention](https://indieweb.org/Webmention) and [Pingback](https://indieweb.org/pingback) notifications.**
 
 [![Gem](https://img.shields.io/gem/v/webmention.svg?style=for-the-badge)](https://rubygems.org/gems/webmention)
 [![Downloads](https://img.shields.io/gem/dt/webmention.svg?style=for-the-badge)](https://rubygems.org/gems/webmention)
-[![Build](https://img.shields.io/travis/indieweb/mention-client-ruby/master.svg?style=for-the-badge)](https://travis-ci.org/indieweb/mention-client-ruby)
+[![Build](https://img.shields.io/travis/indieweb/webmention-client-ruby/master.svg?style=for-the-badge)](https://travis-ci.org/indieweb/webmention-client-ruby)
 
 ## Key Features
 
@@ -13,13 +13,13 @@
 
 ## Getting Started
 
-Before installing and using mention-client-ruby, you'll want to have [Ruby](https://www.ruby-lang.org) 2.4 (or newer) installed. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm).
+Before installing and using webmention-client-ruby, you'll want to have [Ruby](https://www.ruby-lang.org) 2.4 (or newer) installed. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm).
 
-mention-client-ruby is developed using Ruby 2.4.4 and is additionally tested against Ruby 2.5.1 using [Travis CI](https://travis-ci.org/indieweb/mention-client-ruby).
+webmention-client-ruby is developed using Ruby 2.4.4 and is additionally tested against Ruby 2.5.1 using [Travis CI](https://travis-ci.org/indieweb/webmention-client-ruby).
 
 ## Installation
 
-If you're using [Bundler](https://bundler.io) to manage gem dependencies, add mention-client-ruby to your project's Gemfile:
+If you're using [Bundler](https://bundler.io) to manage gem dependencies, add webmention-client-ruby to your project's Gemfile:
 
 ```ruby
 source 'https://rubygems.org'
@@ -65,7 +65,7 @@ end
 
 ### Command Line Interface
 
-mention-client-ruby also includes a command line program for manually sending webmentions and pingbacks from a given URL to all mentioned URLs.
+webmention-client-ruby also includes a command line program for manually sending webmentions and pingbacks from a given URL to all mentioned URLs.
 
 ```sh
 $ webmention https://source.example.com/post/100
@@ -73,10 +73,10 @@ $ webmention https://source.example.com/post/100
 
 ## Acknowledgments
 
-mention-client-ruby is written and maintained by [Aaron Parecki](https://aaronparecki.com) ([@aaronpk](https://github.com/aaronpk)) and [Nat Welch](https://natwelch.com) ([@icco](https://github.com/icco)) with help from [these additional contributors](https://github.com/indieweb/mention-client-ruby/graphs/contributors).
+webmention-client-ruby is written and maintained by [Aaron Parecki](https://aaronparecki.com) ([@aaronpk](https://github.com/aaronpk)) and [Nat Welch](https://natwelch.com) ([@icco](https://github.com/icco)) with help from [these additional contributors](https://github.com/indieweb/webmention-client-ruby/graphs/contributors).
 
 To learn more about Webmention, see [indieweb.org/Webmention](https://indieweb.org/Webmention) and [webmention.net](https://webmention.net).
 
 ## License
 
-mention-client-ruby is freely available under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html). See [LICENSE](https://github.com/indieweb/mention-client-ruby/blob/master/LICENSE) for more details.
+webmention-client-ruby is freely available under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html). See [LICENSE](https://github.com/indieweb/webmention-client-ruby/blob/master/LICENSE) for more details.
