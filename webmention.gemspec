@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Webmention and pingback notification client'
   spec.description   = 'A Ruby gem for sending webmention and pingback notifications.'
-  spec.homepage      = 'https://github.com/indieweb/mention-client-ruby'
+  spec.homepage      = 'https://github.com/indieweb/webmention-client-ruby'
   spec.license       = 'Apache-2.0'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
