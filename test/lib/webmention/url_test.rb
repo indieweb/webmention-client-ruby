@@ -1,4 +1,4 @@
-require_relative '../../test_helper'
+require 'test_helper'
 
 describe Webmention::Client do
   describe "#new" do
@@ -28,7 +28,7 @@ describe Webmention::Client do
       end
     end
   end
-  
+
   describe "#absolute_endpoint" do
     it "should expand an endpoint url with a path to an absolute url based on the webmention url" do
       Webmention::Client.absolute_endpoint('/webmention', 'http://webmention.io/example/1').must_equal "http://webmention.io/webmention"

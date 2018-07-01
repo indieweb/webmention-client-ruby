@@ -1,5 +1,9 @@
+# Require SimpleCov first!
+require 'simplecov'
+
 require 'minitest/autorun'
 require 'webmock/minitest'
 
-require File.expand_path('../../lib/webmention.rb', __FILE__)
-require File.expand_path('../data/sample_html.rb', __FILE__)
+require_relative 'data/sample_html'
+
+require 'webmention'
