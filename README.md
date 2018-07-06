@@ -58,7 +58,7 @@ require 'webmention'
 source = 'https://source.example.com/post/100' # A post on your website
 target = 'https://target.example.com/post/100' # A post on someone else's website
 
-endpoint = Webmention::Client.supports_webmention?(target)
+endpoint = Webmention::Endpoint.supports_webmention?(target)
 
 if endpoint
   Webmention::Client.send_mention(endpoint, source, target)
