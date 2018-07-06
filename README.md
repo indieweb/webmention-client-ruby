@@ -5,6 +5,8 @@
 [![Gem](https://img.shields.io/gem/v/webmention.svg?style=for-the-badge)](https://rubygems.org/gems/webmention)
 [![Downloads](https://img.shields.io/gem/dt/webmention.svg?style=for-the-badge)](https://rubygems.org/gems/webmention)
 [![Build](https://img.shields.io/travis/indieweb/webmention-client-ruby/master.svg?style=for-the-badge)](https://travis-ci.org/indieweb/webmention-client-ruby)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/indieweb/webmention-client-ruby.svg?style=for-the-badge)](https://codeclimate.com/github/indieweb/webmention-client-ruby)
+[![Coverage](https://img.shields.io/codeclimate/c/indieweb/webmention-client-ruby.svg?style=for-the-badge)](https://codeclimate.com/github/indieweb/webmention-client-ruby/code)
 
 ## Key Features
 
