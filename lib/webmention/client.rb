@@ -58,20 +58,14 @@ module Webmention
     # source - Source of mention (your page).
     # target - The link that was mentioned in the source page.
     #
-    # Returns a boolean.
+    # Returns a boolean or the response if full_response == true.
     def self.send_mention(endpoint, source, target, full_response = false)
-      # Ensure the endpoint is an absolute URL
-      endpoint = absolute_endpoint(endpoint, target)
+      response = HTTParty.post(absolute_endpoint(endpoint, target), body: { source: source, target: target })
 
-      begin
-        response = HTTParty.post(endpoint, body: { source: source, target: target })
-
-        return response if full_response
-
-        return response.code == 200 || response.code == 202
-      rescue
-        return false
-      end
+      return response if full_response
+      return response.code == 200 || response.code == 202
+    rescue
+      return false
     end
 
     # Public: Use URI to parse a url and check if it is HTTP or HTTPS.

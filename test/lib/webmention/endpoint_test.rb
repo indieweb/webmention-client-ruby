@@ -30,8 +30,8 @@ describe Webmention::Endpoint do
       Webmention::Endpoint.discover("http://example.com/header").must_equal "http://webmention.io/example/webmention"
     end
 
-    it "should return false when no endpoint found" do
-      Webmention::Endpoint.discover("http://example.com/none").must_equal false
+    it "should return nil when no endpoint found" do
+      assert_nil Webmention::Endpoint.discover("http://example.com/none")
     end
   end
 

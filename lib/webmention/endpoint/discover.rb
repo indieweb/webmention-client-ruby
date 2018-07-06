@@ -16,7 +16,7 @@ module Webmention
       end
 
       def endpoint
-        endpoint_from_http_request || false
+        endpoint_from_http_request
       end
 
       def response
