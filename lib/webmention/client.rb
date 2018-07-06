@@ -42,7 +42,7 @@ module Webmention
       sent_mentions_count = 0
 
       links.each do |link|
-        endpoint = Webmention::Endpoint.supports_webmention?(link)
+        endpoint = Webmention::Endpoint.discover(link)
 
         next unless endpoint
 

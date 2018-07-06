@@ -37,7 +37,7 @@ debug('')
 links.each do |link|
   debug(link)
 
-  endpoint = Webmention::Endpoint.supports_webmention?(link)
+  endpoint = Webmention::Endpoint.discover(link)
 
   unless endpoint
     debug("\tNo webmention endpoint found at `#{link}`.")

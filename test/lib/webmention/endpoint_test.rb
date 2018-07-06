@@ -23,15 +23,15 @@ describe Webmention::Endpoint do
 
   describe "#discover_webmention_endpoint_from_url" do
     it "should find endpoint from html head" do
-      Webmention::Endpoint.supports_webmention?("http://example.com/html").must_equal "http://webmention.io/example/webmention"
+      Webmention::Endpoint.discover("http://example.com/html").must_equal "http://webmention.io/example/webmention"
     end
 
     it "should find endpoint from http header" do
-      Webmention::Endpoint.supports_webmention?("http://example.com/header").must_equal "http://webmention.io/example/webmention"
+      Webmention::Endpoint.discover("http://example.com/header").must_equal "http://webmention.io/example/webmention"
     end
 
     it "should return false when no endpoint found" do
-      Webmention::Endpoint.supports_webmention?("http://example.com/none").must_equal false
+      Webmention::Endpoint.discover("http://example.com/none").must_equal false
     end
   end
 
