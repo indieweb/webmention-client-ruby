@@ -44,9 +44,9 @@ module Webmention
       links.each do |link|
         endpoint = Webmention::Endpoint.supports_webmention?(link)
 
-        if endpoint
-          sent_mentions_count += 1 if Webmention::Client.send_mention(endpoint, url, link)
-        end
+        next unless endpoint
+
+        sent_mentions_count += 1 if Webmention::Client.send_mention(endpoint, url, link)
       end
 
       sent_mentions_count
@@ -60,16 +60,11 @@ module Webmention
     #
     # Returns a boolean.
     def self.send_mention(endpoint, source, target, full_response = false)
-      data = {
-        source: source,
-        target: target
-      }
-
       # Ensure the endpoint is an absolute URL
       endpoint = absolute_endpoint(endpoint, target)
 
       begin
-        response = HTTParty.post(endpoint, body: data)
+        response = HTTParty.post(endpoint, body: { source: source, target: target })
 
         return response if full_response
 
@@ -98,11 +93,9 @@ module Webmention
     # Returns original endpoint if it is already an absolute URL; constructs
     # new absolute URL using relative endpoint if not
     def self.absolute_endpoint(endpoint, url)
-      unless Webmention::Client.valid_http_url?(endpoint)
-        endpoint = URI.join(url, endpoint).to_s
-      end
+      return endpoint if Webmention::Client.valid_http_url?(endpoint)
 
-      endpoint
+      URI.join(url, endpoint).to_s
     end
   end
 end
