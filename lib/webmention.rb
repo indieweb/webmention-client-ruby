@@ -7,3 +7,4 @@ require 'uri'
 
 require 'webmention/version'
 require 'webmention/client'
+require 'webmention/endpoint'
