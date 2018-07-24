@@ -23,7 +23,7 @@ describe Webmention::Client, '#send_mentions' do
     stub_request(:any, 'http://target.example.com/post/5').to_return(
       status: 202,
       headers: {
-        'Link': 'rel="webmention"; <http://webmention.io/example/webmention>'
+        'Link': '<http://webmention.io/example/webmention>; rel="webmention"'
       }
     )
 
