@@ -1,6 +1,8 @@
 require 'test_helper'
 
-describe Webmention::Client do
+describe Webmention::Client, '#send_mentions' do
+  let(:client) { Webmention::Client.new('http://source.example.com/post/100') }
+
   before do
     stub_request(:any, 'http://source.example.com/post/100').to_return(
       status: 202,
@@ -26,10 +28,7 @@ describe Webmention::Client do
     )
   end
 
-  describe '#send_mentions' do
-    it 'should return number of mentions sent' do
-      client = Webmention::Client.new('http://source.example.com/post/100')
-      client.send_mentions.must_equal(2)
-    end
+  it 'should return an integer' do
+    client.send_mentions.must_equal(2)
   end
 end
