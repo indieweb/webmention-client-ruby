@@ -17,8 +17,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'Apache-2.0'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = 'bin'
-  spec.executables   = ['webmention']
+
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler', '~> 1.17'
@@ -30,7 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'webmock', '~> 3.5'
 
   spec.add_runtime_dependency 'httparty', '~> 0.16.3'
-  spec.add_runtime_dependency 'link_header', '~> 0.0.8'
   spec.add_runtime_dependency 'nokogiri', '~> 1.9'
   spec.add_runtime_dependency 'webmention-endpoint', '~> 2.0'
 end

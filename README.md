@@ -10,8 +10,9 @@
 
 ## Key Features
 
-- Programatically crawls a given URL for mentioned URLs, performs endpoint discovery on mentioned URLs, and sends webmentions and/or pingbacks to mentioned URLs.
-- Provides a [CLI](https://en.wikipedia.org/wiki/Command-line_interface) for sending webmentions from the given URL to mentioned URLs within a parsed [h-entry](http://microformats.org/wiki/h-entry).
+- Crawls a given URL for mentioned URLs.
+- Performs endpoint discovery on mentioned URLs.
+- Sends webmentions and/or pingbacks to mentioned URLs.
 
 ## Getting Started
 
@@ -63,14 +64,6 @@ endpoint = Webmention::Endpoint.discover(target)
 if endpoint
   Webmention::Client.send_mention(endpoint, source, target)
 end
-```
-
-### Command Line Interface
-
-webmention-client-ruby also includes a command line program for manually sending webmentions and pingbacks from a given URL to all mentioned URLs.
-
-```sh
-$ webmention https://source.example.com/post/100
 ```
 
 ## Acknowledgments
