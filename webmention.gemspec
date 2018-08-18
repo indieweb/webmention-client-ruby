@@ -30,7 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'webmock', '~> 3.4', '>= 3.4.2'
 
   spec.add_runtime_dependency 'httparty', '~> 0.16.2'
-  spec.add_runtime_dependency 'json', '~> 2.1'
   spec.add_runtime_dependency 'link_header', '~> 0.0.8'
   spec.add_runtime_dependency 'nokogiri', '~> 1.8', '>= 1.8.3'
   spec.add_runtime_dependency 'webmention-endpoint', '~> 1.0'
