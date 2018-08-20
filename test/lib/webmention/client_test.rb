@@ -19,11 +19,11 @@ describe Webmention::Client, '#new' do
 
   describe 'when an invalid url' do
     it 'should raise an error for ftp' do
-      lambda { described_class.new('ftp://google.com') }.must_raise(ArgumentError)
+      -> { described_class.new('ftp://google.com') }.must_raise(ArgumentError)
     end
 
     it 'should raise an error for no protocol' do
-      lambda { described_class.new('google.com') }.must_raise(ArgumentError)
+      -> { described_class.new('google.com') }.must_raise(ArgumentError)
     end
   end
 end
