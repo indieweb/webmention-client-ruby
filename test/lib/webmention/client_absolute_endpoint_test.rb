@@ -1,6 +1,6 @@
 require 'test_helper'
 
-describe Webmention::Client, '#absolute_endpoint' do
+describe Webmention::Client, '.absolute_endpoint' do
   let(:described_class) { Webmention::Client }
 
   it 'should expand an endpoint url with a path to an absolute url based on the webmention url' do
