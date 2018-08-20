@@ -6,7 +6,7 @@ describe Webmention::Client, '#send_mentions' do
   before do
     stub_request(:any, 'http://source.example.com/post/100').to_return(
       status: 202,
-      body: SampleData.sample_source_post_html,
+      body: TestFixtures::SAMPLE_SOURCE_POST_HTML,
       headers: {
         'Content-Type': 'text/html'
       }
@@ -14,7 +14,7 @@ describe Webmention::Client, '#send_mentions' do
 
     stub_request(:any, 'http://target.example.com/post/4').to_return(
       status: 202,
-      body: SampleData.rel_webmention_href,
+      body: TestFixtures::REL_WEBMENTION_HREF,
       headers: {
         'Content-Type': 'text/html'
       }

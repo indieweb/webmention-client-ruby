@@ -6,7 +6,7 @@ describe Webmention::Client, '#crawl' do
   before do
     stub_request(:any, 'http://source.example.com/post/100').to_return(
       status: 200,
-      body: SampleData.sample_source_post_html
+      body: TestFixtures::SAMPLE_SOURCE_POST_HTML
     )
   end
 
