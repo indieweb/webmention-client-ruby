@@ -4,6 +4,6 @@ require 'simplecov'
 require 'minitest/autorun'
 require 'webmock/minitest'
 
-require_relative 'data/sample_html'
+require_relative 'support/test_fixtures'
 
 require 'webmention'
