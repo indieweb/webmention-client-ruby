@@ -22,13 +22,16 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'minitest', '~> 5.11'
+  spec.add_development_dependency 'minitest-reporters', '~> 1.3'
   spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'rubocop', '~> 0.64.0'
   spec.add_development_dependency 'simplecov', '~> 0.16.1'
   spec.add_development_dependency 'simplecov-console', '~> 0.4.2'
   spec.add_development_dependency 'webmock', '~> 3.5'
 
-  spec.add_runtime_dependency 'httparty', '~> 0.16.4'
+  spec.add_runtime_dependency 'absolutely', '~> 1.1'
+  spec.add_runtime_dependency 'addressable', '~> 2.5'
+  spec.add_runtime_dependency 'http', '~> 3.3'
   spec.add_runtime_dependency 'nokogiri', '~> 1.9'
   spec.add_runtime_dependency 'webmention-endpoint', '~> 2.0'
 end

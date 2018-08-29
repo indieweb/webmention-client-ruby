@@ -1,95 +1,36 @@
 module Webmention
   class Client
-    # Public: Returns a URI of the url initialized with.
-    attr_reader :url
-
-    # Public: Returns an array of links contained within the url.
-    attr_reader :links
-
-    # Public: Create a new client
-    #
-    # url - The url you want us to crawl.
     def initialize(url)
-      @url = URI.parse(url)
-      @links ||= Set.new
+      raise ArgumentError, "url must be a String (given #{url.class.name})" unless url.is_a?(String)
 
-      raise ArgumentError, "`#{@url}` is not a valid URL." unless Webmention::Client.valid_http_url?(@url)
+      @url = url
+      @uri = Addressable::URI.parse(url)
+
+      raise ArgumentError, 'url must be an absolute URI (e.g. https://example.com)' unless @uri.absolute?
+    rescue Addressable::URI::InvalidURIError => error
+      raise InvalidURIError, error
     end
 
-    # Public: Crawl the url this client was initialized with.
-    #
-    # Returns the number of links found.
-    def crawl
-      @links ||= Set.new
+    def mentioned_urls
+      raise UnsupportedMimeTypeError, "Unsupported MIME Type: #{response.mime_type}" unless parser_for_mime_type
 
-      raise ArgumentError, 'URL cannot be nil.' if @url.nil?
-
-      Nokogiri::HTML(open(url)).css('.h-entry a').each do |link|
-        link = link.attribute('href').to_s
-
-        @links.add(link) if Webmention::Client.valid_http_url?(link)
-      end
-
-      @links.count
+      @mentioned_urls ||= parser_for_mime_type.new(response).results
     end
 
-    # Public: Sends mentions to each of the links found in the page.
-    #
-    # Returns the number of links mentioned.
-    def send_mentions
-      crawl if links.nil? || links.empty?
+    # def send(url)
+    # end
 
-      sent_mentions_count = 0
+    # def send_all
+    # end
 
-      links.each do |link|
-        endpoint = Webmention::Endpoint.discover(link)
+    private
 
-        next unless endpoint
-
-        sent_mentions_count += 1 if Webmention::Client.send_mention(endpoint, url, link)
-      end
-
-      sent_mentions_count
+    def parser_for_mime_type
+      @parser_for_mime_type ||= Parser.subclasses.find { |parser| parser.mime_types.include?(response.mime_type) }
     end
 
-    # Public: Send a mention to an endoint about a link from a link.
-    #
-    # endpoint - URL to send mention to.
-    # source - Source of mention (your page).
-    # target - The link that was mentioned in the source page.
-    #
-    # Returns a boolean or the response if full_response == true.
-    def self.send_mention(endpoint, source, target, full_response = false)
-      response = HTTParty.post(absolute_endpoint(endpoint, target), body: { source: source, target: target })
-
-      return response if full_response
-      return response.code == 200 || response.code == 202
-    rescue
-      return false
-    end
-
-    # Public: Use URI to parse a url and check if it is HTTP or HTTPS.
-    #
-    # url - URL to check
-    #
-    # Returns a boolean.
-    def self.valid_http_url?(url)
-      url = URI.parse(url) if url.is_a?(String)
-
-      url.is_a?(URI::HTTP) || url.is_a?(URI::HTTPS)
-    end
-
-    # Public: Takes an endpoint and ensures an absolute URL is returned
-    #
-    # endpoint - Endpoint which may be an absolute or relative URL
-    # url - URL of the webmention
-    #
-    # Returns original endpoint if it is already an absolute URL; constructs
-    # new absolute URL using relative endpoint if not
-    def self.absolute_endpoint(endpoint, url)
-      return endpoint if Webmention::Client.valid_http_url?(endpoint)
-
-      URI.join(url, endpoint).to_s
+    def response
+      @response ||= GetRequest.new(@uri).response
     end
   end
 end
