@@ -17,8 +17,21 @@ module Webmention
       @mentioned_urls ||= parser_for_mime_type.new(response).results
     end
 
-    # def send(url)
-    # end
+    def send(url)
+      endpoint = Webmention::Endpoint.discover(url)
+
+      return unless endpoint
+
+      PostRequest.new(Addressable::URI.parse(endpoint), source: @url, target: url).response
+    rescue Webmention::Endpoint::ConnectionError => error
+      raise ConnectionError, error
+    rescue Webmention::Endpoint::InvalidURIError => error
+      raise InvalidURIError, error
+    rescue Webmention::Endpoint::TimeoutError => error
+      raise TimeoutError, error
+    rescue Webmention::Endpoint::TooManyRedirectsError => error
+      raise TooManyRedirectsError, error
+    end
 
     # def send_all
     # end
