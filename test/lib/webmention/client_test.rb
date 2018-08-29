@@ -1,29 +1,25 @@
 require 'test_helper'
 
-describe Webmention::Client, '#new' do
-  let(:described_class) { Webmention::Client }
+describe Webmention::Client do
+  describe 'when not given a String' do
+    it 'raises an ArgumentError' do
+      error = -> { Webmention::Client.new(nil) }.must_raise(Webmention::ArgumentError)
 
-  describe 'when a valid url' do
-    it 'should not throw an error for http' do
-      client = described_class.new('http://google.com')
-
-      client.url.must_be_instance_of(URI::HTTP)
-    end
-
-    it 'should not throw an error for https' do
-      client = described_class.new('https://google.com')
-
-      client.url.must_be_instance_of(URI::HTTPS)
+      error.message.must_match('url must be a String (given NilClass)')
     end
   end
 
-  describe 'when an invalid url' do
-    it 'should raise an error for ftp' do
-      -> { described_class.new('ftp://google.com') }.must_raise(ArgumentError)
+  describe 'when given an invalid URL' do
+    it 'raises an InvalidURIError' do
+      -> { Webmention::Client.new('http:') }.must_raise(Webmention::InvalidURIError)
     end
+  end
 
-    it 'should raise an error for no protocol' do
-      -> { described_class.new('google.com') }.must_raise(ArgumentError)
+  describe 'when given a relative URL' do
+    it 'raises an ArgumentError' do
+      error = -> { Webmention::Client.new('/foo') }.must_raise(Webmention::ArgumentError)
+
+      error.message.must_match('url must be an absolute URI (e.g. https://example.com)')
     end
   end
 end

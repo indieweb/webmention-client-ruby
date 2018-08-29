@@ -2,7 +2,10 @@
 require 'simplecov'
 
 require 'minitest/autorun'
+require 'minitest/reporters'
 require 'webmock/minitest'
+
+Minitest::Reporters.use! Minitest::Reporters::DefaultReporter.new
 
 require_relative 'support/test_fixtures'
 
