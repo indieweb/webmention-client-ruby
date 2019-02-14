@@ -30,8 +30,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'webmock', '~> 3.5'
 
   spec.add_runtime_dependency 'absolutely', '~> 1.1'
-  spec.add_runtime_dependency 'addressable', '~> 2.5'
-  spec.add_runtime_dependency 'http', '~> 3.3'
-  spec.add_runtime_dependency 'nokogiri', '~> 1.9'
+  spec.add_runtime_dependency 'addressable', '~> 2.6'
+  spec.add_runtime_dependency 'http', '~> 4.0'
+  spec.add_runtime_dependency 'nokogiri', '~> 1.10'
   spec.add_runtime_dependency 'webmention-endpoint', '~> 2.0'
 end
