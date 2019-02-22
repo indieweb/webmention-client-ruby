@@ -21,7 +21,7 @@ describe Webmention, '.send' do
     before do
       stub_request(:any, target_url).to_return(
         headers: {
-          Link: %{<#{target_endpoint_url}>; rel="webmention"}
+          Link: %(<#{target_endpoint_url}>; rel="webmention")
         }
       )
 

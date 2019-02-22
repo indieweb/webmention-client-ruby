@@ -33,8 +33,9 @@ module Webmention
       raise TooManyRedirectsError, error
     end
 
-    # def send_all
-    # end
+    def send_all
+      mentioned_urls.map { |url| response_for_mentioned_url(url) }
+    end
 
     private
 
@@ -44,6 +45,12 @@ module Webmention
 
     def response
       @response ||= GetRequest.new(@uri).response
+    end
+
+    def response_for_mentioned_url(url)
+      {
+        url: url,
+        response: send(url) }
     end
   end
 end
