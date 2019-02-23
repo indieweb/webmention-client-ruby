@@ -1,14 +1,6 @@
 require 'test_helper'
 
 describe Webmention::Parser do
-  let :mime_types do
-    ['text/html']
-  end
-
-  let :subclasses do
-    [Webmention::HtmlParser]
-  end
-
   describe 'when response is invalid' do
     it 'raises an ArgumentError' do
       error = -> { Webmention::Parser.new(nil) }.must_raise(Webmention::ArgumentError)
@@ -17,10 +9,12 @@ describe Webmention::Parser do
     end
 
     it 'raises an UnsupportedMimeTypeError' do
-      response = HTTP::Response.new(body: '', status: 200, version: '1.1')
+      mock = Minitest::Mock.new
+      def mock.is_a?(arg); true; end
+      def mock.mime_type; 'unsupported/type'; end
 
-      response.stub :mime_type, 'unsupported/type' do
-        error = -> { Webmention::Parser.new(response) }.must_raise(Webmention::UnsupportedMimeTypeError)
+      HTTP::Response.stub :new, mock do
+        error = -> { Webmention::Parser.new(mock) }.must_raise(Webmention::UnsupportedMimeTypeError)
 
         error.message.must_match('Unsupported MIME Type: unsupported/type')
       end
@@ -29,12 +23,16 @@ describe Webmention::Parser do
 
   describe '.mime_types' do
     it 'returns an array' do
+      mime_types = ['text/html']
+
       Webmention::Parser.mime_types.must_equal(mime_types)
     end
   end
 
   describe '.subclasses' do
     it 'returns an array' do
+      subclasses = [Webmention::HtmlParser]
+
       Webmention::Parser.subclasses.must_equal(subclasses)
     end
   end

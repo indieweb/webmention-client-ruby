@@ -20,16 +20,6 @@ describe Webmention::Client, '#mentioned_urls' do
   end
 
   describe 'when response MIME type is text/html' do
-    let :urls do
-      [
-        'https://target.example.com/post/1',
-        'https://target.example.com/post/2',
-        'https://target.example.com/image.jpg',
-        'https://target.example.com/image-1x.jpg',
-        'https://target.example.com/image-2x.jpg'
-      ]
-    end
-
     before do
       stub_request(:any, 'https://example.com').to_return(
         body: TestFixtures::SAMPLE_POST_HTML,
@@ -40,7 +30,15 @@ describe Webmention::Client, '#mentioned_urls' do
     end
 
     it 'returns an array' do
-      client.mentioned_urls.must_equal(urls)
+      mentioned_urls = [
+        'https://target.example.com/post/1',
+        'https://target.example.com/post/2',
+        'https://target.example.com/image.jpg',
+        'https://target.example.com/image-1x.jpg',
+        'https://target.example.com/image-2x.jpg'
+      ]
+
+      client.mentioned_urls.must_equal(mentioned_urls)
     end
   end
 end
