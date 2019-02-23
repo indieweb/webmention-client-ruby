@@ -7,7 +7,7 @@ describe Webmention, '.send_mention' do
 
   describe 'when no endpoint found' do
     before do
-      stub_request(:any, target_url).to_return(
+      stub_request(:get, target_url).to_return(
         body: TestFixtures::SAMPLE_POST_HTML
       )
     end
@@ -19,7 +19,7 @@ describe Webmention, '.send_mention' do
 
   describe 'when endpoint found' do
     before do
-      stub_request(:any, target_url).to_return(
+      stub_request(:get, target_url).to_return(
         headers: {
           Link: %(<#{target_endpoint_url}>; rel="webmention")
         }

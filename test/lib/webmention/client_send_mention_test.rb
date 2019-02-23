@@ -6,7 +6,7 @@ describe Webmention::Client, '#send_mention' do
 
   describe 'when rescuing a Webmention::Endpoint::ConnectionError' do
     before do
-      stub_request(:any, target_url).to_raise(Webmention::Endpoint::ConnectionError)
+      stub_request(:get, target_url).to_raise(Webmention::Endpoint::ConnectionError)
     end
 
     it 'raises a ConnectionError' do
@@ -16,7 +16,7 @@ describe Webmention::Client, '#send_mention' do
 
   describe 'when rescuing a Webmention::Endpoint::InvalidURIError' do
     before do
-      stub_request(:any, target_url).to_raise(Webmention::Endpoint::InvalidURIError)
+      stub_request(:get, target_url).to_raise(Webmention::Endpoint::InvalidURIError)
     end
 
     it 'raises a InvalidURIError' do
@@ -26,7 +26,7 @@ describe Webmention::Client, '#send_mention' do
 
   describe 'when rescuing a Webmention::Endpoint::TimeoutError' do
     before do
-      stub_request(:any, target_url).to_raise(Webmention::Endpoint::TimeoutError)
+      stub_request(:get, target_url).to_raise(Webmention::Endpoint::TimeoutError)
     end
 
     it 'raises a TimeoutError' do
@@ -36,7 +36,7 @@ describe Webmention::Client, '#send_mention' do
 
   describe 'when rescuing a Webmention::Endpoint::TooManyRedirectsError' do
     before do
-      stub_request(:any, target_url).to_raise(Webmention::Endpoint::TooManyRedirectsError)
+      stub_request(:get, target_url).to_raise(Webmention::Endpoint::TooManyRedirectsError)
     end
 
     it 'raises a TooManyRedirectsError' do
