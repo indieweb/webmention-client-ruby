@@ -34,7 +34,12 @@ module Webmention
     end
 
     def send_all
-      mentioned_urls.map { |url| response_for_mentioned_url(url) }
+      mentioned_urls.map do |url|
+        {
+          url: url,
+          response: send(url)
+        }
+      end
     end
 
     private
@@ -45,12 +50,6 @@ module Webmention
 
     def response
       @response ||= GetRequest.new(@uri).response
-    end
-
-    def response_for_mentioned_url(url)
-      {
-        url: url,
-        response: send(url) }
     end
   end
 end

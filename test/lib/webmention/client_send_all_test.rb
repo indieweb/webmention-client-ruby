@@ -1,20 +1,15 @@
 require 'test_helper'
 
 describe Webmention::Client, '#send_all' do
-  let(:client) { Webmention::Client.new('https://example.com') }
+  let(:source_url) { 'https://source.example.com' }
+  let(:target_url) { 'https://target.example.com' }
+  let(:target_endpoint_url) { "#{target_url}/webmention" }
+  let(:client) { Webmention::Client.new(source_url) }
 
   describe 'when no mentioned URLs found' do
-    it 'returns an array' do
-      client.stub :mentioned_urls, [] do
-        client.send_all.must_equal([])
-      end
-    end
-  end
-
-  describe 'when mentioned URLs found' do
     before do
-      stub_request(:any, 'https://example.com').to_return(
-        body: TestFixtures::SAMPLE_POST_HTML,
+      stub_request(:get, source_url).to_return(
+        body: TestFixtures::SAMPLE_POST_HTML_NO_LINKS,
         headers: {
           'Content-Type': 'text/html'
         }
@@ -22,13 +17,41 @@ describe Webmention::Client, '#send_all' do
     end
 
     it 'returns an array' do
-      response = {
-        url: 'https://target.example.com/post/1',
-        response: nil
-      }
+      client.send_all.must_equal([])
+    end
+  end
 
-      client.stub :response_for_mentioned_url, response do
-        client.send_all.must_equal([response, response, response, response, response])
+  describe 'when mentioned URLs found' do
+    before do
+      stub_request(:get, source_url).to_return(
+        body: TestFixtures::SAMPLE_POST_HTML_ANCHORS_ONLY,
+        headers: {
+          'Content-Type': 'text/html'
+        }
+      )
+
+      stub_request(:get, %r(#{target_url}/.*)).to_return(
+        headers: {
+          Link: %(<#{target_endpoint_url}>; rel="webmention")
+        }
+      )
+
+      stub_request(:post, target_endpoint_url).to_return(
+        status: 200
+      )
+    end
+
+    it 'returns an array' do
+      mock = Minitest::Mock.new
+      def mock.response; true; end
+
+      Webmention::PostRequest.stub :new, mock do
+        responses = [
+          { url: "#{target_url}/post/1", response: true },
+          { url: "#{target_url}/post/2", response: true }
+        ]
+
+        client.send_all.must_equal(responses)
       end
     end
   end
