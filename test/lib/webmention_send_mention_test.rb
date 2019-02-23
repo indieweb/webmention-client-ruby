@@ -1,6 +1,6 @@
 require 'test_helper'
 
-describe Webmention, '.send' do
+describe Webmention, '.send_mention' do
   let(:source_url) { 'https://source.example.com' }
   let(:target_url) { 'https://target.example.com' }
   let(:target_endpoint_url) { "#{target_url}/webmention" }
@@ -13,7 +13,7 @@ describe Webmention, '.send' do
     end
 
     it 'returns nil' do
-      Webmention.send(source_url, target_url).must_be_nil
+      Webmention.send_mention(source_url, target_url).must_be_nil
     end
   end
 
@@ -31,7 +31,7 @@ describe Webmention, '.send' do
     end
 
     it 'returns an HTTP::Response' do
-      Webmention.send(source_url, target_url).must_be_instance_of(HTTP::Response)
+      Webmention.send_mention(source_url, target_url).must_be_instance_of(HTTP::Response)
     end
   end
 end

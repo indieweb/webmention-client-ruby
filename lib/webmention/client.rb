@@ -17,7 +17,7 @@ module Webmention
       @mentioned_urls ||= parser_for_mime_type.new(response).results
     end
 
-    def send(url)
+    def send_mention(url)
       endpoint = Webmention::Endpoint.discover(url)
 
       return unless endpoint
@@ -33,11 +33,11 @@ module Webmention
       raise TooManyRedirectsError, error
     end
 
-    def send_all
+    def send_all_mentions
       mentioned_urls.map do |url|
         {
           url: url,
-          response: send(url)
+          response: send_mention(url)
         }
       end
     end

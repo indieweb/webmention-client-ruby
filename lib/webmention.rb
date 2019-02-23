@@ -18,7 +18,7 @@ require 'webmention/requests/get_request'
 require 'webmention/requests/post_request'
 
 module Webmention
-  def self.send(source, target)
-    Client.new(source).send(target)
+  def self.send_mention(source, target)
+    Client.new(source).send_mention(target)
   end
 end

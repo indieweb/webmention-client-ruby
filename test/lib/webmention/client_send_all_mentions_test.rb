@@ -1,6 +1,6 @@
 require 'test_helper'
 
-describe Webmention::Client, '#send_all' do
+describe Webmention::Client, '#send_all_mentions' do
   let(:source_url) { 'https://source.example.com' }
   let(:target_url) { 'https://target.example.com' }
   let(:target_endpoint_url) { "#{target_url}/webmention" }
@@ -17,7 +17,7 @@ describe Webmention::Client, '#send_all' do
     end
 
     it 'returns an array' do
-      client.send_all.must_equal([])
+      client.send_all_mentions.must_equal([])
     end
   end
 
@@ -51,7 +51,7 @@ describe Webmention::Client, '#send_all' do
           { url: "#{target_url}/post/2", response: true }
         ]
 
-        client.send_all.must_equal(responses)
+        client.send_all_mentions.must_equal(responses)
       end
     end
   end
