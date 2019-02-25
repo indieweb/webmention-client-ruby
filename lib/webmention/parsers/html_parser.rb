@@ -45,8 +45,12 @@ module Webmention
       @response_url ||= @response.uri.to_s
     end
 
+    def root_node
+      @root_node ||= doc.css('.h-entry .e-content').first || doc.css('.h-entry').first || doc.css('body')
+    end
+
     def search_doc(element, attribute)
-      doc.css("#{element}[#{attribute}]").map { |node| parse_node(node, attribute) }.flatten
+      root_node.css("#{element}[#{attribute}]").map { |node| parse_node(node, attribute) }.flatten
     end
   end
 end
