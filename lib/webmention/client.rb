@@ -17,6 +17,15 @@ module Webmention
       @mentioned_urls ||= parser_for_mime_type.new(response).results
     end
 
+    def send_all_mentions
+      mentioned_urls.map do |url|
+        {
+          url: url,
+          response: send_mention(url)
+        }
+      end
+    end
+
     def send_mention(url)
       endpoint = Webmention::Endpoint.discover(url)
 
@@ -31,15 +40,6 @@ module Webmention
       raise TimeoutError, error
     rescue Webmention::Endpoint::TooManyRedirectsError => error
       raise TooManyRedirectsError, error
-    end
-
-    def send_all_mentions
-      mentioned_urls.map do |url|
-        {
-          url: url,
-          response: send_mention(url)
-        }
-      end
     end
 
     private
