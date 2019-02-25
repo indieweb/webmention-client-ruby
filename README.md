@@ -46,7 +46,7 @@ require 'webmention'
 source = 'https://source.example.com/post/100'  # A post on your website
 target = 'https://target.example.com/post/100'  # A post on someone else's website
 
-Webmention::Client.send_mention(source, target) # returns HTTP::Response
+Webmention.send_mention(source, target) # returns HTTP::Response
 ```
 
 To send webmentions to all URLs mentioned within a source URL's [h-entry](http://microformats.org/wiki/h-entry):
