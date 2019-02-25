@@ -11,8 +11,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Aaron Parecki', 'Nat Welch']
   spec.email         = ['aaron@parecki.com']
 
-  spec.summary       = 'Webmention and pingback notification client'
-  spec.description   = 'A Ruby gem for sending webmention and pingback notifications.'
+  spec.summary       = 'Webmention notification client'
+  spec.description   = 'A Ruby gem for sending webmention notifications.'
   spec.homepage      = 'https://github.com/indieweb/webmention-client-ruby'
   spec.license       = 'Apache-2.0'
 
