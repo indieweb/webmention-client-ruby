@@ -4,8 +4,6 @@ require 'absolutely'
 require 'addressable/uri'
 require 'http'
 require 'nokogiri'
-require 'open-uri'
-require 'set'
 require 'webmention/endpoint'
 
 require 'webmention/version'
