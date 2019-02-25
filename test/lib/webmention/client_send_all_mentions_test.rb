@@ -30,7 +30,7 @@ describe Webmention::Client, '#send_all_mentions' do
         }
       )
 
-      stub_request(:get, %r(#{target_url}/.*)).to_return(
+      stub_request(:get, %r{#{target_url}/.*}).to_return(
         headers: {
           Link: %(<#{target_endpoint_url}>; rel="webmention")
         }

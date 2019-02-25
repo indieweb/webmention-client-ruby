@@ -1,3 +1,7 @@
+Layout/EmptyLineBetweenDefs:
+  Exclude:
+    - test/**/parser_test.rb
+
 Metrics/BlockLength:
   Exclude:
     - test/**/*
@@ -5,8 +9,15 @@ Metrics/BlockLength:
 Metrics/LineLength:
   Enabled: false
 
+Metrics/MethodLength:
+  Max: 15
+
 Style/Documentation:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/SingleLineMethods:
+  Exclude:
+    - test/**/*

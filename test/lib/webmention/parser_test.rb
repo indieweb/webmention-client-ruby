@@ -10,7 +10,7 @@ describe Webmention::Parser do
 
     it 'raises an UnsupportedMimeTypeError' do
       mock = Minitest::Mock.new
-      def mock.is_a?(arg); true; end
+      def mock.is_a?(_arg); true; end
       def mock.mime_type; 'unsupported/type'; end
 
       HTTP::Response.stub :new, mock do
