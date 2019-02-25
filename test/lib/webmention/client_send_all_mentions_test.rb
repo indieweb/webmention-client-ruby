@@ -23,7 +23,7 @@ describe Webmention::Client, '#send_all_mentions' do
 
   describe 'when mentioned URLs found' do
     before do
-      stub_request(:get, source_url).to_return(
+      stub_request(:get, %r{#{source_url}/.*}).to_return(
         body: TestFixtures::SAMPLE_POST_HTML_ANCHORS_ONLY,
         headers: {
           'Content-Type': 'text/html'
