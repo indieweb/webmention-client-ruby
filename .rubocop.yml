@@ -1,3 +1,6 @@
+require:
+  - rubocop-performance
+
 Layout/EmptyLineBetweenDefs:
   Exclude:
     - test/**/parser_test.rb
