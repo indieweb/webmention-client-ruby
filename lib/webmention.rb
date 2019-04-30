@@ -7,7 +7,7 @@ require 'indieweb/endpoints'
 require 'nokogiri'
 
 require 'webmention/version'
-require 'webmention/error'
+require 'webmention/exceptions'
 require 'webmention/client'
 require 'webmention/parser'
 require 'webmention/parsers/html_parser'

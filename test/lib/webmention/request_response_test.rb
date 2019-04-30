@@ -30,7 +30,7 @@ describe Webmention::Request, '#response' do
       stubbed_request.to_raise(HTTP::Redirector::TooManyRedirectsError)
     end
 
-    it 'raises a ConnectionError' do
+    it 'raises a TooManyRedirectsError' do
       -> { request.response }.must_raise(Webmention::TooManyRedirectsError)
     end
   end

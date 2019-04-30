@@ -6,9 +6,7 @@ describe Webmention::Client, '#mentioned_urls' do
   describe 'when response MIME type is unsupported/type' do
     before do
       stub_request(:get, 'https://example.com').to_return(
-        headers: {
-          'Content-Type': 'unsupported/type'
-        }
+        headers: { 'Content-Type': 'unsupported/type' }
       )
     end
 
@@ -22,14 +20,12 @@ describe Webmention::Client, '#mentioned_urls' do
   describe 'when response MIME type is text/html' do
     before do
       stub_request(:get, 'https://example.com').to_return(
-        body: TestFixtures::SAMPLE_POST_HTML,
-        headers: {
-          'Content-Type': 'text/html'
-        }
+        body:    TestFixtures::SAMPLE_POST_HTML,
+        headers: { 'Content-Type': 'text/html' }
       )
     end
 
-    it 'returns an array' do
+    it 'returns an Array' do
       mentioned_urls = [
         'https://target.example.com/post/1',
         'https://target.example.com/post/2',

@@ -4,19 +4,22 @@ describe Webmention::Client, '#send_all_mentions' do
   let(:source_url) { 'https://source.example.com' }
   let(:target_url) { 'https://target.example.com' }
   let(:target_endpoint_url) { "#{target_url}/webmention" }
+
+  let :http_response_headers do
+    { 'Content-Type': 'text/html' }
+  end
+
   let(:client) { Webmention::Client.new(source_url) }
 
   describe 'when no mentioned URLs found' do
     before do
       stub_request(:get, source_url).to_return(
-        body: TestFixtures::SAMPLE_POST_HTML_NO_LINKS,
-        headers: {
-          'Content-Type': 'text/html'
-        }
+        body:    TestFixtures::SAMPLE_POST_HTML_NO_LINKS,
+        headers: http_response_headers
       )
     end
 
-    it 'returns an array' do
+    it 'returns an Array' do
       client.send_all_mentions.must_equal([])
     end
   end
@@ -24,10 +27,8 @@ describe Webmention::Client, '#send_all_mentions' do
   describe 'when mentioned URLs found' do
     before do
       stub_request(:get, %r{#{source_url}/.*}).to_return(
-        body: TestFixtures::SAMPLE_POST_HTML_ANCHORS_ONLY,
-        headers: {
-          'Content-Type': 'text/html'
-        }
+        body:    TestFixtures::SAMPLE_POST_HTML_ANCHORS_ONLY,
+        headers: http_response_headers
       )
 
       stub_request(:get, %r{#{target_url}/.*}).to_return(
@@ -36,13 +37,12 @@ describe Webmention::Client, '#send_all_mentions' do
         }
       )
 
-      stub_request(:post, target_endpoint_url).to_return(
-        status: 200
-      )
+      stub_request(:post, target_endpoint_url).to_return(status: 200)
     end
 
-    it 'returns an array' do
+    it 'returns an Array' do
       mock = Minitest::Mock.new
+
       def mock.response; true; end
 
       Webmention::PostRequest.stub :new, mock do

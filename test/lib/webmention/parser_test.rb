@@ -10,7 +10,9 @@ describe Webmention::Parser do
 
     it 'raises an UnsupportedMimeTypeError' do
       mock = Minitest::Mock.new
+
       def mock.is_a?(_arg); true; end
+
       def mock.mime_type; 'unsupported/type'; end
 
       HTTP::Response.stub :new, mock do
@@ -18,22 +20,6 @@ describe Webmention::Parser do
 
         error.message.must_match('Unsupported MIME Type: unsupported/type')
       end
-    end
-  end
-
-  describe '.mime_types' do
-    it 'returns an array' do
-      mime_types = ['text/html']
-
-      Webmention::Parser.mime_types.must_equal(mime_types)
-    end
-  end
-
-  describe '.subclasses' do
-    it 'returns an array' do
-      subclasses = [Webmention::HtmlParser]
-
-      Webmention::Parser.subclasses.must_equal(subclasses)
     end
   end
 end

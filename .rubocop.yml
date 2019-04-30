@@ -1,9 +1,8 @@
 require:
   - rubocop-performance
 
-Layout/EmptyLineBetweenDefs:
-  Exclude:
-    - test/**/parser_test.rb
+Layout/AlignHash:
+  EnforcedColonStyle: table
 
 Metrics/BlockLength:
   Exclude:
@@ -12,8 +11,8 @@ Metrics/BlockLength:
 Metrics/LineLength:
   Enabled: false
 
-Metrics/MethodLength:
-  Max: 15
+Naming/RescuedExceptionsVariableName:
+  PreferredName: exception
 
 Style/Documentation:
   Enabled: false

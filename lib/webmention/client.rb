@@ -7,8 +7,8 @@ module Webmention
       @uri = Addressable::URI.parse(url)
 
       raise ArgumentError, 'url must be an absolute URI (e.g. https://example.com)' unless @uri.absolute?
-    rescue Addressable::URI::InvalidURIError => error
-      raise InvalidURIError, error
+    rescue Addressable::URI::InvalidURIError => exception
+      raise InvalidURIError, exception
     end
 
     def mentioned_urls
@@ -20,7 +20,7 @@ module Webmention
     def send_all_mentions
       mentioned_urls.map do |url|
         {
-          url: url,
+          url:      url,
           response: send_mention(url)
         }
       end
@@ -32,14 +32,8 @@ module Webmention
       return unless endpoint
 
       PostRequest.new(Addressable::URI.parse(endpoint), source: @url, target: url).response
-    rescue IndieWeb::Endpoints::ConnectionError => error
-      raise ConnectionError, error
-    rescue IndieWeb::Endpoints::InvalidURIError => error
-      raise InvalidURIError, error
-    rescue IndieWeb::Endpoints::TimeoutError => error
-      raise TimeoutError, error
-    rescue IndieWeb::Endpoints::TooManyRedirectsError => error
-      raise TooManyRedirectsError, error
+    rescue IndieWeb::Endpoints::Error => exception
+      raise Webmention.const_get(exception.class.name.split('::').last), exception
     end
 
     private

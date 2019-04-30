@@ -1,6 +1,5 @@
 module Webmention
   class HtmlParser < Parser
-    # rubocop:disable Layout/AlignHash
     HTML_ATTRIBUTE_MAPPINGS = {
       cite:   %w[blockquote del ins q],
       data:   %w[object],
@@ -9,7 +8,6 @@ module Webmention
       src:    %w[audio embed img source track video],
       srcset: %w[img source]
     }.freeze
-    # rubocop:enable Layout/AlignHash
 
     def self.mime_types
       ['text/html']
