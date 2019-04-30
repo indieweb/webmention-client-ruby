@@ -27,18 +27,18 @@ module Webmention
     end
 
     def send_mention(url)
-      endpoint = Webmention::Endpoint.discover(url)
+      endpoint = IndieWeb::Endpoints.get(url).webmention
 
       return unless endpoint
 
       PostRequest.new(Addressable::URI.parse(endpoint), source: @url, target: url).response
-    rescue Webmention::Endpoint::ConnectionError => error
+    rescue IndieWeb::Endpoints::ConnectionError => error
       raise ConnectionError, error
-    rescue Webmention::Endpoint::InvalidURIError => error
+    rescue IndieWeb::Endpoints::InvalidURIError => error
       raise InvalidURIError, error
-    rescue Webmention::Endpoint::TimeoutError => error
+    rescue IndieWeb::Endpoints::TimeoutError => error
       raise TimeoutError, error
-    rescue Webmention::Endpoint::TooManyRedirectsError => error
+    rescue IndieWeb::Endpoints::TooManyRedirectsError => error
       raise TooManyRedirectsError, error
     end
 
