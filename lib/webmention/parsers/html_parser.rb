@@ -16,42 +16,46 @@ module Webmention
         srcset: %w[img source]
       }.freeze
 
+      CSS_SELECTORS_MAP = HTML_ATTRIBUTE_MAP.each_with_object({}) do |(attribute, elements), hash|
+        hash[attribute] = elements.map { |element| "#{element}[#{attribute}]" }
+      end
+
       private
 
       def doc
         @doc ||= Nokogiri::HTML(response_body)
       end
 
-      def parse_node(node, attribute)
-        value = node[attribute]
-
-        return value unless attribute == :srcset
-
-        value.split(',').map { |link| link.strip.split(' ').first }
-      end
-
+      # Parse an HTML string for URLs
+      #
+      # @return [Array] the URLs
       def parse_response_body
-        matches = Set.new
-
-        HTML_ATTRIBUTE_MAP.each do |attribute, elements|
-          elements.each do |element|
-            matches.merge(search_doc(element, attribute).map { |match| Absolutely.to_absolute_uri(base: response_url, relative: match) })
-          end
-        end
-
-        matches.to_a
-      end
-
-      def response_url
-        @response_url ||= @response.uri.to_s
+        CSS_SELECTORS_MAP
+          .each_with_object([]) { |(*args), array| array << search_doc(*args) }
+          .flatten
+          .map { |url| Absolutely.to_absolute_uri(base: response_url, relative: url) }
+          .uniq
       end
 
       def root_node
         @root_node ||= doc.css('.h-entry .e-content').first || doc.css('.h-entry').first || doc.css('body')
       end
 
-      def search_doc(element, attribute)
-        root_node.css("#{element}[#{attribute}]").map { |node| parse_node(node, attribute) }.flatten
+      def search_doc(attribute, selectors)
+        root_node.css(*selectors).map { |node| self.class.attribute_values_from(node, attribute).reject(&:empty?) }
+      end
+
+      class << self
+        # Derive attribute values from a single node
+        #
+        # @param node [Nokogiri::XML::Element]
+        # @param attribute [Symbol]
+        # @return [Array] the HTML attribute values
+        def attribute_values_from(node, attribute)
+          return Array(node[attribute]) unless attribute == :srcset
+
+          node[attribute].split(',').map { |value| value.strip.match(/^\S+/).to_s }
+        end
       end
     end
   end

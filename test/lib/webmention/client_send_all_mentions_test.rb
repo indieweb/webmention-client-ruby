@@ -27,7 +27,9 @@ describe Webmention::Client, :send_all_mentions do
     before do
       stub_request(:get, %r{#{source_url}/.*}).to_return(
         body:    TestFixtures::SAMPLE_POST_HTML_ANCHORS_ONLY,
-        headers: http_response_headers
+        headers: http_response_headers.merge(
+          Link: %(<#{source_url}/webmention>; rel="webmention")
+        )
       )
 
       stub_request(:get, %r{#{target_url}/.*}).to_return(
@@ -41,7 +43,8 @@ describe Webmention::Client, :send_all_mentions do
       Webmention::Request.stub :post, true do
         responses = {
           "#{target_url}/post/1" => true,
-          "#{target_url}/post/2" => true
+          "#{target_url}/post/2" => true,
+          "#{source_url}/post/1" => true
         }
 
         client.send_all_mentions.must_equal(responses)

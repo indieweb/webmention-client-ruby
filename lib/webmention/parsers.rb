@@ -20,6 +20,10 @@ module Webmention
       def response_body
         @response_body ||= @response.body.to_s
       end
+
+      def response_url
+        @response_url ||= @response.uri.to_s
+      end
     end
   end
 end
