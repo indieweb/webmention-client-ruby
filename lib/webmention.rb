@@ -8,12 +8,13 @@ require 'nokogiri'
 
 require 'webmention/version'
 require 'webmention/exceptions'
+
 require 'webmention/client'
-require 'webmention/parser'
-require 'webmention/parsers/html_parser'
+require 'webmention/registerable'
 require 'webmention/request'
-require 'webmention/requests/get_request'
-require 'webmention/requests/post_request'
+
+require 'webmention/parsers'
+require 'webmention/parsers/html_parser'
 
 module Webmention
   def self.send_mention(source, target)

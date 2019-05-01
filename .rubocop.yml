@@ -23,3 +23,6 @@ Style/FrozenStringLiteralComment:
 Style/SingleLineMethods:
   Exclude:
     - test/**/*
+
+Style/SymbolArray:
+  Enabled: false

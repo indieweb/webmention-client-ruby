@@ -1,11 +1,45 @@
 require 'test_helper'
 
-describe Webmention::Client, '#mentioned_urls' do
-  let(:client) { Webmention::Client.new('https://example.com') }
+describe Webmention::Client, :mentioned_urls do
+  let(:url) { 'https://example.com' }
+
+  let(:client) { Webmention::Client.new(url) }
+
+  let(:stubbed_request) { stub_request(:get, url) }
+
+  describe 'when rescuing an HTTP::ConnectionError' do
+    before do
+      stubbed_request.to_raise(HTTP::ConnectionError)
+    end
+
+    it 'raises a ConnectionError' do
+      -> { client.mentioned_urls }.must_raise(Webmention::ConnectionError)
+    end
+  end
+
+  describe 'when rescuing an HTTP::TimeoutError' do
+    before do
+      stubbed_request.to_raise(HTTP::TimeoutError)
+    end
+
+    it 'raises a TimeoutError' do
+      -> { client.mentioned_urls }.must_raise(Webmention::TimeoutError)
+    end
+  end
+
+  describe 'when rescuing an HTTP::Redirector::TooManyRedirectsError' do
+    before do
+      stubbed_request.to_raise(HTTP::Redirector::TooManyRedirectsError)
+    end
+
+    it 'raises a TooManyRedirectsError' do
+      -> { client.mentioned_urls }.must_raise(Webmention::TooManyRedirectsError)
+    end
+  end
 
   describe 'when response MIME type is unsupported/type' do
     before do
-      stub_request(:get, 'https://example.com').to_return(
+      stub_request(:get, url).to_return(
         headers: { 'Content-Type': 'unsupported/type' }
       )
     end
@@ -19,7 +53,7 @@ describe Webmention::Client, '#mentioned_urls' do
 
   describe 'when response MIME type is text/html' do
     before do
-      stub_request(:get, 'https://example.com').to_return(
+      stub_request(:get, url).to_return(
         body:    TestFixtures::SAMPLE_POST_HTML,
         headers: { 'Content-Type': 'text/html' }
       )

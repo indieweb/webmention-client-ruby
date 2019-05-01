@@ -1,37 +1,34 @@
 module Webmention
   class Client
-    def initialize(url)
-      raise ArgumentError, "url must be a String (given #{url.class.name})" unless url.is_a?(String)
+    HTTP_HEADERS_OPTS = {
+      accept:     '*/*',
+      user_agent: 'Webmention Client (https://rubygems.org/gems/webmention)'
+    }.freeze
 
-      @url = url
-      @uri = Addressable::URI.parse(url)
+    def initialize(source)
+      raise ArgumentError, "source must be a String (given #{source.class.name})" unless source.is_a?(String)
 
-      raise ArgumentError, 'url must be an absolute URI (e.g. https://example.com)' unless @uri.absolute?
-    rescue Addressable::URI::InvalidURIError => exception
-      raise InvalidURIError, exception
-    end
+      @source = source
 
-    def mentioned_urls
-      raise UnsupportedMimeTypeError, "Unsupported MIME Type: #{response.mime_type}" unless parser_for_mime_type
-
-      @mentioned_urls ||= parser_for_mime_type.new(response).results
+      raise ArgumentError, 'source must be an absolute URL (e.g. https://example.com)' unless source_uri.absolute?
     end
 
     def send_all_mentions
-      mentioned_urls.map do |url|
-        {
-          url:      url,
-          response: send_mention(url)
-        }
-      end
+      mentioned_urls.each_with_object({}) { |url, hash| hash[url] = send_mention(url) }
     end
 
-    def send_mention(url)
-      endpoint = IndieWeb::Endpoints.get(url).webmention
+    def mentioned_urls
+      raise UnsupportedMimeTypeError, "Unsupported MIME Type: #{source_response.mime_type}" unless parser_for_mime_type
+
+      @mentioned_urls ||= parser_for_mime_type.new(source_response).results
+    end
+
+    def send_mention(target)
+      endpoint = IndieWeb::Endpoints.get(target).webmention
 
       return unless endpoint
 
-      PostRequest.new(Addressable::URI.parse(endpoint), source: @url, target: url).response
+      Request.post(Addressable::URI.parse(endpoint), source: @source, target: target)
     rescue IndieWeb::Endpoints::Error => exception
       raise Webmention.const_get(exception.class.name.split('::').last), exception
     end
@@ -39,11 +36,17 @@ module Webmention
     private
 
     def parser_for_mime_type
-      @parser_for_mime_type ||= Parser.subclasses.find { |parser| parser.mime_types.include?(response.mime_type) }
+      @parser_for_mime_type ||= Parsers.registered[source_response.mime_type]
     end
 
-    def response
-      @response ||= GetRequest.new(@uri).response
+    def source_response
+      @source_response ||= Request.get(source_uri)
+    end
+
+    def source_uri
+      @source_uri ||= Addressable::URI.parse(@source)
+    rescue Addressable::URI::InvalidURIError => exception
+      raise InvalidURIError, exception
     end
   end
 end

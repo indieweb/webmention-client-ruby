@@ -1,6 +1,6 @@
 require 'test_helper'
 
-describe Webmention, '.send_mention' do
+describe Webmention, :send_mention do
   let(:source_url) { 'https://source.example.com' }
   let(:target_url) { 'https://target.example.com' }
   let(:target_endpoint_url) { "#{target_url}/webmention" }

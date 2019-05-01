@@ -5,7 +5,7 @@ describe Webmention::Client do
     it 'raises an ArgumentError' do
       error = -> { Webmention::Client.new(nil) }.must_raise(Webmention::ArgumentError)
 
-      error.message.must_match('url must be a String (given NilClass)')
+      error.message.must_match('source must be a String (given NilClass)')
     end
   end
 
@@ -19,7 +19,7 @@ describe Webmention::Client do
     it 'raises an ArgumentError' do
       error = -> { Webmention::Client.new('/foo') }.must_raise(Webmention::ArgumentError)
 
-      error.message.must_match('url must be an absolute URI (e.g. https://example.com)')
+      error.message.must_match('source must be an absolute URL (e.g. https://example.com)')
     end
   end
 end
