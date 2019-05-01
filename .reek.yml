@@ -1,0 +1,8 @@
+detectors:
+  DuplicateMethodCall:
+    max_calls: 3
+  IrresponsibleModule:
+    enabled: false
+
+exclude_paths:
+  - vendor/
