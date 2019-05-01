@@ -31,7 +31,7 @@ module Webmention
       # @return [Array] the URLs
       def parse_response_body
         CSS_SELECTORS_MAP
-          .each_with_object([]) { |(*args), array| array << search_doc(*args) }
+          .each_with_object([]) { |(*args), array| array << search_node(*args) }
           .flatten
           .map { |url| Absolutely.to_absolute_uri(base: response_url, relative: url) }
           .uniq
@@ -41,20 +41,31 @@ module Webmention
         @root_node ||= doc.css('.h-entry .e-content').first || doc.css('.h-entry').first || doc.css('body')
       end
 
-      def search_doc(attribute, selectors)
-        root_node.css(*selectors).map { |node| self.class.attribute_values_from(node, attribute).reject(&:empty?) }
+      def search_node(attribute, selectors)
+        NodeParser.nodes_from(root_node, selectors).map { |node| NodeParser.values_from(node, attribute) }.reject(&:empty?)
       end
 
-      class << self
-        # Derive attribute values from a single node
-        #
-        # @param node [Nokogiri::XML::Element]
-        # @param attribute [Symbol]
-        # @return [Array] the HTML attribute values
-        def attribute_values_from(node, attribute)
-          return Array(node[attribute]) unless attribute == :srcset
+      module NodeParser
+        class << self
+          # Search a node for matching elements
+          #
+          # @param node [Nokogiri::XML::Element]
+          # @param selectors [Array]
+          # @return [Nokogiri::XML::NodeSet]
+          def nodes_from(node, selectors)
+            node.css(*selectors)
+          end
 
-          node[attribute].split(',').map { |value| value.strip.match(/^\S+/).to_s }
+          # Derive attribute values from a single node
+          #
+          # @param node [Nokogiri::XML::Element]
+          # @param attribute [Symbol]
+          # @return [Array] the HTML attribute values
+          def values_from(node, attribute)
+            return Array(node[attribute]) unless attribute == :srcset
+
+            node[attribute].split(',').map { |value| value.strip.match(/^\S+/).to_s }
+          end
         end
       end
     end
