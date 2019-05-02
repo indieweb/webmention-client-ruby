@@ -1,11 +1,11 @@
 module Webmention
-  module Request
-    class << self
-      HTTP_HEADERS_OPTS = {
-        accept:     '*/*',
-        user_agent: 'Webmention Client (https://rubygems.org/gems/webmention)'
-      }.freeze
+  class HttpRequest
+    HTTP_HEADERS_OPTS = {
+      accept:     '*/*',
+      user_agent: 'Webmention Client (https://rubygems.org/gems/webmention)'
+    }.freeze
 
+    class << self
       def get(uri)
         perform_request(:get, uri)
       end

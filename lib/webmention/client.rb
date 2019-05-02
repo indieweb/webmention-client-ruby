@@ -1,10 +1,5 @@
 module Webmention
   class Client
-    HTTP_HEADERS_OPTS = {
-      accept:     '*/*',
-      user_agent: 'Webmention Client (https://rubygems.org/gems/webmention)'
-    }.freeze
-
     def initialize(source)
       raise ArgumentError, "source must be a String (given #{source.class.name})" unless source.is_a?(String)
 
@@ -28,7 +23,7 @@ module Webmention
 
       return unless endpoint
 
-      Request.post(Addressable::URI.parse(endpoint), source: @source, target: target)
+      HttpRequest.post(Addressable::URI.parse(endpoint), source: @source, target: target)
     rescue IndieWeb::Endpoints::IndieWebEndpointsError => exception
       raise Webmention.const_get(exception.class.name.split('::').last), exception
     end
@@ -40,7 +35,7 @@ module Webmention
     end
 
     def source_response
-      @source_response ||= Request.get(source_uri)
+      @source_response ||= HttpRequest.get(source_uri)
     end
 
     def source_uri
