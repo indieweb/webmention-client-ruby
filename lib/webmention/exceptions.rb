@@ -1,15 +1,15 @@
 module Webmention
-  class Error < StandardError; end
+  class WebmentionClientError < StandardError; end
 
-  class ArgumentError < Error; end
+  class ArgumentError < WebmentionClientError; end
 
-  class ConnectionError < Error; end
+  class ConnectionError < WebmentionClientError; end
 
-  class InvalidURIError < Error; end
+  class InvalidURIError < WebmentionClientError; end
 
-  class TimeoutError < Error; end
+  class TimeoutError < WebmentionClientError; end
 
-  class TooManyRedirectsError < Error; end
+  class TooManyRedirectsError < WebmentionClientError; end
 
-  class UnsupportedMimeTypeError < Error; end
+  class UnsupportedMimeTypeError < WebmentionClientError; end
 end

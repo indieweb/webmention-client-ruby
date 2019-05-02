@@ -27,7 +27,7 @@ If you're using [Bundler](https://bundler.io) to manage gem dependencies, add we
 ```ruby
 source 'https://rubygems.org'
 
-gem 'webmention', '~> 1.0'
+gem 'webmention'
 ```
 
 …and then run:
@@ -46,7 +46,7 @@ require 'webmention'
 source = 'https://source.example.com/post/100'  # A post on your website
 target = 'https://target.example.com/post/100'  # A post on someone else's website
 
-Webmention.send_mention(source, target) # returns HTTP::Response
+Webmention.send_mention(source, target) # => HTTP::Response
 ```
 
 To send webmentions to all URLs mentioned within a source URL's [h-entry](http://microformats.org/wiki/h-entry):
@@ -54,10 +54,10 @@ To send webmentions to all URLs mentioned within a source URL's [h-entry](http:/
 ```ruby
 require 'webmention'
 
-client = Webmention::Client.new('https://source.example.com/post/100')
+client = Webmention.client('https://source.example.com/post/100')
 
-client.mentioned_urls    # returns Array
-client.send_all_mentions # returns Array
+client.mentioned_urls    # => Array
+client.send_all_mentions # => Array
 ```
 
 This example will crawl `https://source.example.com/post/100`, parse its markup for the first h-entry, perform [endpoint discovery](https://www.w3.org/TR/webmention/#sender-discovers-receiver-webmention-endpoint) on mentioned URLs, and attempt to send webmentions to those URLs.
@@ -80,7 +80,7 @@ If no webmention endpoint is found for a mentioned URL, the `response` key's val
 
 ### Exception Handling
 
-There are several exceptions that may be raised by webmention-client-ruby's underlying dependencies. These errors are raised as subclasses of `Webmention::Client::Error` (which itself is a subclass of `StandardError`).
+There are several exceptions that may be raised by webmention-client-ruby's underlying dependencies. These errors are raised as subclasses of `WebmentionClientError` (which itself is a subclass of `StandardError`).
 
 From [sporkmonger/addressable](https://github.com/sporkmonger/addressable):
 
