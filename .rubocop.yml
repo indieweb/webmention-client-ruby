@@ -3,6 +3,7 @@ require:
 
 Layout/AlignHash:
   EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
 
 Metrics/BlockLength:
   Exclude:
