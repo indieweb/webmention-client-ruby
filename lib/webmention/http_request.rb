@@ -7,19 +7,19 @@ module Webmention
 
     class << self
       def get(uri)
-        perform_request(:get, uri)
+        request(:get, uri)
       end
 
       def post(uri, **options)
-        perform_request(:post, uri, form: options)
+        request(:post, uri, form: options)
       end
 
       private
 
-      def perform_request(method, uri, **options)
+      def request(method, uri, **options)
         raise ArgumentError, "uri must be an Addressable::URI (given #{uri.class.name})" unless uri.is_a?(Addressable::URI)
 
-        HTTP.follow.headers(HTTP_HEADERS_OPTS).timeout(connect: 10, read: 10).send(method, uri, options)
+        HTTP.follow.headers(HTTP_HEADERS_OPTS).timeout(connect: 10, read: 10).request(method, uri, options)
       rescue HTTP::ConnectionError,
              HTTP::TimeoutError,
              HTTP::Redirector::TooManyRedirectsError => exception
