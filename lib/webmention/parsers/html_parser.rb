@@ -33,7 +33,7 @@ module Webmention
         CSS_SELECTORS_MAP
           .each_with_object([]) { |(*args), array| array << search_node(*args) }
           .flatten
-          .map { |url| Absolutely.to_absolute_uri(base: response_url, relative: url) }
+          .map { |url| Absolutely.to_abs(base: response_url, relative: url) }
           .uniq
       end
 

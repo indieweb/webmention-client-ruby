@@ -29,7 +29,7 @@ module Webmention
       return unless endpoint
 
       Request.post(Addressable::URI.parse(endpoint), source: @source, target: target)
-    rescue IndieWeb::Endpoints::Error => exception
+    rescue IndieWeb::Endpoints::IndieWebEndpointsError => exception
       raise Webmention.const_get(exception.class.name.split('::').last), exception
     end
 

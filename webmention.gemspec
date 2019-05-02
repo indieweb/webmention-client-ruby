@@ -36,10 +36,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov-console', '~> 0.4.2'
   spec.add_development_dependency 'webmock', '~> 3.5'
 
-  spec.add_runtime_dependency 'absolutely', '~> 2.0'
+  spec.add_runtime_dependency 'absolutely', '~> 2.1'
   spec.add_runtime_dependency 'addressable', '~> 2.6'
   spec.add_runtime_dependency 'http', '~> 5.0.0.pre'
-  spec.add_runtime_dependency 'indieweb-endpoints', '~> 0.3.0'
+  spec.add_runtime_dependency 'indieweb-endpoints', '~> 0.4.0'
   spec.add_runtime_dependency 'nokogiri', '~> 1.10'
 end
 # rubocop:enable Metrics/BlockLength
