@@ -15,7 +15,13 @@ require 'webmention/parsers'
 require 'webmention/parsers/html_parser'
 
 module Webmention
-  def self.send_mention(source, target)
-    Client.new(source).send_mention(target)
+  class << self
+    def client(source)
+      Client.new(source)
+    end
+
+    def send_mention(source, target)
+      client(source).send_mention(target)
+    end
   end
 end
