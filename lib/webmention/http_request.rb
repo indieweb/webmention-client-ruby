@@ -1,9 +1,22 @@
 module Webmention
   class HttpRequest
-    HTTP_HEADERS_OPTS = {
-      accept:     '*/*',
-      user_agent: 'Webmention Client (https://rubygems.org/gems/webmention)'
+    # Defaults derived from Webmention specification examples
+    # https://www.w3.org/TR/webmention/#limits-on-get-requests
+    # rubocop:disable Layout/AlignHash
+    HTTP_CLIENT_OPTS = {
+      follow: {
+        max_hops: 20
+      },
+      headers: {
+        accept: '*/*',
+        user_agent: 'Webmention Client (https://rubygems.org/gems/webmention)'
+      },
+      timeout_options: {
+        connect_timeout: 5,
+        read_timeout: 5
+      }
     }.freeze
+    # rubocop:enable Layout/AlignHash
 
     class << self
       def get(uri)
@@ -17,9 +30,7 @@ module Webmention
       private
 
       def request(method, uri, **options)
-        raise ArgumentError, "uri must be an Addressable::URI (given #{uri.class.name})" unless uri.is_a?(Addressable::URI)
-
-        HTTP.follow.headers(HTTP_HEADERS_OPTS).timeout(connect: 10, read: 10).request(method, uri, options)
+        HTTP::Client.new(HTTP_CLIENT_OPTS).request(method, uri, options)
       rescue HTTP::ConnectionError,
              HTTP::TimeoutError,
              HTTP::Redirector::TooManyRedirectsError => exception
