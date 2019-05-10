@@ -11,7 +11,7 @@
 ## Key Features
 
 - Crawls a given URL for mentioned URLs.
-- Performs endpoint discovery on mentioned URLs.
+- Performs [endpoint discovery](https://www.w3.org/TR/webmention/#sender-discovers-receiver-webmention-endpoint) on mentioned URLs.
 - Sends webmentions to mentioned URLs.
 
 ## Getting Started
@@ -46,8 +46,14 @@ require 'webmention'
 source = 'https://source.example.com/post/100'  # A post on your website
 target = 'https://target.example.com/post/100'  # A post on someone else's website
 
-Webmention.send_mention(source, target) # => HTTP::Response
+Webmention.send_mention(source, target) # => #<HTTP::Response/1.1 200 OK {…}>
 ```
+
+If no Webmention endpoint is found for a given source URL, the `send_mention` method will return `nil`.
+
+**Note:** `HTTP::Response` objects may return a variety of status codes that will vary depending on the endpoint's capabilities and the success or failure of the request. See [the Webmention spec](https://www.w3.org/TR/webmention/) for more on status codes on their implications.
+
+### Sending multiple webmentions
 
 To send webmentions to all URLs mentioned within a source URL's [h-entry](http://microformats.org/wiki/h-entry):
 
@@ -57,26 +63,21 @@ require 'webmention'
 client = Webmention.client('https://source.example.com/post/100')
 
 client.mentioned_urls    # => Array
-client.send_all_mentions # => Array
+client.send_all_mentions # => Hash
 ```
 
-This example will crawl `https://source.example.com/post/100`, parse its markup for the first h-entry, perform [endpoint discovery](https://www.w3.org/TR/webmention/#sender-discovers-receiver-webmention-endpoint) on mentioned URLs, and attempt to send webmentions to those URLs.
+This example will crawl `https://source.example.com/post/100`, parse its markup for the first h-entry, perform endpoint discovery on mentioned URLs, and attempt to send webmentions to those URLs.
 
 **Note:** If no h-entry is found at the provided source URL, the `send_all_mentions` method will search the source URL's `<body>` for mentioned URLs.
 
-The `send_all_mentions` method returns an array of hashes for each mentioned URL. Each hash contains the keys `url` (a String) and `response` (an [`HTTP::Response` object](https://github.com/httprb/http/wiki/Response-Handling)):
+The `send_all_mentions` method returns a hash of mentioned URLs and the associated HTTP response (an [`HTTP::Response` object](https://github.com/httprb/http/wiki/Response-Handling)):
 
 ```ruby
-[
-  {
-    url: 'https://target.example.com/post/100',
-    response: #<HTTP::Response/1.1 200 OK {…}>
-  },
-  # etc. etc. etc.
-]
+{
+  'https://target.example.com/post/100' => #<HTTP::Response/1.1 200 OK {…}>,
+  'https://target.example.com/post/101' => #<HTTP::Response/1.1 200 OK {…}>
+}
 ```
-
-If no webmention endpoint is found for a mentioned URL, the `response` key's value will be `nil`.
 
 ### Exception Handling
 
