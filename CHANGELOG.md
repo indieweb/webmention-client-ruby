@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 / 2019-07-17
+
+- Update indieweb-endpoints (cfe6287) and rubocop (c2b7047)
+
 ## 1.0.0 / 2019-07-03
 
 ### Breaking Changes
