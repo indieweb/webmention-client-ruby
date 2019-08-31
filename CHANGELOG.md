@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2 / 2019-08-31
+
+- Update Addressable and WebMock gems (0b98981)
+- Update project development Ruby to 2.4.7 and update documentation (882d4d3)
+
 ## 1.0.1 / 2019-07-17
 
 - Update indieweb-endpoints (cfe6287) and rubocop (c2b7047)
