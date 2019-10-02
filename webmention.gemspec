@@ -25,13 +25,13 @@ Gem::Specification.new do |spec|
     'changelog_uri'   => "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md"
   }
 
-  spec.add_development_dependency 'minitest', '~> 5.11'
+  spec.add_development_dependency 'minitest', '~> 5.12'
   spec.add_development_dependency 'minitest-reporters', '~> 1.3'
-  spec.add_development_dependency 'rake', '~> 12.3'
+  spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'reek', '~> 5.4'
-  spec.add_development_dependency 'rubocop', '~> 0.74.0'
-  spec.add_development_dependency 'rubocop-performance', '~> 1.4'
-  spec.add_development_dependency 'simplecov', '~> 0.17.0'
+  spec.add_development_dependency 'rubocop', '~> 0.75.0'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.5'
+  spec.add_development_dependency 'simplecov', '~> 0.17.1'
   spec.add_development_dependency 'simplecov-console', '~> 0.5.0'
   spec.add_development_dependency 'webmock', '~> 3.7'
 
