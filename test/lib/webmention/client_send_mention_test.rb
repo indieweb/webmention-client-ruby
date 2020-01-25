@@ -12,7 +12,7 @@ describe Webmention::Client, :send_mention do
     end
 
     it 'raises a ConnectionError' do
-      -> { client.send_mention(target_url) }.must_raise(Webmention::ConnectionError)
+      _ { client.send_mention(target_url) }.must_raise(Webmention::ConnectionError)
     end
   end
 
@@ -22,7 +22,7 @@ describe Webmention::Client, :send_mention do
     end
 
     it 'raises a InvalidURIError' do
-      -> { client.send_mention(target_url) }.must_raise(Webmention::InvalidURIError)
+      _ { client.send_mention(target_url) }.must_raise(Webmention::InvalidURIError)
     end
   end
 
@@ -32,7 +32,7 @@ describe Webmention::Client, :send_mention do
     end
 
     it 'raises a TimeoutError' do
-      -> { client.send_mention(target_url) }.must_raise(Webmention::TimeoutError)
+      _ { client.send_mention(target_url) }.must_raise(Webmention::TimeoutError)
     end
   end
 
@@ -42,7 +42,7 @@ describe Webmention::Client, :send_mention do
     end
 
     it 'raises a TooManyRedirectsError' do
-      -> { client.send_mention(target_url) }.must_raise(Webmention::TooManyRedirectsError)
+      _ { client.send_mention(target_url) }.must_raise(Webmention::TooManyRedirectsError)
     end
   end
 end

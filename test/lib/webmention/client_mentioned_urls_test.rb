@@ -13,7 +13,7 @@ describe Webmention::Client, :mentioned_urls do
     end
 
     it 'raises a ConnectionError' do
-      -> { client.mentioned_urls }.must_raise(Webmention::ConnectionError)
+      _ { client.mentioned_urls }.must_raise(Webmention::ConnectionError)
     end
   end
 
@@ -23,7 +23,7 @@ describe Webmention::Client, :mentioned_urls do
     end
 
     it 'raises a TimeoutError' do
-      -> { client.mentioned_urls }.must_raise(Webmention::TimeoutError)
+      _ { client.mentioned_urls }.must_raise(Webmention::TimeoutError)
     end
   end
 
@@ -33,7 +33,7 @@ describe Webmention::Client, :mentioned_urls do
     end
 
     it 'raises a TooManyRedirectsError' do
-      -> { client.mentioned_urls }.must_raise(Webmention::TooManyRedirectsError)
+      _ { client.mentioned_urls }.must_raise(Webmention::TooManyRedirectsError)
     end
   end
 
@@ -45,9 +45,9 @@ describe Webmention::Client, :mentioned_urls do
     end
 
     it 'raises an UnsupportedMimeTypeError' do
-      error = -> { client.mentioned_urls }.must_raise(Webmention::UnsupportedMimeTypeError)
+      error = _ { client.mentioned_urls }.must_raise(Webmention::UnsupportedMimeTypeError)
 
-      error.message.must_match('Unsupported MIME Type: unsupported/type')
+      _(error.message).must_match('Unsupported MIME Type: unsupported/type')
     end
   end
 
@@ -68,7 +68,7 @@ describe Webmention::Client, :mentioned_urls do
         'https://target.example.com/image-2x.jpg'
       ]
 
-      client.mentioned_urls.must_equal(mentioned_urls)
+      _(client.mentioned_urls).must_equal(mentioned_urls)
     end
   end
 end

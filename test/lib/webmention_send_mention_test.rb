@@ -13,7 +13,7 @@ describe Webmention, :send_mention do
     end
 
     it 'returns nil' do
-      Webmention.send_mention(source_url, target_url).must_be_nil
+      _(Webmention.send_mention(source_url, target_url)).must_be_nil
     end
   end
 
@@ -31,7 +31,7 @@ describe Webmention, :send_mention do
     end
 
     it 'returns an HTTP::Response' do
-      Webmention.send_mention(source_url, target_url).must_be_instance_of(HTTP::Response)
+      _(Webmention.send_mention(source_url, target_url)).must_be_instance_of(HTTP::Response)
     end
   end
 end

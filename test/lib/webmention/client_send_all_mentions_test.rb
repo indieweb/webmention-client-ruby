@@ -19,7 +19,7 @@ describe Webmention::Client, :send_all_mentions do
     end
 
     it 'returns a Hash' do
-      client.send_all_mentions.must_equal({})
+      _(client.send_all_mentions).must_equal({})
     end
   end
 
@@ -47,7 +47,7 @@ describe Webmention::Client, :send_all_mentions do
           "#{source_url}/post/1" => true
         }
 
-        client.send_all_mentions.must_equal(responses)
+        _(client.send_all_mentions).must_equal(responses)
       end
     end
   end
