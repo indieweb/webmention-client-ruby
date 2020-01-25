@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0 / unreleased
+
+- Add Ruby 2.7 to list of supported Ruby versions (c67ed14)
+- Update absolutely, addressable, http, and indieweb-endpoints version constaints (986d326)
+- Update development dependencies (74ac982)
+- Update project Ruby version to 2.4.9 and update documentation (fd61ddf)
+
 ## 1.0.2 / 2019-08-31
 
 - Update Addressable and WebMock gems (0b98981)
