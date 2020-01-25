@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0 / unreleased
+## 2.0.0 / 2020-01-25
 
 - Add Ruby 2.7 to list of supported Ruby versions (c67ed14)
 - Update absolutely, addressable, http, and indieweb-endpoints version constaints (986d326 and 6ba054f)
