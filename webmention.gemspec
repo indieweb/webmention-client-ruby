@@ -29,9 +29,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest-reporters', '~> 1.4'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'reek', '~> 5.6'
-  spec.add_development_dependency 'rubocop', '~> 0.79.0'
+  spec.add_development_dependency 'rubocop', '~> 0.80.0'
   spec.add_development_dependency 'rubocop-performance', '~> 1.5'
-  spec.add_development_dependency 'simplecov', '~> 0.18.1'
+  spec.add_development_dependency 'simplecov', '~> 0.18.2'
   spec.add_development_dependency 'simplecov-console', '~> 0.6.0'
   spec.add_development_dependency 'webmock', '~> 3.8'
 
