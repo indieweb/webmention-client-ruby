@@ -36,7 +36,7 @@ module Webmention
       end
 
       def root_node
-        @root_node ||= doc.css('.h-entry .e-content').first || doc.css('.h-entry').first || doc.css('body')
+        @root_node ||= doc.at_css('.h-entry .e-content') || doc.at_css('.h-entry') || doc.css('body')
       end
 
       def search_node(attribute, selectors)
