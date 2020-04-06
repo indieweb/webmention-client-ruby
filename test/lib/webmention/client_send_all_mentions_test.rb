@@ -40,7 +40,7 @@ describe Webmention::Client, :send_all_mentions do
     end
 
     it 'returns a Hash' do
-      Webmention::HttpRequest.stub :post, true do
+      Webmention::Services::HttpRequestService.stub :post, true do
         responses = {
           "#{target_url}/post/1" => true,
           "#{target_url}/post/2" => true,

@@ -8,11 +8,12 @@ require 'webmention/version'
 require 'webmention/exceptions'
 
 require 'webmention/client'
-require 'webmention/http_request'
 require 'webmention/registerable'
 
 require 'webmention/parsers'
 require 'webmention/parsers/html_parser'
+
+require 'webmention/services/http_request_service'
 
 module Webmention
   class << self

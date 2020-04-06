@@ -23,7 +23,7 @@ module Webmention
 
       return unless endpoint
 
-      HttpRequest.post(Addressable::URI.parse(endpoint), source: @source, target: target)
+      Services::HttpRequestService.post(Addressable::URI.parse(endpoint), source: @source, target: target)
     rescue IndieWeb::Endpoints::IndieWebEndpointsError => exception
       raise Webmention.const_get(exception.class.name.split('::').last), exception
     end
@@ -35,7 +35,7 @@ module Webmention
     end
 
     def source_response
-      @source_response ||= HttpRequest.get(source_uri)
+      @source_response ||= Services::HttpRequestService.get(source_uri)
     end
 
     def source_uri
