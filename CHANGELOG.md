@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0 / 2020-04-06
+
+- Refactor `BaseParser` class and remove `Registerable` module (b706229)
+- Refactor `HttpRequest` and `NodeParser` classes into Service Objects (f29c073 and 7456bf1)
+
 ## 2.0.0 / 2020-01-25
 
 - Add Ruby 2.7 to list of supported Ruby versions (c67ed14)
