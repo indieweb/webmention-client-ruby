@@ -1,9 +1,7 @@
 module Webmention
   module Parsers
     class HtmlParser < BaseParser
-      def self.mime_types
-        ['text/html']
-      end
+      @mime_types = ['text/html']
 
       Parsers.register(self)
 

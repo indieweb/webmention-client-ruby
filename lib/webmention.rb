@@ -8,9 +8,9 @@ require 'webmention/version'
 require 'webmention/exceptions'
 
 require 'webmention/client'
-require 'webmention/registerable'
 
 require 'webmention/parsers'
+require 'webmention/parsers/base_parser'
 require 'webmention/parsers/html_parser'
 
 require 'webmention/services/http_request_service'
