@@ -14,6 +14,7 @@ require 'webmention/parsers/base_parser'
 require 'webmention/parsers/html_parser'
 
 require 'webmention/services/http_request_service'
+require 'webmention/services/node_parser_service'
 
 module Webmention
   class << self
