@@ -18,12 +18,12 @@ require 'webmention/services/node_parser_service'
 
 module Webmention
   class << self
-    def client(source)
-      Client.new(source)
+    def client(source, **kwargs)
+      Client.new(source, **kwargs)
     end
 
-    def send_mention(source, target)
-      client(source).send_mention(target)
+    def send_mention(source, target, **kwargs)
+      client(source, **kwargs).send_mention(target)
     end
   end
 end

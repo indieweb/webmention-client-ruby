@@ -4,6 +4,7 @@ describe Webmention, :send_mention do
   let(:source_url) { 'https://source.example.com' }
   let(:target_url) { 'https://target.example.com' }
   let(:target_endpoint_url) { "#{target_url}/webmention" }
+  let(:logger) { NullLogger.new }
 
   describe 'when no endpoint found' do
     before do
@@ -13,7 +14,7 @@ describe Webmention, :send_mention do
     end
 
     it 'returns nil' do
-      _(Webmention.send_mention(source_url, target_url)).must_be_nil
+      _(Webmention.send_mention(source_url, target_url, logger: logger)).must_be_nil
     end
   end
 
@@ -31,7 +32,7 @@ describe Webmention, :send_mention do
     end
 
     it 'returns an HTTP::Response' do
-      _(Webmention.send_mention(source_url, target_url)).must_be_instance_of(HTTP::Response)
+      _(Webmention.send_mention(source_url, target_url, logger: logger)).must_be_instance_of(HTTP::Response)
     end
   end
 end

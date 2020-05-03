@@ -1,9 +1,11 @@
+require 'logger'
 module Webmention
   class Client
-    def initialize(source)
+    def initialize(source, logger: Logger.new(STDOUT))
       raise ArgumentError, "source must be a String (given #{source.class.name})" unless source.is_a?(String)
 
       @source = source
+      @logger = logger
 
       raise ArgumentError, 'source must be an absolute URL (e.g. https://example.com)' unless source_uri.absolute?
     end
@@ -19,11 +21,15 @@ module Webmention
     end
 
     def send_mention(target)
+      @logger.debug(%(Attempting to send mention from "#{@source}" to "#{target}"))
       endpoint = IndieWeb::Endpoints.get(target).webmention
 
-      return unless endpoint
-
-      Services::HttpRequestService.post(Addressable::URI.parse(endpoint), source: @source, target: target)
+      if endpoint
+        @logger.debug(%(\tusing endpoint "#{endpoint}"))
+        Services::HttpRequestService.post(Addressable::URI.parse(endpoint), source: @source, target: target)
+      else
+        @logger.debug(%(\tbut could not find webmention endpoint))
+      end
     rescue IndieWeb::Endpoints::IndieWebEndpointsError => exception
       raise Webmention.const_get(exception.class.name.split('::').last), exception
     end

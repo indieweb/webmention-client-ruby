@@ -3,12 +3,13 @@ require 'test_helper'
 describe Webmention::Client, :send_all_mentions do
   let(:source_url) { 'https://source.example.com' }
   let(:target_url) { 'https://target.example.com' }
+  let(:logger) { NullLogger.new }
 
   let :http_response_headers do
     { 'Content-Type': 'text/html' }
   end
 
-  let(:client) { Webmention::Client.new(source_url) }
+  let(:client) { Webmention::Client.new(source_url, logger: logger) }
 
   describe 'when no mentioned URLs found' do
     before do

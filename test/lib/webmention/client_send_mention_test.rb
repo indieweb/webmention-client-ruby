@@ -3,8 +3,9 @@ require 'test_helper'
 describe Webmention::Client, :send_mention do
   let(:source_url) { 'https://source.example.com' }
   let(:target_url) { 'https://target.example.com' }
+  let(:logger) { NullLogger.new }
 
-  let(:client) { Webmention::Client.new(source_url) }
+  let(:client) { Webmention::Client.new(source_url, logger: logger) }
 
   describe 'when rescuing an IndieWeb::Endpoints::ConnectionError' do
     before do

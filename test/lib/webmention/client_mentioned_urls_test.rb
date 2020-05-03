@@ -2,8 +2,9 @@ require 'test_helper'
 
 describe Webmention::Client, :mentioned_urls do
   let(:url) { 'https://example.com' }
+  let(:logger) { NullLogger.new }
 
-  let(:client) { Webmention::Client.new(url) }
+  let(:client) { Webmention::Client.new(url, logger: logger) }
 
   let(:stubbed_request) { stub_request(:get, url) }
 
