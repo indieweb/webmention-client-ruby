@@ -24,15 +24,18 @@ module Webmention
         @doc ||= Nokogiri::HTML(response_body)
       end
 
+      HTTP_URLS_REGEXP = %r{^https?://}.freeze
+
       # Parse an HTML string for URLs
       #
-      # @return [Array] the URLs
+      # @return [Array] the URLs that have the HTTP or HTTPS URI scheme
       def parse_response_body
         CSS_SELECTORS_MAP
           .each_with_object([]) { |(*args), array| array << search_node(*args) }
           .flatten
           .map { |url| Absolutely.to_abs(base: response_url, relative: url) }
           .uniq
+          .select { |url| HTTP_URLS_REGEXP.match?(url) }
       end
 
       def root_node
