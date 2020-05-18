@@ -1,16 +1,17 @@
 require:
   - rubocop-performance
 
+AllCops:
+  NewCops: enable
+
 Layout/HashAlignment:
   EnforcedColonStyle: table
-  EnforcedHashRocketStyle: table
 
 Layout/LineLength:
   Enabled: false
 
 Metrics/BlockLength:
   Exclude:
-    - webmention.gemspec
     - test/**/*
 
 Naming/RescuedExceptionsVariableName:
@@ -21,10 +22,6 @@ Style/Documentation:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
-
-Style/SingleLineMethods:
-  Exclude:
-    - test/**/*
 
 Style/SymbolArray:
   Enabled: false
