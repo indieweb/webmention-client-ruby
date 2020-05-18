@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.0 / 2020-05-18
+
+- Update absolutely and indieweb-endpoints gems (350d2ed)
+- Add pry-byebug and `bin/console` script (d2c5e03)
+- Move development dependencies to Gemfile per current Bundler conventions (3a2fc21)
+- Update development Ruby version to 2.4.10 (4c7d1f7)
+
 ## 2.1.0 / 2020-04-06
 
 - Refactor `BaseParser` class and remove `Registerable` module (b706229)
