@@ -1,6 +1,6 @@
 # Changelog
 
-## unreleased
+## v3.0.0 / 2020-05-19
 
 - Reject "internal" URLs when sending webmentions (#24) (ccc82c8)
 - Select only HTTP/HTTPS URLs when sending webmentions (#22) (39e5852)
