@@ -1,5 +1,10 @@
 # Changelog
 
+## unreleased
+
+- Reject "internal" URLs when sending webmentions (#24) (ccc82c8)
+- Select only HTTP/HTTPS URLs when sending webmentions (#22) (39e5852)
+
 ## 2.2.0 / 2020-05-18
 
 - Update absolutely and indieweb-endpoints gems (350d2ed)
