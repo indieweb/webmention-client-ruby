@@ -6,6 +6,7 @@ AllCops:
 
 Layout/HashAlignment:
   EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
 
 Layout/LineLength:
   Enabled: false
