@@ -5,17 +5,22 @@ module Webmention
 
       Parsers.register(self)
 
-      HTML_ATTRIBUTE_MAP = {
-        cite:   %w[blockquote del ins q],
-        data:   %w[object],
-        href:   %w[a area],
-        poster: %w[video],
-        src:    %w[audio embed img source track video],
-        srcset: %w[img source]
+      HTML_ATTRIBUTES_MAP = {
+        'cite'   => %w[blockquote del ins q],
+        'data'   => %w[object],
+        'href'   => %w[a area],
+        'poster' => %w[video],
+        'src'    => %w[audio embed img source track video],
+        'srcset' => %w[img source]
       }.freeze
 
-      CSS_SELECTORS_MAP = HTML_ATTRIBUTE_MAP.each_with_object({}) do |(attribute, elements), hash|
-        hash[attribute] = elements.map { |element| "#{element}[#{attribute}]" }
+      CSS_SELECTORS_ARRAY = HTML_ATTRIBUTES_MAP.flat_map { |attribute, names| names.map { |name| "#{name}[#{attribute}]" } }.freeze
+
+      # Parse an HTML string for URLs
+      #
+      # @return [Array<String>] Unique external URLs whose scheme matches http/https
+      def results
+        @results ||= resolved_urls.uniq.select { |url| url.match?(%r{https?://}) }.reject { |url| url.match(/^#{response_url}(?:#.*)?$/) }
       end
 
       private
@@ -24,26 +29,36 @@ module Webmention
         @doc ||= Nokogiri::HTML(response_body)
       end
 
-      HTTP_URLS_REGEXP = %r{^https?://}.freeze
-
-      # Parse an HTML string for URLs
-      #
-      # @return [Array] the URLs that have the HTTP or HTTPS URI scheme
-      def parse_response_body
-        CSS_SELECTORS_MAP
-          .each_with_object([]) { |(*args), array| array << search_node(*args) }
-          .flatten
-          .map { |url| Absolutely.to_abs(base: response_url, relative: url) }
-          .uniq
-          .select { |url| HTTP_URLS_REGEXP.match?(url) }
+      def resolved_urls
+        UrlAttributesParser.parse(*url_attributes).map { |url| Absolutely.to_abs(base: response_url, relative: url) }
       end
 
       def root_node
-        @root_node ||= doc.at_css('.h-entry .e-content') || doc.at_css('.h-entry') || doc.css('body')
+        doc.at_css('.h-entry .e-content', '.h-entry') || doc.css('body')
       end
 
-      def search_node(attribute, selectors)
-        Services::NodeParserService.nodes_from(root_node, selectors).map { |node| Services::NodeParserService.values_from(node, attribute) }.reject(&:empty?)
+      def url_attributes
+        url_nodes.flat_map(&:attribute_nodes).select { |attribute| HTML_ATTRIBUTES_MAP.key?(attribute.name) }
+      end
+
+      def url_nodes
+        root_node.css(*CSS_SELECTORS_ARRAY)
+      end
+
+      module UrlAttributesParser
+        # @param attributes [Array<Nokogiri::XML::Attr>]
+        # @return [Array<String>]
+        def self.parse(*attributes)
+          attributes.flat_map { |attribute| value_from(attribute) }
+        end
+
+        # @param attribute [Nokogiri::XML::Attr]
+        # @return [String, Array<String>]
+        def self.value_from(attribute)
+          return attribute.value unless attribute.name == 'srcset'
+
+          attribute.value.split(',').map { |value| value.strip.match(/^\S+/).to_s }
+        end
       end
     end
   end

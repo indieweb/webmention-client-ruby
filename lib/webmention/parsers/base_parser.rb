@@ -13,10 +13,6 @@ module Webmention
         raise UnsupportedMimeTypeError, "Unsupported MIME Type: #{response.mime_type}" unless self.class.mime_types.include?(response.mime_type)
       end
 
-      def results
-        @results ||= parse_response_body
-      end
-
       private
 
       def response_body
