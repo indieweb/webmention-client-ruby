@@ -1,7 +1,7 @@
 require 'test_helper'
 
 describe Webmention::Client, :mentioned_urls do
-  let(:url) { 'https://example.com' }
+  let(:url) { 'https://source.example.com' }
 
   let(:client) { Webmention::Client.new(url) }
 

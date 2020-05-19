@@ -12,7 +12,7 @@ module TestFixtures
           <p><a href="https://target.example.com/post/1">Link to Target 1</a></p>
           <p><a href="https://target.example.com/post/2">Link to Target 2</a></p>
           <p><a href="https://target.example.com/post/2">Duplicate Link to Target 2</a></p>
-          <p><img src="https://target.example.com/image.jpg" srcset="https://target.example.com/image-1x.jpg, https://target.example.com/image-2x.jpg 2x"></p>
+          <p><img alt="Sample Image" src="https://target.example.com/image.jpg" srcset="https://target.example.com/image-1x.jpg, https://target.example.com/image-2x.jpg 2x"></p>
           <p><a href="https://source.example.com">Absolute Link to Self</a></p>
           <p><a href="mailto:email@example.com">Invalid Link</a></p>
         </main>
