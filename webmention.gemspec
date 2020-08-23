@@ -25,6 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'absolutely', '~> 4.0'
   spec.add_runtime_dependency 'addressable', '~> 2.7'
   spec.add_runtime_dependency 'http', '~> 4.4'
-  spec.add_runtime_dependency 'indieweb-endpoints', '~> 3.0'
+  spec.add_runtime_dependency 'indieweb-endpoints', '~> 4.0'
   spec.add_runtime_dependency 'nokogiri', '~> 1.10'
 end

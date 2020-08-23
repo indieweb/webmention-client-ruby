@@ -36,7 +36,7 @@ module Webmention
     # @return [HTTP::Response, nil]
     # @raise [Webmention::ArgumentError, Webmention::ConnectionError, Webmention::InvalidURIError, Webmention::TimeoutError, Webmention::TooManyRedirectsError]
     def send_mention(target)
-      endpoint = IndieWeb::Endpoints.get(target).webmention
+      endpoint = IndieWeb::Endpoints.get(target)[:webmention]
 
       return unless endpoint
 
