@@ -1,7 +1,7 @@
 require_relative 'lib/webmention/version'
 
 Gem::Specification.new do |spec|
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.4', '< 2.8')
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.5', '< 2.8')
 
   spec.name          = 'webmention'
   spec.version       = Webmention::VERSION

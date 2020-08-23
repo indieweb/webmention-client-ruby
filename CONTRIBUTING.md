@@ -8,9 +8,9 @@ There are a couple ways you can help improve webmention-client-ruby:
 
 ## Getting Started
 
-webmention-client-ruby is developed using Ruby 2.4.10 and is additionally tested against Ruby 2.5, 2.6, and 2.7 using [Travis CI](https://travis-ci.org/indieweb/webmention-client-ruby).
+webmention-client-ruby is developed using Ruby 2.5.8 and is additionally tested against Ruby 2.6 and 2.7 using [Travis CI](https://travis-ci.org/indieweb/webmention-client-ruby).
 
-Before making changes to webmention-client-ruby, you'll want to install Ruby 2.4.10. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm). Once you've installed Ruby 2.4.10 using your method of choice, install the project's gems by running:
+Before making changes to webmention-client-ruby, you'll want to install Ruby 2.5.8. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm). Once you've installed Ruby 2.5.8 using your method of choice, install the project's gems by running:
 
 ```sh
 bundle install
