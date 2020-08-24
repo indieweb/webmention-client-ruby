@@ -1,5 +1,11 @@
 # Changelog
 
+## v4.0.0 / 2020-08-23
+
+- **Breaking change:** Update minimum supported Ruby version to 2.5 (b2bc62f)
+- Update indieweb-endpoints to 4.0 (e61588f)
+- Update project Ruby version to 2.5.8 (2a626a6)
+
 ## v3.0.0 / 2020-05-19
 
 - Reject "internal" URLs when sending webmentions (#24) (ccc82c8)

@@ -1,3 +1,3 @@
 module Webmention
-  VERSION = '3.0.0'.freeze
+  VERSION = '4.0.0'.freeze
 end
