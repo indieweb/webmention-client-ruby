@@ -1,5 +1,9 @@
 # Changelog
 
+## v5.0.0 / 2020-12-13
+
+- Update absolutely and indieweb-endpoints gems to v5.0 (89f4ea8)
+
 ## v4.0.0 / 2020-08-23
 
 - **Breaking change:** Update minimum supported Ruby version to 2.5 (b2bc62f)
