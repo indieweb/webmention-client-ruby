@@ -16,9 +16,9 @@
 
 ## Getting Started
 
-Before installing and using webmention-client-ruby, you'll want to have [Ruby](https://www.ruby-lang.org) 2.5 (or newer) installed. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm).
+Before installing and using webmention-client-ruby, you'll want to have [Ruby](https://www.ruby-lang.org) 2.6 (or newer) installed. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm).
 
-webmention-client-ruby is developed using Ruby 2.5.8 and is additionally tested against Ruby 2.6 and 2.7 using [Travis CI](https://travis-ci.org/indieweb/webmention-client-ruby).
+webmention-client-ruby is developed using Ruby 2.6.9 and is additionally tested against Ruby 2.7, 3.0, and 3.1 using [Travis CI](https://travis-ci.org/indieweb/webmention-client-ruby).
 
 ## Installation
 
