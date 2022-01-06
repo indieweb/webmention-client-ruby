@@ -4,7 +4,7 @@
 
 [![Gem](https://img.shields.io/gem/v/webmention.svg?logo=rubygems&style=for-the-badge)](https://rubygems.org/gems/webmention)
 [![Downloads](https://img.shields.io/gem/dt/webmention.svg?logo=rubygems&style=for-the-badge)](https://rubygems.org/gems/webmention)
-[![Build](https://img.shields.io/travis/indieweb/webmention-client-ruby/master.svg?logo=travis&style=for-the-badge)](https://travis-ci.org/indieweb/webmention-client-ruby)
+[![Build](https://img.shields.io/travis/indieweb/webmention-client-ruby/main.svg?logo=travis&style=for-the-badge)](https://travis-ci.org/indieweb/webmention-client-ruby)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/indieweb/webmention-client-ruby.svg?logo=code-climate&style=for-the-badge)](https://codeclimate.com/github/indieweb/webmention-client-ruby)
 [![Coverage](https://img.shields.io/codeclimate/c/indieweb/webmention-client-ruby.svg?logo=code-climate&style=for-the-badge)](https://codeclimate.com/github/indieweb/webmention-client-ruby/code)
 
@@ -97,7 +97,7 @@ webmention-client-ruby will also raise a `Webmention::Client::UnsupportedMimeTyp
 
 ## Contributing
 
-Interested in helping improve webmention-client-ruby? Awesome! Your help is greatly appreciated. See [CONTRIBUTING.md](https://github.com/indieweb/webmention-client-ruby/blob/master/CONTRIBUTING.md) for details.
+Interested in helping improve webmention-client-ruby? Awesome! Your help is greatly appreciated. See [CONTRIBUTING.md](https://github.com/indieweb/webmention-client-ruby/blob/main/CONTRIBUTING.md) for details.
 
 ## Acknowledgments
 
@@ -107,4 +107,4 @@ To learn more about Webmention, see [indieweb.org/Webmention](https://indieweb.o
 
 ## License
 
-webmention-client-ruby is freely available under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html). See [LICENSE](https://github.com/indieweb/webmention-client-ruby/blob/master/LICENSE) for more details.
+webmention-client-ruby is freely available under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html). See [LICENSE](https://github.com/indieweb/webmention-client-ruby/blob/main/LICENSE) for more details.
