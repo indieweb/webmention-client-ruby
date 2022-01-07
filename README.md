@@ -85,13 +85,13 @@ There are several exceptions that may be raised by webmention-client-ruby's unde
 
 From [sporkmonger/addressable](https://github.com/sporkmonger/addressable):
 
-- `Webmention::Client::InvalidURIError`
+- `Webmention::InvalidURIError`
 
 From [httprb/http](https://github.com/httprb/http):
 
-- `Webmention::Client::HttpError`
+- `Webmention::HttpError`
 
-webmention-client-ruby will also raise a `Webmention::Client::UnsupportedMimeTypeError` when encountering an `HTTP::Response` instance with an unsupported MIME type.
+webmention-client-ruby will also raise a `Webmention::UnsupportedMimeTypeError` when encountering an `HTTP::Response` instance with an unsupported MIME type.
 
 ## Contributing
 
