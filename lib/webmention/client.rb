@@ -43,8 +43,8 @@ module Webmention
       return unless endpoint
 
       Services::HttpRequestService.post(Addressable::URI.parse(endpoint), source: @source, target: target)
-    rescue IndieWeb::Endpoints::Error => exception
-      raise Webmention.const_get(exception.class.name.split('::').last), exception
+    rescue IndieWeb::Endpoints::Error => e
+      raise Webmention.const_get(e.class.name.split('::').last), e
     end
 
     private
@@ -59,8 +59,8 @@ module Webmention
 
     def source_uri
       @source_uri ||= Addressable::URI.parse(@source)
-    rescue Addressable::URI::InvalidURIError => exception
-      raise InvalidURIError, exception
+    rescue Addressable::URI::InvalidURIError => e
+      raise InvalidURIError, e
     end
   end
 end

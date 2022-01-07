@@ -36,8 +36,8 @@ module Webmention
 
         def request(method, uri, **options)
           client.request(method, uri, options)
-        rescue HTTP::Error => exception
-          raise HttpError, exception
+        rescue HTTP::Error => e
+          raise HttpError, e
         end
       end
     end
