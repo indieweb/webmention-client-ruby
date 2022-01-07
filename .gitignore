@@ -32,3 +32,6 @@ Gemfile.lock
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+
+# Ignore cached RuboCop configuration files
+/.rubocop-*

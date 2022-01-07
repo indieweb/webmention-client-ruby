@@ -1,31 +1,18 @@
+inherit_from:
+  - https://raw.githubusercontent.com/jgarber623/rubocop-configs/main/.rubocop.yml
+
 require:
   - rubocop-minitest
   - rubocop-packaging
   - rubocop-performance
   - rubocop-rake
 
-AllCops:
-  NewCops: enable
+# Identifies places where inefficient `readlines` method can be replaced by
+# `each_line` to avoid fully loading file content into memory.
+Performance/IoReadlines:
+  Enabled: true
 
-Layout/HashAlignment:
-  EnforcedColonStyle: table
-  EnforcedHashRocketStyle: table
-
-Layout/LineLength:
-  Enabled: false
-
-Metrics/BlockLength:
-  Exclude:
-    - test/**/*
-
-Naming/RescuedExceptionsVariableName:
-  PreferredName: exception
-
-Style/Documentation:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/SymbolArray:
-  Enabled: false
+# Identifies places where `select.map` can be replaced by `filter_map`.
+# Requires Ruby 2.7
+Performance/SelectMap:
+  Enabled: true
