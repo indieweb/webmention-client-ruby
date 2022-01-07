@@ -7,6 +7,15 @@ require:
   - rubocop-performance
   - rubocop-rake
 
+# Checks if the length of a block exceeds some maximum value.
+Metrics/BlockLength:
+  Exclude:
+    - test/**/*.rb
+
+# Checks if test cases contain any assertion calls.
+Minitest/NoAssertions:
+  Enabled: true
+
 # Identifies places where inefficient `readlines` method can be replaced by
 # `each_line` to avoid fully loading file content into memory.
 Performance/IoReadlines:
