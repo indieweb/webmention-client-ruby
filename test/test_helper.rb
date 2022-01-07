@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Require SimpleCov first!
 require 'simplecov'
 

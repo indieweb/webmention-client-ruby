@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Webmention
   module Parsers
     def self.register(klass)

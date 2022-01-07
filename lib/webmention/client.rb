@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Webmention
   class Client
     # Create a new Webmention::Client

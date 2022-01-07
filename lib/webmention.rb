@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'absolutely'
 require 'addressable/uri'
 require 'http'

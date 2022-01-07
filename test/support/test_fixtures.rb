@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TestFixtures
   SAMPLE_POST_HTML = '
     <html>
