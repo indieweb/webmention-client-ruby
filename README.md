@@ -81,7 +81,7 @@ The `send_all_mentions` method returns a hash of mentioned URLs and the associat
 
 ### Exception Handling
 
-There are several exceptions that may be raised by webmention-client-ruby's underlying dependencies. These errors are raised as subclasses of `WebmentionClientError` (which itself is a subclass of `StandardError`).
+There are several exceptions that may be raised by webmention-client-ruby's underlying dependencies. These errors are raised as subclasses of `Webmention::Error` (which itself is a subclass of `StandardError`).
 
 From [sporkmonger/addressable](https://github.com/sporkmonger/addressable):
 
@@ -89,9 +89,7 @@ From [sporkmonger/addressable](https://github.com/sporkmonger/addressable):
 
 From [httprb/http](https://github.com/httprb/http):
 
-- `Webmention::Client::ConnectionError`
-- `Webmention::Client::TimeoutError`
-- `Webmention::Client::TooManyRedirectsError`
+- `Webmention::Client::HttpError`
 
 webmention-client-ruby will also raise a `Webmention::Client::UnsupportedMimeTypeError` when encountering an `HTTP::Response` instance with an unsupported MIME type.
 
