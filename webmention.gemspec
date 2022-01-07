@@ -22,8 +22,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.metadata = {
-    'bug_tracker_uri' => "#{spec.homepage}/issues",
-    'changelog_uri' => "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md",
+    'bug_tracker_uri'       => "#{spec.homepage}/issues",
+    'changelog_uri'         => "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md",
     'rubygems_mfa_required' => 'true'
   }
 

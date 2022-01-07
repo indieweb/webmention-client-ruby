@@ -8,11 +8,15 @@ module Webmention
       end
 
       def initialize(response)
-        raise ArgumentError, "response must be an HTTP::Response (given #{response.class.name})" unless response.is_a?(HTTP::Response)
+        unless response.is_a?(HTTP::Response)
+          raise ArgumentError, "response must be an HTTP::Response (given #{response.class.name})"
+        end
 
         @response = response
 
-        raise UnsupportedMimeTypeError, "Unsupported MIME Type: #{response.mime_type}" unless self.class.mime_types.include?(response.mime_type)
+        return if self.class.mime_types.include?(response.mime_type)
+
+        raise UnsupportedMimeTypeError, "Unsupported MIME Type: #{response.mime_type}"
       end
 
       private

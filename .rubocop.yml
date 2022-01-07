@@ -7,6 +7,12 @@ require:
   - rubocop-performance
   - rubocop-rake
 
+# Checks that the keys, separators, and values of a multi-line hash literal are
+# aligned according to configuration.
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+
 # Checks if the length of a block exceeds some maximum value.
 Metrics/BlockLength:
   Exclude:

@@ -36,7 +36,7 @@ module Webmention
     #
     # @param target [String] An absolute URL representing the target document
     # @return [HTTP::Response, nil]
-    # @raise [Webmention::ArgumentError, Webmention::ConnectionError, Webmention::InvalidURIError, Webmention::TimeoutError, Webmention::TooManyRedirectsError]
+    # @raise [Webmention::ArgumentError, Webmention::HttpError, Webmention::InvalidURIError]
     def send_mention(target)
       endpoint = IndieWeb::Endpoints.get(target)[:webmention]
 
