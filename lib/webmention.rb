@@ -6,16 +6,16 @@ require 'http'
 require 'indieweb/endpoints'
 require 'nokogiri'
 
-require 'webmention/version'
-require 'webmention/exceptions'
+require_relative 'webmention/version'
+require_relative 'webmention/exceptions'
 
-require 'webmention/client'
+require_relative 'webmention/client'
 
-require 'webmention/parsers'
-require 'webmention/parsers/base_parser'
-require 'webmention/parsers/html_parser'
+require_relative 'webmention/parsers'
+require_relative 'webmention/parsers/base_parser'
+require_relative 'webmention/parsers/html_parser'
 
-require 'webmention/services/http_request_service'
+require_relative 'webmention/services/http_request_service'
 
 module Webmention
   # Create a new Webmention::Client
