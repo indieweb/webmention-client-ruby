@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 module Webmention
-  class WebmentionClientError < StandardError; end
+  class Error < StandardError; end
 
-  class ArgumentError < WebmentionClientError; end
+  class ArgumentError < Error; end
 
-  class ConnectionError < WebmentionClientError; end
+  class HttpError < Error; end
 
-  class InvalidURIError < WebmentionClientError; end
+  class InvalidURIError < Error; end
 
-  class TimeoutError < WebmentionClientError; end
-
-  class TooManyRedirectsError < WebmentionClientError; end
-
-  class UnsupportedMimeTypeError < WebmentionClientError; end
+  class UnsupportedMimeTypeError < Error; end
 end

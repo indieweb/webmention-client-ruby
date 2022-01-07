@@ -9,33 +9,13 @@ describe Webmention::Client, :mentioned_urls do
 
   let(:stubbed_request) { stub_request(:get, url) }
 
-  describe 'when rescuing an HTTP::ConnectionError' do
+  describe 'when rescuing an HTTP::Error' do
     before do
-      stubbed_request.to_raise(HTTP::ConnectionError)
+      stubbed_request.to_raise(HTTP::Error)
     end
 
-    it 'raises a ConnectionError' do
-      _ { client.mentioned_urls }.must_raise(Webmention::ConnectionError)
-    end
-  end
-
-  describe 'when rescuing an HTTP::TimeoutError' do
-    before do
-      stubbed_request.to_raise(HTTP::TimeoutError)
-    end
-
-    it 'raises a TimeoutError' do
-      _ { client.mentioned_urls }.must_raise(Webmention::TimeoutError)
-    end
-  end
-
-  describe 'when rescuing an HTTP::Redirector::TooManyRedirectsError' do
-    before do
-      stubbed_request.to_raise(HTTP::Redirector::TooManyRedirectsError)
-    end
-
-    it 'raises a TooManyRedirectsError' do
-      _ { client.mentioned_urls }.must_raise(Webmention::TooManyRedirectsError)
+    it 'raises a HttpError' do
+      _ { client.mentioned_urls }.must_raise(Webmention::HttpError)
     end
   end
 

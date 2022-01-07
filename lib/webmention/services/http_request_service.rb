@@ -36,10 +36,8 @@ module Webmention
 
         def request(method, uri, **options)
           client.request(method, uri, options)
-        rescue HTTP::ConnectionError,
-               HTTP::TimeoutError,
-               HTTP::Redirector::TooManyRedirectsError => exception
-          raise Webmention.const_get(exception.class.name.split('::').last), exception
+        rescue HTTP::Error => exception
+          raise HttpError, exception
         end
       end
     end

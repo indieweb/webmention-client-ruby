@@ -8,13 +8,13 @@ describe Webmention::Client, :send_mention do
 
   let(:client) { Webmention::Client.new(source_url) }
 
-  describe 'when rescuing an IndieWeb::Endpoints::ConnectionError' do
+  describe 'when rescuing an IndieWeb::Endpoints::HttpError' do
     before do
-      stub_request(:get, target_url).to_raise(IndieWeb::Endpoints::ConnectionError)
+      stub_request(:get, target_url).to_raise(IndieWeb::Endpoints::HttpError)
     end
 
-    it 'raises a ConnectionError' do
-      _ { client.send_mention(target_url) }.must_raise(Webmention::ConnectionError)
+    it 'raises a HttpError' do
+      _ { client.send_mention(target_url) }.must_raise(Webmention::HttpError)
     end
   end
 
@@ -25,26 +25,6 @@ describe Webmention::Client, :send_mention do
 
     it 'raises a InvalidURIError' do
       _ { client.send_mention(target_url) }.must_raise(Webmention::InvalidURIError)
-    end
-  end
-
-  describe 'when rescuing an IndieWeb::Endpoints::TimeoutError' do
-    before do
-      stub_request(:get, target_url).to_raise(IndieWeb::Endpoints::TimeoutError)
-    end
-
-    it 'raises a TimeoutError' do
-      _ { client.send_mention(target_url) }.must_raise(Webmention::TimeoutError)
-    end
-  end
-
-  describe 'when rescuing an IndieWeb::Endpoints::TooManyRedirectsError' do
-    before do
-      stub_request(:get, target_url).to_raise(IndieWeb::Endpoints::TooManyRedirectsError)
-    end
-
-    it 'raises a TooManyRedirectsError' do
-      _ { client.send_mention(target_url) }.must_raise(Webmention::TooManyRedirectsError)
     end
   end
 end
