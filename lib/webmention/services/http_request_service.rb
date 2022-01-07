@@ -5,6 +5,7 @@ module Webmention
     module HttpRequestService
       # Defaults derived from Webmention specification examples
       # https://www.w3.org/TR/webmention/#limits-on-get-requests
+      # rubocop:disable Layout/HashAlignment
       HTTP_CLIENT_OPTS = {
         follow: {
           max_hops: 20
@@ -18,6 +19,7 @@ module Webmention
           read_timeout: 5
         }
       }.freeze
+      # rubocop:enable Layout/HashAlignment
 
       class << self
         def get(uri)
