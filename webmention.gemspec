@@ -24,9 +24,9 @@ Gem::Specification.new do |spec|
   spec.metadata['bug_tracker_uri'] = "#{spec.homepage}/issues"
   spec.metadata['changelog_uri']   = "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md"
 
-  spec.add_runtime_dependency 'absolutely', '~> 5.0'
+  spec.add_runtime_dependency 'absolutely', '~> 5.1'
   spec.add_runtime_dependency 'addressable', '~> 2.8'
-  spec.add_runtime_dependency 'http', '~> 4.4'
-  spec.add_runtime_dependency 'indieweb-endpoints', '~> 5.0'
+  spec.add_runtime_dependency 'http', '~> 5.0'
+  spec.add_runtime_dependency 'indieweb-endpoints', '~> 7.0'
   spec.add_runtime_dependency 'nokogiri', '~> 1.12'
 end
