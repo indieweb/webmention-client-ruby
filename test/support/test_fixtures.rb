@@ -19,7 +19,7 @@ module TestFixtures
           <p><a href="mailto:email@example.com">Invalid Link</a></p>
         </main>
       </body>
-    </html>'.freeze
+    </html>'
 
   SAMPLE_POST_HTML_ANCHORS_ONLY = '
     <html>
@@ -38,7 +38,7 @@ module TestFixtures
           <p><a href="mailto:email@example.com">Invalid Link</a></p>
         </main>
       </body>
-    </html>'.freeze
+    </html>'
 
   SAMPLE_POST_HTML_NO_LINKS = '
     <html>
@@ -50,5 +50,5 @@ module TestFixtures
           <p>Hello, world!</p>
         </main>
       </body>
-    </html>'.freeze
+    </html>'
 end
