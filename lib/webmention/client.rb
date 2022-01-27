@@ -8,9 +8,7 @@ module Webmention
     #
     # @param source [String] An absolute URL representing the source document
     def initialize(source)
-      raise ArgumentError, "source must be a String (given #{source.class.name})" unless source.is_a?(String)
-
-      @source = source
+      @source = source.to_str
 
       raise ArgumentError, 'source must be an absolute URL (e.g. https://example.com)' unless source_uri.absolute?
     end
@@ -38,7 +36,7 @@ module Webmention
     # @return [HTTP::Response, nil]
     # @raise [Webmention::ArgumentError, Webmention::HttpError, Webmention::InvalidURIError]
     def send_mention(target)
-      endpoint = IndieWeb::Endpoints.get(target)[:webmention]
+      endpoint = IndieWeb::Endpoints.get(target.to_str)[:webmention]
 
       return unless endpoint
 

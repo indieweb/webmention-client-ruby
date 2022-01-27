@@ -4,10 +4,8 @@ require 'test_helper'
 
 describe Webmention::Client do
   describe 'when not given a String' do
-    it 'raises an ArgumentError' do
-      error = _ { Webmention::Client.new(nil) }.must_raise(Webmention::ArgumentError)
-
-      _(error.message).must_match('source must be a String (given NilClass)')
+    it 'raises a NoMethodError' do
+      _ { Webmention::Client.new(nil) }.must_raise(NoMethodError)
     end
   end
 
