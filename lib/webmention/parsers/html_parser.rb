@@ -25,7 +25,7 @@ module Webmention
       # @return [Array<String>] Unique external URLs whose scheme matches http/https
       def results
         @results ||= resolved_urls.uniq
-                                  .select { |url| url.match?(%r{https?://}) }
+                                  .grep(%r{https?://})
                                   .reject { |url| url.match(/^#{response_url}(?:#.*)?$/) }
       end
 
