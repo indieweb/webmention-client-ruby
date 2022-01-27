@@ -7,27 +7,18 @@ module Webmention
         attr_reader :mime_types
       end
 
-      def initialize(response)
-        unless response.is_a?(HTTP::Response)
-          raise ArgumentError, "response must be an HTTP::Response (given #{response.class.name})"
-        end
+      def initialize(body:, mime_type:, uri:)
+        @response_body = body.to_str
+        @response_url = uri.to_str
 
-        @response = response
-
-        return if self.class.mime_types.include?(response.mime_type)
+        return if self.class.mime_types.include?(mime_type)
 
         raise UnsupportedMimeTypeError, "Unsupported MIME Type: #{response.mime_type}"
       end
 
       private
 
-      def response_body
-        @response_body ||= @response.body.to_s
-      end
-
-      def response_url
-        @response_url ||= @response.uri.to_s
-      end
+      attr_reader :response_body, :response_url
     end
   end
 end
