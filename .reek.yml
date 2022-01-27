@@ -3,6 +3,9 @@ detectors:
     max_calls: 3
   IrresponsibleModule:
     enabled: false
+  UncommunicativeVariableName:
+    accept:
+      - e
 
 exclude_paths:
   - vendor/
