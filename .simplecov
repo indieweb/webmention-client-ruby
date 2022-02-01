@@ -3,14 +3,17 @@
 require 'simplecov_json_formatter'
 require 'simplecov-console'
 
-SimpleCov.start do
-  add_filter '/test/'
+formatters = [
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::JSONFormatter
+]
 
-  formatter SimpleCov::Formatter::MultiFormatter.new(
-    [
-      SimpleCov::Formatter::Console,
-      SimpleCov::Formatter::HTMLFormatter,
-      SimpleCov::Formatter::JSONFormatter
-    ]
-  )
+# rubocop:disable Style/IfUnlessModifier
+if RSpec.configuration.files_to_run.length > 1
+  formatters << SimpleCov::Formatter::Console
+end
+# rubocop:enable Style/IfUnlessModifier
+
+SimpleCov.start do
+  formatter SimpleCov::Formatter::MultiFormatter.new(formatters)
 end

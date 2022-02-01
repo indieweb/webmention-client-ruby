@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+describe Webmention::Client, '#send_all_mentions' do
+  subject(:client) { described_class.new(source_url) }
 
-describe Webmention::Client, :send_all_mentions do
   let(:source_url) { 'https://source.example.com' }
   let(:target_url) { 'https://target.example.com' }
 
@@ -10,25 +10,23 @@ describe Webmention::Client, :send_all_mentions do
     { 'Content-Type': 'text/html' }
   end
 
-  let(:client) { Webmention::Client.new(source_url) }
-
   describe 'when no mentioned URLs found' do
     before do
       stub_request(:get, source_url).to_return(
-        body:    TestFixtures::SAMPLE_POST_HTML_NO_LINKS,
+        body: TestFixtures::SAMPLE_POST_HTML_NO_LINKS,
         headers: http_response_headers
       )
     end
 
     it 'returns a Hash' do
-      _(client.send_all_mentions).must_equal({})
+      expect(client.send_all_mentions).to eq({})
     end
   end
 
   describe 'when mentioned URLs found' do
     before do
       stub_request(:get, %r{#{source_url}/.*}).to_return(
-        body:    TestFixtures::SAMPLE_POST_HTML_ANCHORS_ONLY,
+        body: TestFixtures::SAMPLE_POST_HTML_ANCHORS_ONLY,
         headers: http_response_headers.merge(
           Link: %(<#{source_url}/webmention>; rel="webmention")
         )
@@ -42,15 +40,15 @@ describe Webmention::Client, :send_all_mentions do
     end
 
     it 'returns a Hash' do
-      Webmention::Services::HttpRequestService.stub :post, true do
-        responses = {
-          "#{target_url}/post/1" => true,
-          "#{target_url}/post/2" => true,
-          "#{source_url}/post/1" => true
-        }
+      allow(Webmention::Services::HttpRequestService).to receive(:post).and_return(true)
 
-        _(client.send_all_mentions).must_equal(responses)
-      end
+      responses = {
+        "#{target_url}/post/1" => true,
+        "#{target_url}/post/2" => true,
+        "#{source_url}/post/1" => true
+      }
+
+      expect(client.send_all_mentions).to eq(responses)
     end
   end
 end

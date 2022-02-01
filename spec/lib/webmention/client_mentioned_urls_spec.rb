@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+describe Webmention::Client, '#mentioned_urls' do
+  subject(:client) { described_class.new(url) }
 
-describe Webmention::Client, :mentioned_urls do
   let(:url) { 'https://source.example.com' }
-
-  let(:client) { Webmention::Client.new(url) }
 
   let(:stubbed_request) { stub_request(:get, url) }
 
@@ -15,7 +13,7 @@ describe Webmention::Client, :mentioned_urls do
     end
 
     it 'raises a HttpError' do
-      _ { client.mentioned_urls }.must_raise(Webmention::HttpError)
+      expect { client.mentioned_urls }.to raise_error(Webmention::HttpError)
     end
   end
 
@@ -27,16 +25,17 @@ describe Webmention::Client, :mentioned_urls do
     end
 
     it 'raises an UnsupportedMimeTypeError' do
-      error = _ { client.mentioned_urls }.must_raise(Webmention::UnsupportedMimeTypeError)
-
-      _(error.message).must_match('Unsupported MIME Type: unsupported/type')
+      expect { client.mentioned_urls }.to raise_error(
+        Webmention::UnsupportedMimeTypeError,
+        'Unsupported MIME Type: unsupported/type'
+      )
     end
   end
 
   describe 'when response MIME type is text/html' do
     before do
       stub_request(:get, url).to_return(
-        body:    TestFixtures::SAMPLE_POST_HTML,
+        body: TestFixtures::SAMPLE_POST_HTML,
         headers: { 'Content-Type': 'text/html' }
       )
     end
@@ -50,7 +49,7 @@ describe Webmention::Client, :mentioned_urls do
         'https://target.example.com/image-2x.jpg'
       ]
 
-      _(client.mentioned_urls).must_equal(mentioned_urls)
+      expect(client.mentioned_urls).to eq(mentioned_urls)
     end
   end
 end

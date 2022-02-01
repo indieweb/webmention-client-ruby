@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+describe Webmention::Client, '#send_mention' do
+  subject(:client) { described_class.new(source_url) }
 
-describe Webmention::Client, :send_mention do
   let(:source_url) { 'https://source.example.com' }
   let(:target_url) { 'https://target.example.com' }
-
-  let(:client) { Webmention::Client.new(source_url) }
 
   describe 'when rescuing an IndieWeb::Endpoints::HttpError' do
     before do
@@ -14,7 +12,7 @@ describe Webmention::Client, :send_mention do
     end
 
     it 'raises a HttpError' do
-      _ { client.send_mention(target_url) }.must_raise(Webmention::HttpError)
+      expect { client.send_mention(target_url) }.to raise_error(Webmention::HttpError)
     end
   end
 
@@ -24,7 +22,7 @@ describe Webmention::Client, :send_mention do
     end
 
     it 'raises a InvalidURIError' do
-      _ { client.send_mention(target_url) }.must_raise(Webmention::InvalidURIError)
+      expect { client.send_mention(target_url) }.to raise_error(Webmention::InvalidURIError)
     end
   end
 end

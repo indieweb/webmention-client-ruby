@@ -1,33 +1,18 @@
 inherit_from:
-  - https://raw.githubusercontent.com/jgarber623/rubocop-configs/main/.rubocop.yml
-
-require:
-  - rubocop-minitest
-  - rubocop-packaging
-  - rubocop-performance
-  - rubocop-rake
+  - https://raw.githubusercontent.com/jgarber623/rubocop-configs/main/.rubocop.gem.yml
 
 # Checks that the keys, separators, and values of a multi-line hash literal are
 # aligned according to configuration.
 Layout/HashAlignment:
-  EnforcedColonStyle: table
   EnforcedHashRocketStyle: table
 
 # Checks if the length of a block exceeds some maximum value.
 Metrics/BlockLength:
   Exclude:
-    - test/**/*.rb
+    - spec/**/*.rb
 
-# Checks if test cases contain any assertion calls.
-Minitest/NoAssertions:
-  Enabled: true
-
-# Identifies places where inefficient `readlines` method can be replaced by
-# `each_line` to avoid fully loading file content into memory.
-Performance/IoReadlines:
-  Enabled: true
-
-# Identifies places where `select.map` can be replaced by `filter_map`.
-# Requires Ruby 2.7
-Performance/SelectMap:
-  Enabled: true
+# Checks for long examples.
+RSpec/ExampleLength:
+  CountAsOne:
+    - array
+    - hash
