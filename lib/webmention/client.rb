@@ -27,9 +27,9 @@ module Webmention
     def mentioned_urls
       raise UnsupportedMimeTypeError, "Unsupported MIME Type: #{source_response.mime_type}" unless parser_for_mime_type
 
-      @mentioned_urls ||= parser_for_mime_type.new(body:      source_response.body,
+      @mentioned_urls ||= parser_for_mime_type.new(body: source_response.body,
                                                    mime_type: source_response.mime_type,
-                                                   uri:       source_response.uri)
+                                                   uri: source_response.uri)
                                               .results
     end
 
