@@ -8,9 +8,9 @@ There are a couple ways you can help improve webmention-client-ruby:
 
 ## Getting Started
 
-webmention-client-ruby is developed using Ruby 2.6.9 and is additionally tested against Ruby 2.7, 3.0, and 3.1 using [GitHub Actions](https://github.com/indieweb/webmention-client-ruby/actions).
+webmention-client-ruby is developed using Ruby 2.6.10 and is additionally tested against Ruby 2.7, 3.0, and 3.1 using [GitHub Actions](https://github.com/indieweb/webmention-client-ruby/actions).
 
-Before making changes to webmention-client-ruby, you'll want to install Ruby 2.6.9. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm). Once you've installed Ruby 2.6.9 using your method of choice, install the project's gems by running:
+Before making changes to webmention-client-ruby, you'll want to install Ruby 2.6.10. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm). Once you've installed Ruby 2.6.10 using your method of choice, install the project's gems by running:
 
 ```sh
 bundle install
@@ -22,7 +22,7 @@ bundle install
 1. Install development dependencies as outlined above.
 1. Create a feature branch for the code changes you're looking to make: `git checkout -b my-new-feature`.
 1. _Write some code!_
-1. If your changes would benefit from testing, add the necessary tests and verify everything passes by running `bin/ci`.
+1. If your changes would benefit from testing, add the necessary tests and verify everything passes by running `bundle exec rspec`.
 1. Commit your changes: `git commit -am 'Add some new feature or fix some issue'`. _(See [this excellent article](https://chris.beams.io/posts/git-commit/) for tips on writing useful Git commit messages.)_
 1. Push the branch to your fork: `git push -u origin my-new-feature`.
 1. Create a new [pull request][pulls] and we'll review your changes.
