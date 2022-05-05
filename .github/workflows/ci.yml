@@ -3,19 +3,39 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+  analyze:
+    name: Analyze
+    permissions:
+      contents: read
+      security-events: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: github/codeql-action/init@v2
+        with:
+          languages: ruby
+      - uses: github/codeql-action/analyze@v2
   lint:
     name: Lint
+    permissions:
+      contents: read
+      security-events: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - run: bundle exec rubocop
-      - run: bundle exec reek
+      - run: bundle exec rubocop --require code_scanning --format progress --format CodeScanning::SarifFormatter --out rubocop.sarif
+      - uses: github/codeql-action/upload-sarif@v1
+        if: ${{ always() }}
+        with:
+          sarif_file: rubocop.sarif
   test:
     name: Test
     runs-on: ubuntu-latest
+    env:
+      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
     strategy:
       fail-fast: false
       matrix:
@@ -27,7 +47,5 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: ${{ matrix.ruby }}
-      - run: bundle exec rspec
+      - run: bundle exec rspec --format RSpec::Github::Formatter
       - uses: paambaati/codeclimate-action@v3.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
