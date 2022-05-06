@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
+require 'pry-byebug'
+
 require 'simplecov'
 require 'webmock/rspec'
 
 require 'webmention'
 
-module TestFixtures
-  SAMPLE_POST_HTML = File.read(File.join(Dir.pwd, 'spec', 'support', 'sample_post.html'))
-  SAMPLE_POST_HTML_ANCHORS_ONLY = File.read(File.join(Dir.pwd, 'spec', 'support', 'sample_post_anchors_only.html'))
-  SAMPLE_POST_HTML_NO_LINKS = File.read(File.join(Dir.pwd, 'spec', 'support', 'sample_post_no_links.html'))
+Dir.glob(File.join(__dir__, 'support/**/*.rb')).each { |f| require_relative f }
+
+RSpec.configure do |config|
+  config.include FixturesHelper
+
+  config.disable_monkey_patching!
 end
