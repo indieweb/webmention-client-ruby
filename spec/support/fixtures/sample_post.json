@@ -1,0 +1,20 @@
+[
+  [
+    {
+      "rels": {
+        "target": "https://target.example.com/post/100"
+      }
+    },
+    {
+      "rels": {
+        "target": "https://target.example.com/post/200"
+      }
+    }
+  ],
+  {
+    "rels": {
+      "url": "https://target.example.com/post/100"
+    }
+  },
+  ["Hello", "world!"]
+]
