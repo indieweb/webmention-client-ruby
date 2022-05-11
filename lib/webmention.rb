@@ -9,7 +9,7 @@ require 'nokogiri'
 require_relative 'webmention/version'
 
 require_relative 'webmention/client'
-require_relative 'webmention/target_url'
+require_relative 'webmention/url'
 require_relative 'webmention/request'
 require_relative 'webmention/response'
 require_relative 'webmention/error_response'

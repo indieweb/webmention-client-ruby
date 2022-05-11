@@ -9,8 +9,8 @@ module Webmention
       attr_reader :registered_parsers
     end
 
-    # @return [HTTP::URI]
-    attr_reader :source_uri
+    # @return [Webmention::Url]
+    attr_reader :source_url
 
     # @api private
     def self.register_parser(klass)
@@ -27,16 +27,32 @@ module Webmention
     #
     # @return [Webmention::Client]
     def initialize(source)
-      @source_uri = HTTP::URI.parse(source.to_s)
+      @source_url = Url.new(source)
     end
 
     # :nocov:
     # @return [String]
     def inspect
       "#<#{self.class}:#{format('%#0x', object_id)} " \
-        "source_uri: #{source_uri}>"
+        "source_url: #{source_url.uri}>"
     end
     # :nocov:
+
+    # Retrieve unique URLs mentioned by this client's source URL.
+    #
+    # @raise [NoMethodError] Occurs when response is a Webmention::ErrorResponse.
+    # @raise [KeyError] Occurs when response if of an unsupported MIME type.
+    #
+    # @return [Array<String>]
+    def mentioned_urls
+      self.class
+          .registered_parsers
+          .fetch(source_url.response.mime_type)
+          .new(source_url.response.body, source_url.response.uri)
+          .results
+          .uniq
+          .sort
+    end
 
     # Send a webmention from this client's source URL to the target URL.
     #
@@ -49,11 +65,11 @@ module Webmention
     #
     # @return [Webmention::Response, Webmention::ErrorResponse]
     def send_webmention(target)
-      target_url = TargetUrl.new(target)
+      target_url = Url.new(target)
 
       # A Webmention endpoint exists. Send the request and return the response.
       if target_url.webmention_endpoint?
-        return Request.post(target_url.webmention_endpoint, source: source_uri.to_s, target: target.to_s)
+        return Request.post(target_url.webmention_endpoint, source: source_url.to_s, target: target.to_s)
       end
 
       # An error was encountered fetching the target URL. Return the response.
