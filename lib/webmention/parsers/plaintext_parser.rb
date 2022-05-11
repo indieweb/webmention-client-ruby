@@ -2,6 +2,7 @@
 
 module Webmention
   module Parsers
+    # @api private
     class PlaintextParser < Parser
       @mime_types = ['text/plain']
 

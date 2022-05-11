@@ -2,6 +2,7 @@
 
 module Webmention
   module Parsers
+    # @api private
     class HtmlParser < Parser
       @mime_types = ['text/html']
 

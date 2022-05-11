@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 module Webmention
+  # @api private
   class TargetUrl
     # @return [HTTP::URI]
     attr_reader :target_uri
 
     # @param target [String, HTTP::URI, #to_s]
-    #   An absolute URL representing the target document
+    #   An absolute URL representing the target document.
     def initialize(target)
       @target_uri = HTTP::URI.parse(target.to_s)
     end

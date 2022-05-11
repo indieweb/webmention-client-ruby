@@ -2,6 +2,7 @@
 
 module Webmention
   module Parsers
+    # @api private
     class JsonParser < Parser
       @mime_types = ['application/json']
 
