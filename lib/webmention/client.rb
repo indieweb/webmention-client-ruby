@@ -2,8 +2,20 @@
 
 module Webmention
   class Client
+    @registered_parsers = {}
+
+    class << self
+      # @api private
+      attr_reader :registered_parsers
+    end
+
     # @return [HTTP::URI]
     attr_reader :source_uri
+
+    # @api private
+    def self.register_parser(klass)
+      klass.mime_types.each { |mime_type| @registered_parsers[mime_type] = klass }
+    end
 
     # Create a new Webmention::Client.
     #
