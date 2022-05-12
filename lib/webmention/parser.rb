@@ -12,7 +12,6 @@ module Webmention
 
     # @param response_body [HTTP::Response::Body, String, #to_s]
     # @param response_uri [String, HTTP::URI, #to_s]
-    # @param options [Hash]
     def initialize(response_body, response_uri)
       @response_body = response_body.to_s
       @response_uri = HTTP::URI.parse(response_uri.to_s)
