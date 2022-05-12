@@ -28,7 +28,7 @@ module Webmention
   # @param url [String, HTTP::URI, #to_s] An absolute URL.
   #
   # @raise [NoMethodError] Occurs when response is a Webmention::ErrorResponse.
-  # @raise [KeyError] Occurs when response if of an unsupported MIME type.
+  # @raise [KeyError] Occurs when response is of an unsupported MIME type.
   #
   # @return [Array<String>]
   def self.mentioned_urls(url)
