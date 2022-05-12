@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe Webmention::Client, '#send_webmention' do
-  subject(:response) { client.send_webmention(target_url) }
-
-  let(:client) { described_class.new(source_url) }
+RSpec.describe Webmention, '.send_webmention' do
+  subject(:response) { described_class.send_webmention(source_url, target_url) }
 
   let(:source_url) { 'https://jgarber.example/foo' }
   let(:target_url) { 'https://aaronpk.example/bar' }
