@@ -58,7 +58,7 @@ module Webmention
       end
 
       module UrlExtractor
-        # @param attributes [Array<Nokogiri::XML::Attr>]
+        # @param *attributes [Array<Nokogiri::XML::Attr>]
         #
         # @return [Array<String>]
         def self.extract(*attributes)

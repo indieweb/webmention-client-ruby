@@ -20,7 +20,7 @@ module Webmention
       end
 
       module UrlExtractor
-        # @param objs [Array<Hash, Array, String, Integer, Boolean, nil>]
+        # @param *objs [Array<Hash, Array, String, Integer, Boolean, nil>]
         #
         # @return [Array<String>]
         def self.extract(*objs)

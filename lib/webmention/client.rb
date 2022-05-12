@@ -40,6 +40,10 @@ module Webmention
 
     # Retrieve unique URLs mentioned by this client's source URL.
     #
+    # @example
+    #   client = Webmention::Client.new('https://jgarber.example/posts/100')
+    #   client.mentioned_urls
+    #
     # @raise [NoMethodError] Occurs when response is a Webmention::ErrorResponse.
     # @raise [KeyError] Occurs when response if of an unsupported MIME type.
     #
@@ -86,7 +90,7 @@ module Webmention
     #   targets = ['https://aaronpk.example/notes/1', 'https://adactio.example/notes/1']
     #   client.send_webmentions(targets)
     #
-    # @param targets [Array<String, HTTP::URI, #to_s>]
+    # @param *targets [Array<String, HTTP::URI, #to_s>]
     #   An array of absolute URLs representing the target documents.
     #
     # @return [Array<Webmention::Response, Webmention::ErrorResponse>]
