@@ -65,4 +65,25 @@ RSpec.describe Webmention, '.mentioned_urls' do
 
     it { is_expected.to eq(extracted_urls) }
   end
+
+  context 'when mentioned URLs include links to source URL' do
+    let(:extracted_urls) do
+      [
+        'https://aaronpk.example/post/1',
+        'https://aaronpk.example/post/2',
+        'https://jgarber.example/post/1'
+      ]
+    end
+
+    before do
+      stub_request(:get, source_url).to_return(
+        body: load_fixture(:sample_post_anchors_only),
+        headers: {
+          'Content-Type': 'text/html'
+        }
+      )
+    end
+
+    it { is_expected.to eq(extracted_urls) }
+  end
 end
