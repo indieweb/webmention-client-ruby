@@ -37,35 +37,51 @@ module Webmention
 
   # Send a webmention from a source URL to a target URL.
   #
-  # @example
+  # @example Send a webmention
   #   source = 'https://jgarber.example/posts/100'
   #   target = 'https://aaronpk.example/notes/1'
   #   Webmention.send_webmention(source, target)
+  #
+  # @example Send a webmention with a vouch URL
+  #   source = 'https://jgarber.example/posts/100'
+  #   target = 'https://aaronpk.example/notes/1'
+  #   Webmention.send_webmention(source, target, vouch: 'https://tantek.example/notes/1')
   #
   # @param source [String, HTTP::URI, #to_s]
   #   An absolute URL representing a source document.
   # @param target [String, HTTP::URI, #to_s]
   #   An absolute URL representing a target document.
+  # @param vouch [String, HTTP::URI, #to_s]
+  #   An absolute URL representing a document vouching for the source document.
+  #   See https://indieweb.org/Vouch for additional details.
   #
   # @return [Webmention::Response, Webmention::ErrorResponse]
-  def self.send_webmention(source, target)
-    Client.new(source).send_webmention(target)
+  def self.send_webmention(source, target, vouch: nil)
+    Client.new(source, vouch: vouch).send_webmention(target)
   end
 
   # Send webmentions from a source URL to multiple target URLs.
   #
-  # @example
+  # @example Send multiple webmentions
   #   source = 'https://jgarber.example/posts/100'
   #   targets = ['https://aaronpk.example/notes/1', 'https://adactio.example/notes/1']
   #   Webmention.send_webmentions(source, targets)
+  #
+  # @example Send multiple webmentions with a vouch URL
+  #   source = 'https://jgarber.example/posts/100'
+  #   targets = ['https://aaronpk.example/notes/1', 'https://adactio.example/notes/1']
+  #   Webmention.send_webmentions(source, targets, vouch: 'https://tantek.example/notes/1')
   #
   # @param source [String, HTTP::URI, #to_s]
   #   An absolute URL representing a source document.
   # @param *targets [Array<String, HTTP::URI, #to_s>]
   #   An array of absolute URLs representing multiple target documents.
+  # @param vouch [String, HTTP::URI, #to_s]
+  #   An absolute URL representing a document vouching for the source document.
+  #   See https://indieweb.org/Vouch for additional details.
   #
   # @return [Array<Webmention::Response, Webmention::ErrorResponse>]
-  def self.send_webmentions(source, *targets)
-    Client.new(source).send_webmentions(*targets)
+  def self.send_webmentions(source, *targets, vouch: nil)
+    Client.new(source, vouch: vouch).send_webmentions(*targets)
   end
 end

@@ -2,8 +2,14 @@
 
 module Webmention
   class Url
+    extend Forwardable
+
     # @return [HTTP::URI]
     attr_reader :uri
+
+    # @!method
+    #   @return [String]
+    def_delegator :uri, :to_s
 
     # Create a new Webmention::Url.
     #

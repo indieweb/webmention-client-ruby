@@ -13,6 +13,7 @@
 - Crawl a URL for mentioned URLs.
 - Perform [endpoint discovery](https://www.w3.org/TR/webmention/#sender-discovers-receiver-webmention-endpoint) on mentioned URLs.
 - Send webmentions to one or more mentioned URLs.
+- Optionally include a [vouch](https://indieweb.org/Vouch) URL when sending webmentions.
 
 ## Table of Contents
 
@@ -21,8 +22,10 @@
 - [Usage](#usage)
   - [Sending a webmention](#sending-a-webmention)
   - [Sending multiple webmentions](#sending-multiple-webmentions)
+  - [Including a vouch URL](#including-a-vouch-url)
   - [Discovering mentioned URLs](#discovering-mentioned-urls)
   - [Exception Handling](#exception-handling)
+- [Migrating to version 6](#migrating-to-version-6)
 - [Contributing](#contributing)
 - [Acknowledgments](#acknowledgments)
 - [License](#license)
@@ -118,6 +121,18 @@ Webmention.send_webmentions(source, targets)
 
 `Webmention.send_webmentions` will return an Array of `Webmention::Response` and `Webmention::ErrorResponse` objects.
 
+### Including a vouch URL
+
+webmention-client-ruby supports submitting a [vouch](https://indieweb.org/Vouch) URL when sending webmentions:
+
+```ruby
+# Send a webmention with a vouch URL to a target URL
+Webmention.send_webmention(source, target, vouch: 'https://tantek.example/notes/1')
+
+# Send webmentions with a vouch URL to multiple target URLs
+Webmention.send_webmentions(source, targets, vouch: 'https://tantek.example/notes/1')
+```
+
 ### Discovering mentioned URLs
 
 To retrieve unique URLs mentioned by a URL:
@@ -154,12 +169,21 @@ When parsing HTML documents, webmention-client-ruby will find the first [h-entry
 
 ### Exception Handling
 
-webmention-client-ruby makes its best effort to avoid raising exceptions when making HTTP requests. As noted above, a `Webmention::ErrorResponse` should be returned in cases where an HTTP request raises an exception.
+webmention-client-ruby avoids raising exceptions when making HTTP requests. As noted above, a `Webmention::ErrorResponse` should be returned in cases where an HTTP request triggers an exception.
 
 `Webmention.mentioned_urls` _may_ raise one of two exceptions when crawling the supplied URL:
 
 - A `NoMethodError` is raised when a `Webmention::ErrorResponse` is returned.
 - A `KeyError` is raised when the response is of an unsupported MIME type.
+
+## Migrating to version 6
+
+webmention-client-ruby was completely rewritten for version 6 to better support new features and future development. Some notes on migrating to the new version:
+
+- **Renamed:** for clarity and consistency, the `Webmention.send_mention` method has been renamed `Webmention.send_webmention`. Both methods use the same interface.
+- **Removed:** the `Webmention.client` method has been removed in favor of the additional module methods [noted above](#usage). While the underlying `Webmention::Client` class still exists, its interface has changed and its direct usage is generally unnecessary.
+- **Removed:** `Webmention::Client#send_all_mentions` has been removed in favor of `Webmention.send_webmentions`. Combine `Webmention.mentioned_urls` and `Webmention.send_webmentions` to achieve similar results.
+- Exception handling has been greatly improved [as noted above](#exception-handling).
 
 ## Contributing
 
