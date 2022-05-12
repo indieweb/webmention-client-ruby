@@ -21,11 +21,17 @@ module Webmention
         names.map { |name| "#{name}[#{attribute}]" }
       end.freeze
 
-      ROOT_NODE_SELECTORS_ARRAY = ['.h-entry .e-content', '.h-entry', 'body'].freeze
-
       private_constant :HTML_ATTRIBUTES_MAP
       private_constant :CSS_SELECTORS_ARRAY
-      private_constant :ROOT_NODE_SELECTORS_ARRAY
+
+      # @param (see Webmention::Parser#initialize)
+      # @param root_node_selectors [Array<String, #to_s>, String, #to_s]
+      #   A prioritized array of CSS selectors for searching the response body.
+      def initialize(*args, root_node_selectors: ['.h-entry .e-content', '.h-entry', 'body'])
+        super(*args)
+
+        @root_node_selectors = Array(root_node_selectors).map(&:to_s)
+      end
 
       # @return [Array<String>] An array of absolute URLs.
       def results
@@ -37,6 +43,9 @@ module Webmention
 
       private
 
+      # @return [Array<String>]
+      attr_reader :root_node_selectors
+
       # @return [Nokogiri::HTML5::Document]
       def doc
         Nokogiri.HTML5(response_body)
@@ -44,7 +53,7 @@ module Webmention
 
       # @return [Nokogiri::XML::Element]
       def root_node
-        doc.at_css(*ROOT_NODE_SELECTORS_ARRAY)
+        doc.at_css(*root_node_selectors)
       end
 
       # @return [Array<Nokogiri::XML::Attr>]
@@ -52,8 +61,10 @@ module Webmention
         url_nodes.flat_map(&:attribute_nodes).find_all { |attribute| HTML_ATTRIBUTES_MAP.key?(attribute.name) }
       end
 
-      # @return [Nokogiri::XML::NodeSet]
+      # @return [Nokogiri::XML::NodeSet, Array]
       def url_nodes
+        return [] if root_node.nil?
+
         root_node.css(*CSS_SELECTORS_ARRAY)
       end
 
