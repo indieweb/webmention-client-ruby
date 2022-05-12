@@ -132,7 +132,7 @@ urls = Webmention.mentioned_urls('https://jgarber.example/post/100')
 
 In plaintext documents, webmention-client-ruby will search the source URL for absolute URLs. If the source URL is a JSON document, key/value pairs whose value is an absolute URL will be returned.
 
-HTML documents are searched for a variety of elements and attributes whose values may be (or include) URLs:
+When parsing HTML documents, webmention-client-ruby will find the first [h-entry](https://microformats.org/wiki/h-entry) and search its markup for URLs. If no h-entry is found, the parser will search the document's `<body>`. HTML documents are searched for a variety of elements and attributes whose values may be (or include) URLs:
 
 | Element      | Attributes      |
 |:-------------|:----------------|
@@ -150,7 +150,7 @@ HTML documents are searched for a variety of elements and attributes whose value
 | `track`      | `src`           |
 | `video`      | `src`           |
 
-**Note:** You may wish to filter the resulting Array returned by `Webmention.mentioned_urls` before sending webmentions.
+**Note:** Links pointing to the supplied URL (or those with internal fragment identifiers) will be rejected, but you may wish to filter the Array returned by `Webmention.mentioned_urls` before sending webmentions.
 
 ### Exception Handling
 
