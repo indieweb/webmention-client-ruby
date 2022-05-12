@@ -118,12 +118,14 @@ module Webmention
     #
     # @return [Hash{Symbol => String}]
     def request_options_for(target)
-      {
+      opts = {
         source: source_url,
         target: target,
         vouch: vouch_url
-      }.transform_values { |value| value.to_s.strip }
-       .delete_if { |_, value| value.empty? }
+      }
+
+      opts.transform_values { |value| value.to_s.strip }
+          .delete_if { |_, value| value.empty? }
     end
   end
 end
