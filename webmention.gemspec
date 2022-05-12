@@ -7,8 +7,8 @@ Gem::Specification.new do |spec|
 
   spec.name          = 'webmention'
   spec.version       = Webmention::VERSION
-  spec.authors       = ['Aaron Parecki', 'Nat Welch']
-  spec.email         = ['aaron@parecki.com']
+  spec.authors       = ['Jason Garber']
+  spec.email         = ['jason@sixtwothree.org']
 
   spec.summary       = 'Webmention notification client'
   spec.description   = 'A Ruby gem for sending Webmention notifications.'
