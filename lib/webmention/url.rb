@@ -5,9 +5,9 @@ module Webmention
     # @return [HTTP::URI]
     attr_reader :uri
 
-    # @param target [String, HTTP::URI, #to_s] An absolute URL.
-    def initialize(target)
-      @uri = HTTP::URI.parse(target.to_s)
+    # @param url [String, HTTP::URI, #to_s] An absolute URL.
+    def initialize(url)
+      @uri = HTTP::URI.parse(url.to_s)
     end
 
     # :nocov:
