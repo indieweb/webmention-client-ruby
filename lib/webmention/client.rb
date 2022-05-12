@@ -23,7 +23,7 @@ module Webmention
     #   client = Webmention::Client.new('https://jgarber.example/posts/100')
     #
     # @param source [String, HTTP::URI, #to_s]
-    #   An absolute URL representing the source document.
+    #   An absolute URL representing a source document.
     #
     # @return [Webmention::Client]
     def initialize(source)
@@ -58,14 +58,14 @@ module Webmention
           .sort
     end
 
-    # Send a webmention from this client's source URL to the target URL.
+    # Send a webmention from this client's source URL to a target URL.
     #
     # @example
     #   client = Webmention::Client.new('https://jgarber.example/posts/100')
     #   client.send_webmention('https://aaronpk.example/notes/1')
     #
     # @param target [String, HTTP::URI, #to_s]
-    #   An absolute URL representing the target document.
+    #   An absolute URL representing a target document.
     #
     # @return [Webmention::Response, Webmention::ErrorResponse]
     def send_webmention(target)
@@ -83,7 +83,7 @@ module Webmention
       ErrorResponse.new("No webmention endpoint found for target URL #{target}", target_url.response.request)
     end
 
-    # Send webmentions from this client's source URL to the target URLs.
+    # Send webmentions from this client's source URL to multiple target URLs.
     #
     # @example
     #   client = Webmention::Client.new('https://jgarber.example/posts/100')
@@ -91,7 +91,7 @@ module Webmention
     #   client.send_webmentions(targets)
     #
     # @param *targets [Array<String, HTTP::URI, #to_s>]
-    #   An array of absolute URLs representing the target documents.
+    #   An array of absolute URLs representing multiple target documents.
     #
     # @return [Array<Webmention::Response, Webmention::ErrorResponse>]
     def send_webmentions(*targets)

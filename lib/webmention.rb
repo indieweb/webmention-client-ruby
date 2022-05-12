@@ -20,23 +20,22 @@ require_relative 'webmention/parsers/json_parser'
 require_relative 'webmention/parsers/plaintext_parser'
 
 module Webmention
-  # Retrieve unique URLs mentioned by the source URL.
+  # Retrieve unique URLs mentioned by the provided URL.
   #
   # @example
   #   Webmention.mentioned_urls('https://jgarber.example/posts/100')
   #
-  # @param source [String, HTTP::URI, #to_s]
-  #   An absolute URL representing the source document.
+  # @param url [String, HTTP::URI, #to_s] An absolute URL.
   #
   # @raise [NoMethodError] Occurs when response is a Webmention::ErrorResponse.
   # @raise [KeyError] Occurs when response if of an unsupported MIME type.
   #
   # @return [Array<String>]
-  def self.mentioned_urls(source)
-    Client.new(source).mentioned_urls
+  def self.mentioned_urls(url)
+    Client.new(url).mentioned_urls
   end
 
-  # Send a webmention from tthe source URL to the target URL.
+  # Send a webmention from a source URL to a target URL.
   #
   # @example
   #   source = 'https://jgarber.example/posts/100'
@@ -44,16 +43,16 @@ module Webmention
   #   Webmention.send_webmention(source, target)
   #
   # @param source [String, HTTP::URI, #to_s]
-  #   An absolute URL representing the source document.
+  #   An absolute URL representing a source document.
   # @param target [String, HTTP::URI, #to_s]
-  #   An absolute URL representing the target document.
+  #   An absolute URL representing a target document.
   #
   # @return [Webmention::Response, Webmention::ErrorResponse]
   def self.send_webmention(source, target)
     Client.new(source).send_webmention(target)
   end
 
-  # Send webmentions from the source URL to the target URLs.
+  # Send webmentions from a source URL to multiple target URLs.
   #
   # @example
   #   source = 'https://jgarber.example/posts/100'
@@ -61,9 +60,9 @@ module Webmention
   #   Webmention.send_webmentions(source, targets)
   #
   # @param source [String, HTTP::URI, #to_s]
-  #   An absolute URL representing the source document.
+  #   An absolute URL representing a source document.
   # @param *targets [Array<String, HTTP::URI, #to_s>]
-  #   An array of absolute URLs representing the target documents.
+  #   An array of absolute URLs representing multiple target documents.
   #
   # @return [Array<Webmention::Response, Webmention::ErrorResponse>]
   def self.send_webmentions(source, *targets)

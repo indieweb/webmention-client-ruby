@@ -15,6 +15,7 @@ module Webmention
 
       private
 
+      # @return [Array, Hash]
       def doc
         @doc ||= JSON.parse(response_body)
       end

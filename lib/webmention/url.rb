@@ -5,7 +5,11 @@ module Webmention
     # @return [HTTP::URI]
     attr_reader :uri
 
+    # Create a new Webmention::Url.
+    #
     # @param url [String, HTTP::URI, #to_s] An absolute URL.
+    #
+    # @return [Webmention::Url]
     def initialize(url)
       @uri = HTTP::URI.parse(url.to_s)
     end

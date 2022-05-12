@@ -51,7 +51,11 @@ module Webmention
     #   )
     #
     # @param url [String]
-    # @param options [Hash]
+    # @param options [Hash{Symbol => String}]
+    # @option options [String] :source
+    #   An absolute URL representing a source document.
+    # @option options [String] :target
+    #   An absolute URL representing a target document.
     #
     # @return [Webmention::Response, Webmention::ErrorResponse]
     def self.post(url, **options)
@@ -62,7 +66,13 @@ module Webmention
     #
     # @param method [Symbol]
     # @param url [String]
-    # @param options [Hash]
+    # @param options [Hash{Symbol => String}]
+    # @option options [String] :source
+    #   An absolute URL representing a source document.
+    # @option options [String] :target
+    #   An absolute URL representing a target document.
+    #
+    # @return [Webmention::Request]
     def initialize(method, url, **options)
       @method = method.to_sym
       @uri = HTTP::URI.parse(url.to_s)
