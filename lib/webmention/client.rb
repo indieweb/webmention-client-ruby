@@ -55,16 +55,16 @@ module Webmention
     #   client = Webmention::Client.new('https://jgarber.example/posts/100')
     #   client.mentioned_urls
     #
-    # @raise [NoMethodError] Occurs when response is a Webmention::ErrorResponse.
-    # @raise [KeyError] Occurs when response if of an unsupported MIME type.
+    # @raise [NoMethodError]
+    #   Raised when response is a Webmention::ErrorResponse or response is of an
+    #   unsupported MIME type.
     #
     # @return [Array<String>]
     def mentioned_urls
       response = source_url.response
 
       self.class
-          .registered_parsers
-          .fetch(response.mime_type)
+          .registered_parsers[response.mime_type]
           .new(response.body, response.uri)
           .results
           .uniq

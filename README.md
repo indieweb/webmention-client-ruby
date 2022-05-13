@@ -171,10 +171,10 @@ When parsing HTML documents, webmention-client-ruby will find the first [h-entry
 
 webmention-client-ruby avoids raising exceptions when making HTTP requests. As noted above, a `Webmention::ErrorResponse` should be returned in cases where an HTTP request triggers an exception.
 
-`Webmention.mentioned_urls` _may_ raise one of two exceptions when crawling the supplied URL:
+When crawling the supplied URL, `Webmention.mentioned_urls` _may_ raise a `NoMethodError` if:
 
-- A `NoMethodError` is raised when a `Webmention::ErrorResponse` is returned.
-- A `KeyError` is raised when the response is of an unsupported MIME type.
+- a `Webmention::ErrorResponse` is returned, or
+- the response is of an unsupported MIME type.
 
 ## Migrating to version 6
 

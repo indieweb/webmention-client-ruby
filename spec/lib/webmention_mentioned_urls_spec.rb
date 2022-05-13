@@ -24,8 +24,8 @@ RSpec.describe Webmention, '.mentioned_urls' do
       )
     end
 
-    it 'raises a KeyError' do
-      expect { mentioned_urls }.to raise_error(KeyError)
+    it 'raises a NoMethodError' do
+      expect { mentioned_urls }.to raise_error(NoMethodError)
     end
   end
 
