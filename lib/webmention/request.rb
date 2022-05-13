@@ -47,7 +47,8 @@ module Webmention
     #   Request.post(
     #     'https://aaronpk.example/webmention',
     #     source: 'https://jgarber.examples/posts/100',
-    #     target: 'https://aaronpk.example/notes/1'
+    #     target: 'https://aaronpk.example/notes/1',
+    #     vouch: 'https://tantek.example/notes/1'
     #   )
     #
     # @param url [String]
@@ -56,10 +57,13 @@ module Webmention
     #   An absolute URL representing a source document.
     # @option options [String] :target
     #   An absolute URL representing a target document.
+    # @param vouch [String]
+    #   An absolute URL representing a document vouching for the source document.
+    #   See https://indieweb.org/Vouch for additional details.
     #
     # @return [Webmention::Response, Webmention::ErrorResponse]
     def self.post(url, **options)
-      new(:post, url, form: options).perform
+      new(:post, url, form: options.slice(:source, :target, :vouch)).perform
     end
 
     # Create a new Webmention::Request.
