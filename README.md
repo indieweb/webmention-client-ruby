@@ -13,23 +13,7 @@
 - Crawl a URL for mentioned URLs.
 - Perform [endpoint discovery](https://www.w3.org/TR/webmention/#sender-discovers-receiver-webmention-endpoint) on mentioned URLs.
 - Send webmentions to one or more mentioned URLs (and optionally include a [vouch](https://indieweb.org/Vouch) URL).
-- Verify that a received webmention's source URL links to a target URL.
-
-## Table of Contents
-
-- [Getting Started](#getting-started)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Sending a webmention](#sending-a-webmention)
-  - [Sending multiple webmentions](#sending-multiple-webmentions)
-  - [Including a vouch URL](#including-a-vouch-url)
-  - [Discovering mentioned URLs](#discovering-mentioned-urls)
-  - [Verifying a webmention](#verifying-a-webmention)
-  - [Exception Handling](#exception-handling)
-- [Migrating to version 6](#migrating-to-version-6)
-- [Contributing](#contributing)
-- [Acknowledgments](#acknowledgments)
-- [License](#license)
+- Verify that a received webmention's source URL links to a target URL (and optionally verify that a vouch URL mentions the source URL's domain).
 
 ## Getting Started
 
@@ -39,166 +23,35 @@ webmention-client-ruby is developed using Ruby 2.6.10 and is additionally tested
 
 ## Installation
 
-If you're using [Bundler](https://bundler.io) to manage gem dependencies, add webmention-client-ruby to your project's Gemfile:
+If you're using [Bundler](https://bundler.io) to manage gem dependencies, add webmention-client-ruby to your project's `Gemfile`:
 
 ```ruby
-source 'https://rubygems.org'
-
 gem 'webmention'
 ```
 
-…and then run:
+…and run `bundle install` in your shell.
+
+To install the gem manually, run the following in your shell:
 
 ```sh
-bundle install
+gem install webmention
 ```
 
 ## Usage
 
-### Sending a webmention
-
-With webmention-client-ruby added to your project's `Gemfile` and installed, you may send a webmention from a source URL to a target URL:
-
-```ruby
-require 'webmention'
-
-source = 'https://jgarber.example/post/100' # A post on your website
-target = 'https://aaronpk.example/post/100' # A post on someone else's website
-
-response = Webmention.send_webmention(source, target)
-```
-
-`Webmention.send_webmention` will return either a `Webmention::Response` or a `Webmention::ErrorResponse`. Instances of both classes respond to `ok?`. Building on the examples above:
-
-A `Webmention::ErrorResponse` may be returned when:
-
-1. The target URL does not advertise a Webmention endpoint.
-2. The request to the target URL raises an `HTTP::Error` or an `OpenSSL::SSL::SSLError`.
-
-```ruby
-response.ok?
-#=> false
-
-response.class.name
-#=> Webmention::ErrorResponse
-
-response.message
-#=> "No webmention endpoint found for target URL https://aaronpk.example/post/100"
-```
-
-A `Webmention::Response` will be returned in all other cases.
-
-```ruby
-response.ok?
-#=> true
-
-response.class.name
-#=> Webmention::Response
-```
-
-Instances of `Webmention::Response` include useful methods delegated to the underlying `HTTP::Response` object:
-
-```ruby
-response.headers   #=> HTTP::Headers
-response.body      #=> HTTP::Response::Body
-response.code      #=> Integer
-response.reason    #=> String
-response.mime_type #=> String
-response.uri       #=> HTTP::URI
-```
-
-**Note:** `Webmention::Response` objects may return a variety of status codes that will vary depending on the endpoint's capabilities and the success or failure of the request. See [the Webmention spec](https://www.w3.org/TR/webmention/) for more on status codes on their implications. A `Webmention::Response` responding affirmatively to `ok?` _may_ also have a non-successful HTTP status code (e.g. `404 Not Found`).
-
-### Sending multiple webmentions
-
-To send webmentions to multiple target URLs mentioned by a source URL:
-
-```ruby
-source = 'https://jgarber.example/post/100'
-targets = ['https://aaronpk.example/notes/1', 'https://adactio.example/notes/1']
-
-responses = Webmention.send_webmentions(source, targets)
-```
-
-`Webmention.send_webmentions` will return an array of `Webmention::Response` and `Webmention::ErrorResponse` objects.
-
-### Including a vouch URL
-
-webmention-client-ruby supports submitting a [vouch](https://indieweb.org/Vouch) URL when sending webmentions:
-
-```ruby
-# Send a webmention with a vouch URL to a target URL
-Webmention.send_webmention(source, target, vouch: 'https://tantek.example/notes/1')
-
-# Send webmentions with a vouch URL to multiple target URLs
-Webmention.send_webmentions(source, targets, vouch: 'https://tantek.example/notes/1')
-```
-
-### Discovering mentioned URLs
-
-To retrieve unique URLs mentioned by a URL:
-
-```ruby
-urls = Webmention.mentioned_urls('https://jgarber.example/post/100')
-```
-
-`Webmention.mentioned_urls` will crawl the provided URL, parse the response body, and return a sorted list of unique URLs. Response bodies are parsed using MIME type-specific rules as noted in the [Verifying a webmention](#verifying-a-webmention) section below.
-
-When parsing HTML documents, webmention-client-ruby will find the first [h-entry](https://microformats.org/wiki/h-entry) and search its markup for URLs. If no h-entry is found, the parser will search the document's `<body>`.
-
-**Note:** Links pointing to the supplied URL (or those with internal fragment identifiers) will be rejected. You may wish to additionally filter the results returned by `Webmention.mentioned_urls` before sending webmentions.
-
-### Verifying a webmention
-
-webmention-client-ruby verifies [HTML](https://www.w3.org/TR/html/), [JSON](https://json.org), and plaintext files in accordance with [Section 3.2.2](https://www.w3.org/TR/webmention/#webmention-verification) of [the W3C's Webmention Recommendation](https://www.w3.org/TR/webmention/):
-
-> The receiver **should** use per-media-type rules to determine whether the source document mentions the target URL.
-
-In plaintext documents, webmention-client-ruby will search the source URL for exact matches of the target URL. If the source URL is a JSON document, key/value pairs whose value equals the target URL are matched.
-
-HTML documents are searched for a variety of elements and attributes whose values may be (or include) URLs:
-
-| Element      | Attributes      |
-|:-------------|:----------------|
-| `a`          | `href`          |
-| `area`       | `href`          |
-| `audio`      | `src`           |
-| `blockquote` | `cite`          |
-| `del`        | `cite`          |
-| `embed`      | `src`           |
-| `img`        | `src`, `srcset` |
-| `ins`        | `cite`          |
-| `object`     | `data`          |
-| `q`          | `cite`          |
-| `source`     | `src`, `srcset` |
-| `track`      | `src`           |
-| `video`      | `src`           |
-
-To verify a webmention:
-
-```ruby
-Webmention.verify_webmention(source, target)
-```
-
-`Webmention.verify_webmention` returns either `true` or `false` and parses HTML documents using the same rules outlined in [Discovering mentioned URLs](#discovering-mentioned-urls).
-
-### Exception Handling
-
-webmention-client-ruby avoids raising exceptions when making HTTP requests. As noted above, a `Webmention::ErrorResponse` should be returned in cases where an HTTP request triggers an exception.
-
-When crawling the supplied URL, `Webmention.mentioned_urls` _may_ raise a `NoMethodError` if:
-
-- a `Webmention::ErrorResponse` is returned, or
-- the response is of an unsupported MIME type.
+See [USAGE.md](https://github.com/indieweb/webmention-client-ruby/blob/main/USAGE.md) for documentation of webmention-client-ruby's features.
 
 ## Migrating to version 6
 
 webmention-client-ruby was completely rewritten for version 6 to better support new features and future development. Some notes on migrating to the new version:
 
-- **Renamed:** for clarity and consistency, the `Webmention.send_mention` method has been renamed `Webmention.send_webmention`. Both methods use the same interface.
-- **Removed:** the `Webmention.client` method has been removed in favor of the additional module methods [noted above](#usage). While the underlying `Webmention::Client` class still exists, its interface has changed and its direct usage is generally unnecessary.
-- **Removed:** `Webmention::Client#send_all_mentions` has been removed in favor of `Webmention.send_webmentions`. Combine `Webmention.mentioned_urls` and `Webmention.send_webmentions` to achieve similar results.
-- **Refactored:** Exception handling has been greatly improved [as noted above](#exception-handling).
+♻️ **Renamed:** for clarity and consistency, the `Webmention.send_mention` method has been renamed `Webmention.send_webmention`. Both methods use the same interface.
+
+❌ **Removed:** the `Webmention.client` method has been removed in favor of the additional module methods [noted above](#usage). While the underlying `Webmention::Client` class still exists, its interface has changed and its direct usage is generally unnecessary.
+
+❌ **Removed:** `Webmention::Client#send_all_mentions` has been removed in favor of `Webmention.send_webmentions`. Combine `Webmention.mentioned_urls` and `Webmention.send_webmentions` to achieve similar results.
+
+🛠 **Refactored:** Exception handling has been greatly improved [as noted above](#exception-handling).
 
 ## Contributing
 
