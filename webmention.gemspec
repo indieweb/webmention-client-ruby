@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['jason@sixtwothree.org']
 
   spec.summary       = 'Webmention notification client'
-  spec.description   = 'A Ruby gem for sending Webmention notifications.'
+  spec.description   = 'A Ruby gem for sending and verifying Webmention notifications.'
   spec.homepage      = 'https://github.com/indieweb/webmention-client-ruby'
   spec.license       = 'Apache-2.0'
 
