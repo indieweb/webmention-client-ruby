@@ -44,8 +44,8 @@ module Webmention
     # @return [String]
     def inspect
       "#<#{self.class}:#{format('%#0x', object_id)} " \
-        "source_url: #{source_url.uri} " \
-        "vouch_url: #{vouch_url.uri}>"
+        "source_url: #{source_url} " \
+        "vouch_url: #{vouch_url}>"
     end
     # :nocov:
 
@@ -117,11 +117,11 @@ module Webmention
     # @param target [String, HTTP::URI, #to_s]
     #   An absolute URL representing a target document.
     #
-    # @raise (see #mentioned_urls)
+    # @raise (see Webmention::Client#mentioned_urls)
     #
-    # @return [Boolean]
+    # @return [Webmention::Verification]
     def verify_webmention(target)
-      mentioned_urls.any?(target)
+      Verification.new(source_url, Url.new(target), vouch_url: vouch_url)
     end
 
     private

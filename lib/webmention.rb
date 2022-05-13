@@ -13,6 +13,7 @@ require_relative 'webmention/url'
 require_relative 'webmention/request'
 require_relative 'webmention/response'
 require_relative 'webmention/error_response'
+require_relative 'webmention/verification'
 
 require_relative 'webmention/parser'
 require_relative 'webmention/parsers/html_parser'
@@ -88,15 +89,12 @@ module Webmention
 
   # Verify that a source URL links to a target URL.
   #
-  # @param source [String, HTTP::URI, #to_s]
-  #   An absolute URL representing a source document.
-  # @param target [String, HTTP::URI, #to_s]
-  #   An absolute URL representing a target document.
+  # @param (see Webmention.send_webmention)
   #
   # @raise (see Webmention::Client#mentioned_urls)
   #
   # @return [Boolean]
-  def self.verify_webmention(source, target)
-    Client.new(source).verify_webmention(target)
+  def self.verify_webmention(source, target, vouch: nil)
+    Client.new(source, vouch: vouch).verify_webmention(target)
   end
 end
