@@ -8,6 +8,7 @@
   - `Webmention.send_webmention(source, target)`
   - `Webmention.send_webmentions(source, *targets)`
   - `Webmention.mentioned_urls(url)`
+  - `Webmention.verify_webmention(source, target)`
 - New JSON and plaintext parsers
 - [Vouch](https://indieweb.org/Vouch) URL support (9829269)
 - Webmention verification support (5fe5f58 and 100644)
