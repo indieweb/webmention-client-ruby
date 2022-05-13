@@ -87,7 +87,7 @@ module Webmention
 
       # A Webmention endpoint exists. Send the request and return the response.
       if target_url.webmention_endpoint?
-        return Request.post(target_url.webmention_endpoint, request_options_for(target))
+        return Request.post(target_url.webmention_endpoint, **request_options_for(target))
       end
 
       # An error was encountered fetching the target URL. Return the response.
