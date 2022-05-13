@@ -1,5 +1,36 @@
 # Changelog
 
+## v6.0.0 / 2022-05-13
+
+### New Features
+
+- Top-level module methods:
+  - `Webmention.send_webmention(source, target)`
+  - `Webmention.send_webmentions(source, *targets)`
+  - `Webmention.mentioned_urls(url)`
+- New JSON and plaintext parsers
+- [Vouch](https://indieweb.org/Vouch) URL support (9829269)
+- Webmention verification support (5fe5f58 and 100644)
+- Fewer exceptions! HTTP response handling updated to return similar objects (`Webmention::Response` and `Webmention::ErrorResponse`).
+- Fewer runtime dependencies!
+
+### Breaking Changes
+
+- `Webmention.send_mention` renamed to `Webmention.send_webmention`
+- `Webmention.client` method removed
+- `Webmention::Client#send_all_mentions` removed in favor of `Webmention.mentioned_urls` and `Webmention.send_webmentions`
+- Response objects from `Webmention.send_webmention` and `Webmention.send_webmentions` have changed from instances of `HTTP::Response` to instances of `Webmention::Response` or `Webmention::ErrorResponse`
+- Remove Absolutely and Addressable dependencies
+- Add support for Ruby 3 (a31aae6)
+- Update minimum supported Ruby version to 2.6 (e4fed8e)
+
+### Development Changes
+
+- Remove Reek development dependency (806bbc7)
+- Update development Ruby version to 2.6.10 (7e52ec9)
+- Migrate test suite to RSpec (79ac684)
+- Migrate to GitHub Actions (f5a3d7a)
+
 ## v5.0.0 / 2020-12-13
 
 - Update absolutely and indieweb-endpoints gems to v5.0 (89f4ea8)
