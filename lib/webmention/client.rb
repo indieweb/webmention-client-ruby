@@ -112,6 +112,18 @@ module Webmention
       targets.map { |target| send_webmention(target) }
     end
 
+    # Verify that this client's source URL links to a target URL.
+    #
+    # @param target [String, HTTP::URI, #to_s]
+    #   An absolute URL representing a target document.
+    #
+    # @raise (see #mentioned_urls)
+    #
+    # @return [Boolean]
+    def verify_webmention(target)
+      mentioned_urls.any?(target)
+    end
+
     private
 
     # @param target [String, HTTP::URI, #to_s]

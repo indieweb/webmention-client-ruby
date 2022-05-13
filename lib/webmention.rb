@@ -27,8 +27,9 @@ module Webmention
   #
   # @param url [String, HTTP::URI, #to_s] An absolute URL.
   #
-  # @raise [NoMethodError] Occurs when response is a Webmention::ErrorResponse.
-  # @raise [KeyError] Occurs when response is of an unsupported MIME type.
+  # @raise [NoMethodError]
+  #   Raised when response is a Webmention::ErrorResponse or response is of an
+  #   unsupported MIME type.
   #
   # @return [Array<String>]
   def self.mentioned_urls(url)
@@ -83,5 +84,19 @@ module Webmention
   # @return [Array<Webmention::Response, Webmention::ErrorResponse>]
   def self.send_webmentions(source, *targets, vouch: nil)
     Client.new(source, vouch: vouch).send_webmentions(*targets)
+  end
+
+  # Verify that a source URL links to a target URL.
+  #
+  # @param source [String, HTTP::URI, #to_s]
+  #   An absolute URL representing a source document.
+  # @param target [String, HTTP::URI, #to_s]
+  #   An absolute URL representing a target document.
+  #
+  # @raise (see Webmention::Client#mentioned_urls)
+  #
+  # @return [Boolean]
+  def self.verify_webmention(source, target)
+    Client.new(source).verify_webmention(target)
   end
 end
