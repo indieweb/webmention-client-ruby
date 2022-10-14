@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'pry-byebug'
-
+require 'debug'
 require 'simplecov'
 require 'webmock/rspec'
 

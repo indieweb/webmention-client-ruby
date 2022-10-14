@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'code-scanning-rubocop'
-gem 'pry-byebug'
+gem 'debug'
 gem 'rake'
 gem 'rspec'
 gem 'rspec-github'
