@@ -5,7 +5,3 @@ inherit_from:
 # aligned according to configuration.
 Layout/HashAlignment:
   EnforcedHashRocketStyle: table
-
-# Identifies usages of `array.compact.flatten.map { |x| x.downcase }`.
-Performance/ChainArrayAllocation:
-  Enabled: false
