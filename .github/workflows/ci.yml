@@ -48,4 +48,4 @@ jobs:
           bundler-cache: true
           ruby-version: ${{ matrix.ruby }}
       - run: bundle exec rspec --format RSpec::Github::Formatter
-      - uses: paambaati/codeclimate-action@v3.1.0
+      - uses: paambaati/codeclimate-action@v3.2.0
