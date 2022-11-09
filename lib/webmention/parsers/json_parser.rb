@@ -10,30 +10,18 @@ module Webmention
 
       # @return [Array<String>] An array of absolute URLs.
       def results
-        @results ||= UrlExtractor.extract(doc)
+        @results ||= extract_urls_from(JSON.parse(response_body))
       end
 
       private
 
-      # @return [Array, Hash]
-      def doc
-        @doc ||= JSON.parse(response_body)
-      end
-
-      module UrlExtractor
-        # @param *objs [Array<Hash, Array, String, Integer, Boolean, nil>]
-        #
-        # @return [Array<String>]
-        def self.extract(*objs)
-          objs.flat_map { |obj| values_from(obj) }
-        end
-
-        # @param obj [Hash, Array, String, Integer, Boolean, nil]
-        #
-        # @return [Array<String>, String, nil]
-        def self.values_from(obj)
-          return obj.flat_map { |value| extract(value) }.compact if obj.is_a?(Array)
-          return extract(obj.values) if obj.is_a?(Hash)
+      # @param *objs [Array<Hash, Array, String, Integer, Boolean, nil>]
+      #
+      # @return [Array<String>]
+      def extract_urls_from(*objs)
+        objs.flat_map do |obj|
+          return obj.flat_map { |value| extract_urls_from(value) }.compact if obj.is_a?(Array)
+          return extract_urls_from(obj.values) if obj.is_a?(Hash)
 
           obj if obj.is_a?(String) && obj.match?(Parser::URI_REGEXP)
         end
