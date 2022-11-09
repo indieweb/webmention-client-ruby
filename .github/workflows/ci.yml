@@ -26,11 +26,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - run: bundle exec rubocop --require code_scanning --format progress --format CodeScanning::SarifFormatter --out rubocop.sarif
-      - uses: github/codeql-action/upload-sarif@v2
-        if: ${{ always() }}
-        with:
-          sarif_file: rubocop.sarif
+      - run: bundle exec rubocop
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -47,5 +43,5 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: ${{ matrix.ruby }}
-      - run: bundle exec rspec --format RSpec::Github::Formatter
+      - run: bundle exec rspec
       - uses: paambaati/codeclimate-action@v3.2.0
