@@ -5,6 +5,8 @@ module Webmention
   class Parser
     URI_REGEXP = URI::DEFAULT_PARSER.make_regexp(%w[http https]).freeze
 
+    public_constant :URI_REGEXP
+
     class << self
       # @return [Array<String>]
       attr_reader :mime_types
