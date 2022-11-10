@@ -30,9 +30,8 @@ module Webmention
       # @return [Array<String>] An array of absolute URLs.
       def results
         @results ||=
-          UrlExtractor.extract(*url_attributes)
-                      .map { |url| response_uri.join(url).to_s }
-                      .grep(Parser::URI_REGEXP)
+          extract_urls_from(*url_attributes).map { |url| response_uri.join(url).to_s }
+                                            .grep(Parser::URI_REGEXP)
       end
 
       private
@@ -40,6 +39,19 @@ module Webmention
       # @return [Nokogiri::HTML5::Document]
       def doc
         Nokogiri.HTML5(response_body)
+      end
+
+      # @param *attributes [Array<Nokogiri::XML::Attr>]
+      #
+      # @return [Array<String>]
+      def extract_urls_from(*attributes)
+        attributes.flat_map do |attribute|
+          if attribute.name == 'srcset'
+            attribute.value.split(',').map { |value| value.strip.match(/^\S+/).to_s }
+          else
+            attribute.value
+          end
+        end
       end
 
       # @return [Nokogiri::XML::Element]
@@ -55,24 +67,6 @@ module Webmention
       # @return [Nokogiri::XML::NodeSet]
       def url_nodes
         root_node.css(*CSS_SELECTORS_ARRAY)
-      end
-
-      module UrlExtractor
-        # @param *attributes [Array<Nokogiri::XML::Attr>]
-        #
-        # @return [Array<String>]
-        def self.extract(*attributes)
-          attributes.flat_map { |attribute| values_from(attribute) }
-        end
-
-        # @param attribute [Nokogiri::XML::Attr]
-        #
-        # @return [String, Array<String>]
-        def self.values_from(attribute)
-          return attribute.value unless attribute.name == 'srcset'
-
-          attribute.value.split(',').map { |value| value.strip.match(/^\S+/).to_s }
-        end
       end
     end
   end
