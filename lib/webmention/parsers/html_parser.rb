@@ -41,7 +41,7 @@ module Webmention
         Nokogiri.HTML5(response_body)
       end
 
-      # @param *attributes [Array<Nokogiri::XML::Attr>]
+      # @param attributes [Array<Nokogiri::XML::Attr>]
       #
       # @return [Array<String>]
       def extract_urls_from(*attributes)

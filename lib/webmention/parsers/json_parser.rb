@@ -15,7 +15,7 @@ module Webmention
 
       private
 
-      # @param *objs [Array<Hash, Array, String, Integer, Boolean, nil>]
+      # @param objs [Array<Hash, Array, String, Integer, Boolean, nil>]
       #
       # @return [Array<String>]
       def extract_urls_from(*objs)

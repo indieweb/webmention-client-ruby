@@ -76,7 +76,7 @@ module Webmention
   #
   # @param source [String, HTTP::URI, #to_s]
   #   An absolute URL representing a source document.
-  # @param *targets [Array<String, HTTP::URI, #to_s>]
+  # @param targets [Array<String, HTTP::URI, #to_s>]
   #   An array of absolute URLs representing multiple target documents.
   # @param vouch [String, HTTP::URI, #to_s]
   #   An absolute URL representing a document vouching for the source document.

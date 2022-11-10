@@ -104,7 +104,7 @@ module Webmention
     #   targets = ['https://aaronpk.example/notes/1', 'https://adactio.example/notes/1']
     #   client.send_webmentions(targets)
     #
-    # @param *targets [Array<String, HTTP::URI, #to_s>]
+    # @param targets [Array<String, HTTP::URI, #to_s>]
     #   An array of absolute URLs representing multiple target documents.
     #
     # @return [Array<Webmention::Response, Webmention::ErrorResponse>]

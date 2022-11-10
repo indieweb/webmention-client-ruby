@@ -57,7 +57,7 @@ module Webmention
     #   An absolute URL representing a source document.
     # @option options [String] :target
     #   An absolute URL representing a target document.
-    # @param vouch [String]
+    # @option options [String] :vouch
     #   An absolute URL representing a document vouching for the source document.
     #   See https://indieweb.org/Vouch for additional details.
     #
