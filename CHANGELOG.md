@@ -1,6 +1,13 @@
 # Changelog
 
-## v6.0.0 / 2022-05-13
+## 7.0.0 / 2022-11-09
+
+- Refactor HTML and JSON parser classes (ec58206 and 6818c05)
+- Update indieweb-endpoints dependency constraint (4cd742f)
+- Relax nokogiri dependency constraint (e86f3bc)
+- **Breaking change:** Update development Ruby to 2.7.6 and minimum Ruby to 2.7 (5bee7dd)
+
+## 6.0.0 / 2022-05-13
 
 ### New Features
 
@@ -32,17 +39,17 @@
 - Migrate test suite to RSpec (79ac684)
 - Migrate to GitHub Actions (f5a3d7a)
 
-## v5.0.0 / 2020-12-13
+## 5.0.0 / 2020-12-13
 
 - Update absolutely and indieweb-endpoints gems to v5.0 (89f4ea8)
 
-## v4.0.0 / 2020-08-23
+## 4.0.0 / 2020-08-23
 
 - **Breaking change:** Update minimum supported Ruby version to 2.5 (b2bc62f)
 - Update indieweb-endpoints to 4.0 (e61588f)
 - Update project Ruby version to 2.5.8 (2a626a6)
 
-## v3.0.0 / 2020-05-19
+## 3.0.0 / 2020-05-19
 
 - Reject "internal" URLs when sending webmentions (#24) (ccc82c8)
 - Select only HTTP/HTTPS URLs when sending webmentions (#22) (39e5852)
