@@ -15,24 +15,18 @@
 
 ## Getting Started
 
-Before installing and using webmention-client-ruby, you'll want to have [Ruby](https://www.ruby-lang.org) 2.7 (or newer) installed. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm).
+Before installing and using webmention-client-ruby, you'll want to have [Ruby](https://www.ruby-lang.org) 2.7 (or newer) installed. Using a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm) is recommended.
 
-webmention-client-ruby is developed using Ruby 2.7.7 and is additionally tested against Ruby 3.0, 3.1, and 3.2 using [GitHub Actions](https://github.com/indieweb/webmention-client-ruby/actions).
+webmention-client-ruby is developed using Ruby 2.7.8 and is tested against additional Ruby versions using [GitHub Actions](https://github.com/indieweb/webmention-client-ruby/actions).
 
 ## Installation
 
-If you're using [Bundler](https://bundler.io) to manage gem dependencies, add webmention-client-ruby to your project's `Gemfile`:
+Add webmention-client-ruby to your project's `Gemfile` and run `bundle install`:
 
 ```ruby
-gem 'webmention'
-```
+source "https://rubygems.org"
 
-…and run `bundle install` in your shell.
-
-To install the gem manually, run the following in your shell:
-
-```sh
-gem install webmention
+gem "webmention-client"
 ```
 
 ## Usage
@@ -53,7 +47,9 @@ webmention-client-ruby was completely rewritten for version 6 to better support 
 
 ## Contributing
 
-Interested in helping improve webmention-client-ruby? Awesome! Your help is greatly appreciated. See [CONTRIBUTING.md](https://github.com/indieweb/webmention-client-ruby/blob/main/CONTRIBUTING.md) for details.
+See [CONTRIBUTING.md](https://github.com/indieweb/webmention-client-ruby/blob/main/CONTRIBUTING.md) for more on how to contribute to webmention-client-ruby. Your help is greatly appreciated!
+
+By contributing to and participating in the development of webmention-client-ruby, you acknowledge that you have read and agree to the [IndieWeb Code of Conduct](https://indieweb.org/code-of-conduct).
 
 ## Acknowledgments
 
