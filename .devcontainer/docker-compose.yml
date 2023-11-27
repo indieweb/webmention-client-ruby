@@ -1,0 +1,9 @@
+services:
+  default:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    init: true
+    volumes:
+      - ..:/workspace:cached
