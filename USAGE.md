@@ -7,10 +7,10 @@ Before using webmention-client-ruby, please read the [Getting Started](https://g
 With webmention-client-ruby installed, you may send a webmention from a source URL to a target URL:
 
 ```ruby
-require 'webmention'
+require "webmention"
 
-source = 'https://jgarber.example/post/100' # A post on your website
-target = 'https://aaronpk.example/post/100' # A post on someone else's website
+source = "https://jgarber.example/post/100" # A post on your website
+target = "https://aaronpk.example/post/100" # A post on someone else's website
 
 response = Webmention.send_webmention(source, target)
 ```
@@ -61,8 +61,8 @@ response.uri       #=> HTTP::URI
 To send webmentions to multiple target URLs mentioned by a source URL:
 
 ```ruby
-source = 'https://jgarber.example/post/100'
-targets = ['https://aaronpk.example/notes/1', 'https://adactio.example/notes/1']
+source = "https://jgarber.example/post/100"
+targets = ["https://aaronpk.example/notes/1", "https://adactio.example/notes/1"]
 
 responses = Webmention.send_webmentions(source, targets)
 ```
@@ -75,10 +75,10 @@ webmention-client-ruby supports submitting a [vouch](https://indieweb.org/Vouch)
 
 ```ruby
 # Send a webmention with a vouch URL to a target URL
-Webmention.send_webmention(source, target, vouch: 'https://tantek.example/notes/1')
+Webmention.send_webmention(source, target, vouch: "https://tantek.example/notes/1")
 
 # Send webmentions with a vouch URL to multiple target URLs
-Webmention.send_webmentions(source, targets, vouch: 'https://tantek.example/notes/1')
+Webmention.send_webmentions(source, targets, vouch: "https://tantek.example/notes/1")
 ```
 
 ## Discovering mentioned URLs
@@ -86,7 +86,7 @@ Webmention.send_webmentions(source, targets, vouch: 'https://tantek.example/note
 To retrieve unique URLs mentioned by a URL:
 
 ```ruby
-urls = Webmention.mentioned_urls('https://jgarber.example/post/100')
+urls = Webmention.mentioned_urls("https://jgarber.example/post/100")
 ```
 
 `Webmention.mentioned_urls` will crawl the provided URL, parse the response body, and return a sorted list of unique URLs. Response bodies are parsed using MIME type-specific rules as noted in the [Verifying a webmention](#verifying-a-webmention) section below.
@@ -129,7 +129,7 @@ verification = Webmention.verify_webmention(source, target)
 
 # Verify that a source URL links to a target URL and that the vouch URL mentions
 # the source URL's domain
-verification = Webmention.verify_webmention(source, target, vouch: 'https://tantek.example/notes/1')
+verification = Webmention.verify_webmention(source, target, vouch: "https://tantek.example/notes/1")
 ```
 
 `Webmention.verify_webmention` returns an instance of `Webmention::Verification` which includes the following methods (each returns either `true` or `false`):
