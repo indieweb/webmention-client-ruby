@@ -1,7 +1,0 @@
-inherit_from:
-  - https://raw.githubusercontent.com/jgarber623/rubocop-configs/main/.rubocop.gem.yml
-
-# Checks that the keys, separators, and values of a multi-line hash literal are
-# aligned according to configuration.
-Layout/HashAlignment:
-  EnforcedHashRocketStyle: table
