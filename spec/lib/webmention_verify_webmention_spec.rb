@@ -20,7 +20,7 @@ RSpec.describe Webmention, ".verify_webmention" do
       stub_request(:get, source_url).to_return(
         body: load_fixture(:sample_post_no_links),
         headers: {
-          'Content-Type': "text/html"
+          "Content-Type": "text/html"
         }
       )
     end
@@ -42,7 +42,7 @@ RSpec.describe Webmention, ".verify_webmention" do
       stub_request(:get, source_url).to_return(
         body: %({"url":"#{target_url}"}),
         headers: {
-          'Content-Type': "application/json"
+          "Content-Type": "application/json"
         }
       )
     end
@@ -67,14 +67,14 @@ RSpec.describe Webmention, ".verify_webmention" do
       stub_request(:get, source_url).to_return(
         body: load_fixture(:sample_post_anchors_only),
         headers: {
-          'Content-Type': "text/html"
+          "Content-Type": "text/html"
         }
       )
 
       stub_request(:get, vouch_url).to_return(
         body: load_fixture(:sample_post_no_links),
         headers: {
-          'Content-Type': "text/html"
+          "Content-Type": "text/html"
         }
       )
     end
@@ -99,14 +99,14 @@ RSpec.describe Webmention, ".verify_webmention" do
       stub_request(:get, source_url).to_return(
         body: load_fixture(:sample_post_anchors_only),
         headers: {
-          'Content-Type': "text/html"
+          "Content-Type": "text/html"
         }
       )
 
       stub_request(:get, vouch_url).to_return(
         body: "I vouch for:\n\nhttps://jgarber.example\nhttps://adactio.example",
         headers: {
-          'Content-Type': "text/plain"
+          "Content-Type": "text/plain"
         }
       )
     end

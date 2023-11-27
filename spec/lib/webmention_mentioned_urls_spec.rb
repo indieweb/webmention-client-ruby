@@ -19,7 +19,7 @@ RSpec.describe Webmention, ".mentioned_urls" do
     before do
       stub_request(:get, source_url).to_return(
         headers: {
-          'Content-Type': "foo/bar"
+          "Content-Type": "foo/bar"
         }
       )
     end
@@ -34,7 +34,7 @@ RSpec.describe Webmention, ".mentioned_urls" do
       stub_request(:get, source_url).to_return(
         body: load_fixture(:sample_post_no_links),
         headers: {
-          'Content-Type': "text/html"
+          "Content-Type": "text/html"
         }
       )
     end
@@ -58,7 +58,7 @@ RSpec.describe Webmention, ".mentioned_urls" do
       stub_request(:get, source_url).to_return(
         body: load_fixture(:sample_post),
         headers: {
-          'Content-Type': "text/html"
+          "Content-Type": "text/html"
         }
       )
     end
@@ -79,7 +79,7 @@ RSpec.describe Webmention, ".mentioned_urls" do
       stub_request(:get, source_url).to_return(
         body: load_fixture(:sample_post_anchors_only),
         headers: {
-          'Content-Type': "text/html"
+          "Content-Type": "text/html"
         }
       )
     end
