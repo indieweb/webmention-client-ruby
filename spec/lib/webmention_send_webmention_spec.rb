@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-RSpec.describe Webmention, '.send_webmention' do
+RSpec.describe Webmention, ".send_webmention" do
   subject(:response) { described_class.send_webmention(source_url, target_url) }
 
-  let(:source_url) { 'https://jgarber.example/foo' }
-  let(:target_url) { 'https://aaronpk.example/bar' }
+  let(:source_url) { "https://jgarber.example/foo" }
+  let(:target_url) { "https://aaronpk.example/bar" }
 
-  context 'when target URL is not an absolute URL' do
-    let(:target_url) { '/foo' }
-    let(:message) { 'unknown scheme: ' }
+  context "when target URL is not an absolute URL" do
+    let(:target_url) { "/foo" }
+    let(:message) { "unknown scheme: " }
 
     it { is_expected.to be_a(Webmention::ErrorResponse) }
     it { is_expected.to have_attributes(message: message, ok?: false) }
   end
 
-  context 'when target URL unreachable' do
-    let(:message) { 'Exception from WebMock' }
+  context "when target URL unreachable" do
+    let(:message) { "Exception from WebMock" }
 
     before do
       stub_request(:get, target_url).to_raise(OpenSSL::SSL::SSLError)
@@ -25,7 +25,7 @@ RSpec.describe Webmention, '.send_webmention' do
     it { is_expected.to have_attributes(message: message, ok?: false) }
   end
 
-  context 'when target URL does not advertise a Webmention endpoint' do
+  context "when target URL does not advertise a Webmention endpoint" do
     let(:message) { "No webmention endpoint found for target URL #{target_url}" }
 
     before do
@@ -36,7 +36,7 @@ RSpec.describe Webmention, '.send_webmention' do
     it { is_expected.to have_attributes(message: message, ok?: false) }
   end
 
-  context 'when target URL advertises a Webmention endpoint' do
+  context "when target URL advertises a Webmention endpoint" do
     let(:webmention_endpoint) { "#{target_url}/webmention" }
 
     before do

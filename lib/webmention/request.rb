@@ -9,8 +9,8 @@ module Webmention
         max_hops: 20
       },
       headers: {
-        accept: '*/*',
-        user_agent: 'Webmention Client (https://rubygems.org/gems/webmention)'
+        accept: "*/*",
+        user_agent: "Webmention Client (https://rubygems.org/gems/webmention)"
       },
       timeout_options: {
         connect_timeout: 5,
