@@ -9,11 +9,11 @@ module Webmention
       Client.register_parser(self)
 
       HTML_ATTRIBUTES_MAP = {
-        "cite"   => %w[blockquote del ins q],
-        "data"   => %w[object],
-        "href"   => %w[a area],
+        "cite" => %w[blockquote del ins q],
+        "data" => %w[object],
+        "href" => %w[a area],
         "poster" => %w[video],
-        "src"    => %w[audio embed img source track video],
+        "src" => %w[audio embed img source track video],
         "srcset" => %w[img source]
       }.freeze
 
@@ -30,8 +30,9 @@ module Webmention
       # @return [Array<String>] An array of absolute URLs.
       def results
         @results ||=
-          extract_urls_from(*url_attributes).map { |url| response_uri.join(url).to_s }
-                                            .grep(Parser::URI_REGEXP)
+          extract_urls_from(*url_attributes)
+            .map { |url| response_uri.join(url).to_s }
+            .grep(Parser::URI_REGEXP)
       end
 
       private

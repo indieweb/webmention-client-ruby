@@ -5,25 +5,25 @@ require_relative "lib/webmention/version"
 Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.7", "< 4"
 
-  spec.name          = "webmention"
-  spec.version       = Webmention::VERSION
-  spec.authors       = ["Jason Garber"]
-  spec.email         = ["jason@sixtwothree.org"]
+  spec.name = "webmention"
+  spec.version = Webmention::VERSION
+  spec.authors = ["Jason Garber"]
+  spec.email = ["jason@sixtwothree.org"]
 
-  spec.summary       = "Webmention notification client"
-  spec.description   = "A Ruby gem for sending and verifying Webmention notifications."
-  spec.homepage      = "https://github.com/indieweb/webmention-client-ruby"
-  spec.license       = "Apache-2.0"
+  spec.summary = "Webmention notification client"
+  spec.description = "A Ruby gem for sending and verifying Webmention notifications."
+  spec.homepage = "https://github.com/indieweb/webmention-client-ruby"
+  spec.license = "Apache-2.0"
 
-  spec.files         = Dir["lib/**/*"].reject { |f| File.directory?(f) }
-  spec.files        += %w[LICENSE CHANGELOG.md CONTRIBUTING.md README.md USAGE.md]
-  spec.files        += %w[webmention.gemspec]
+  spec.files = Dir["lib/**/*"].reject { |f| File.directory?(f) }
+  spec.files += %w[LICENSE CHANGELOG.md CONTRIBUTING.md README.md USAGE.md]
+  spec.files += %w[webmention.gemspec]
 
   spec.require_paths = ["lib"]
 
   spec.metadata = {
-    "bug_tracker_uri"       => "#{spec.homepage}/issues",
-    "changelog_uri"         => "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md",
+    "bug_tracker_uri" => "#{spec.homepage}/issues",
+    "changelog_uri" => "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md",
     "rubygems_mfa_required" => "true"
   }
 

@@ -93,8 +93,7 @@ module Webmention
     # @return [Webmention::Response, Webmention::ErrorResponse]
     def perform
       Response.new(client.request(method, uri, options), self)
-    rescue HTTP::Error,
-           OpenSSL::SSL::SSLError => e
+    rescue HTTP::Error, OpenSSL::SSL::SSLError => e
       ErrorResponse.new(e.message, self)
     end
 

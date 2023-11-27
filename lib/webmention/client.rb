@@ -139,8 +139,10 @@ module Webmention
         vouch: vouch_url
       }
 
-      opts.transform_values { |value| value.to_s.strip }
-          .delete_if { |_, value| value.empty? }
+      opts.transform_values! { |value| value.to_s.strip }
+      opts.reject! { |_, value| value.empty? }
+
+      opts
     end
   end
 end
