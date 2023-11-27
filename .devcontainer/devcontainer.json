@@ -1,0 +1,9 @@
+{
+  "name": "webmention-client-ruby",
+  "features": {},
+  "customizations": {},
+  "workspaceFolder": "/workspace",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "default",
+  "postCreateCommand": "bundle install"
+}
