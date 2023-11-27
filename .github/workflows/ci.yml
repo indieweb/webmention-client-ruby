@@ -1,28 +1,18 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+  workflow_dispatch:
 
 jobs:
-  analyze:
-    name: Analyze
-    permissions:
-      contents: read
-      security-events: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: github/codeql-action/init@v2
-        with:
-          languages: ruby
-      - uses: github/codeql-action/analyze@v2
   lint:
     name: Lint
-    permissions:
-      contents: read
-      security-events: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
@@ -30,15 +20,14 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    env:
-      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+    needs: lint
     strategy:
       fail-fast: false
       matrix:
-        # See: https://github.com/actions/runner/issues/849
-        ruby: [2.7, "3.0", 3.1, 3.2]
+        os: [macos-latest, ubuntu-latest]
+        ruby: ["2.7", "3.0", "3.1", "3.2", "3.3"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
