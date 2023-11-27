@@ -63,13 +63,16 @@ module Webmention
     def mentioned_urls
       response = source_url.response
 
-      self.class
-          .registered_parsers[response.mime_type]
-          .new(response.body, response.uri)
-          .results
-          .uniq
-          .reject { |url| url.match(/^#{response.uri}(?:#.*)?$/) }
-          .sort
+      urls = Set.new(
+        self.class
+            .registered_parsers[response.mime_type]
+            .new(response.body, response.uri)
+            .results
+      )
+
+      urls.reject! { |url| url.match(/^#{response.uri}(?:#.*)?$/) }
+
+      urls.to_a.sort
     end
 
     # Send a webmention from this client's source URL to a target URL.

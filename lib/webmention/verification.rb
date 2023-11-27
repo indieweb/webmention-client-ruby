@@ -61,7 +61,7 @@ module Webmention
     #
     # @return [Array<String>]
     def mentioned_domains(response)
-      mentioned_urls(response).map { |url| HTTP::URI.parse(url).host }.uniq
+      Set.new(mentioned_urls(response).map { |url| HTTP::URI.parse(url).host }).to_a
     end
 
     # @param response [Webmention::Response]
@@ -70,10 +70,11 @@ module Webmention
     #
     # @return [Array<String>]
     def mentioned_urls(response)
-      Client.registered_parsers[response.mime_type]
-            .new(response.body, response.uri)
-            .results
-            .uniq
+      Set.new(
+        Client.registered_parsers[response.mime_type]
+              .new(response.body, response.uri)
+              .results
+      ).to_a
     end
   end
 end
