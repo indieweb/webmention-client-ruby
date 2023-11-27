@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-RSpec.describe Webmention, '.send_webmentions' do
+RSpec.describe Webmention, ".send_webmentions" do
   subject(:response) { described_class.send_webmentions(*target_urls) }
 
-  let(:source_url) { 'https://jgarber.example/foo' }
+  let(:source_url) { "https://jgarber.example/foo" }
 
   let(:target_urls) do
     [
-      'https://aaronpk.example/bar',
-      'https://adactio.example/biz',
-      'https://tantek.example/baz'
+      "https://aaronpk.example/bar",
+      "https://adactio.example/biz",
+      "https://tantek.example/baz"
     ]
   end
 

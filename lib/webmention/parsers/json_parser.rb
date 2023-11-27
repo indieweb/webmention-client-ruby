@@ -4,7 +4,7 @@ module Webmention
   module Parsers
     # @api private
     class JsonParser < Parser
-      @mime_types = ['application/json']
+      @mime_types = ["application/json"]
 
       Client.register_parser(self)
 

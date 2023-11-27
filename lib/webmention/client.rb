@@ -43,7 +43,7 @@ module Webmention
     # :nocov:
     # @return [String]
     def inspect
-      "#<#{self.class}:#{format('%#0x', object_id)} " \
+      "#<#{self.class}:#{format("%#0x", object_id)} " \
         "source_url: #{source_url} " \
         "vouch_url: #{vouch_url}>"
     end
@@ -139,8 +139,10 @@ module Webmention
         vouch: vouch_url
       }
 
-      opts.transform_values { |value| value.to_s.strip }
-          .delete_if { |_, value| value.empty? }
+      opts.transform_values! { |value| value.to_s.strip }
+      opts.reject! { |_, value| value.empty? }
+
+      opts
     end
   end
 end

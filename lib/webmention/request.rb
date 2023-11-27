@@ -9,8 +9,8 @@ module Webmention
         max_hops: 20
       },
       headers: {
-        accept: '*/*',
-        user_agent: 'Webmention Client (https://rubygems.org/gems/webmention)'
+        accept: "*/*",
+        user_agent: "Webmention Client (https://rubygems.org/gems/webmention)"
       },
       timeout_options: {
         connect_timeout: 5,
@@ -82,7 +82,7 @@ module Webmention
     # :nocov:
     # @return [String]
     def inspect
-      "#<#{self.class}:#{format('%#0x', object_id)} " \
+      "#<#{self.class}:#{format("%#0x", object_id)} " \
         "method: #{method.upcase}, " \
         "url: #{uri}>"
     end
@@ -93,8 +93,7 @@ module Webmention
     # @return [Webmention::Response, Webmention::ErrorResponse]
     def perform
       Response.new(client.request(method, uri, options), self)
-    rescue HTTP::Error,
-           OpenSSL::SSL::SSLError => e
+    rescue HTTP::Error, OpenSSL::SSL::SSLError => e
       ErrorResponse.new(e.message, self)
     end
 

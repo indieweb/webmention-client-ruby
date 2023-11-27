@@ -4,24 +4,24 @@ module Webmention
   module Parsers
     # @api private
     class HtmlParser < Parser
-      @mime_types = ['text/html']
+      @mime_types = ["text/html"]
 
       Client.register_parser(self)
 
       HTML_ATTRIBUTES_MAP = {
-        'cite'   => %w[blockquote del ins q],
-        'data'   => %w[object],
-        'href'   => %w[a area],
-        'poster' => %w[video],
-        'src'    => %w[audio embed img source track video],
-        'srcset' => %w[img source]
+        "cite" => %w[blockquote del ins q],
+        "data" => %w[object],
+        "href" => %w[a area],
+        "poster" => %w[video],
+        "src" => %w[audio embed img source track video],
+        "srcset" => %w[img source]
       }.freeze
 
       CSS_SELECTORS_ARRAY = HTML_ATTRIBUTES_MAP.flat_map do |attribute, names|
         names.map { |name| "#{name}[#{attribute}]" }
       end.freeze
 
-      ROOT_NODE_SELECTORS_ARRAY = ['.h-entry .e-content', '.h-entry', 'body'].freeze
+      ROOT_NODE_SELECTORS_ARRAY = [".h-entry .e-content", ".h-entry", "body"].freeze
 
       private_constant :HTML_ATTRIBUTES_MAP
       private_constant :CSS_SELECTORS_ARRAY
@@ -30,8 +30,9 @@ module Webmention
       # @return [Array<String>] An array of absolute URLs.
       def results
         @results ||=
-          extract_urls_from(*url_attributes).map { |url| response_uri.join(url).to_s }
-                                            .grep(Parser::URI_REGEXP)
+          extract_urls_from(*url_attributes)
+            .map { |url| response_uri.join(url).to_s }
+            .grep(Parser::URI_REGEXP)
       end
 
       private
@@ -46,8 +47,8 @@ module Webmention
       # @return [Array<String>]
       def extract_urls_from(*attributes)
         attributes.flat_map do |attribute|
-          if attribute.name == 'srcset'
-            attribute.value.split(',').map { |value| value.strip.match(/^\S+/).to_s }
+          if attribute.name == "srcset"
+            attribute.value.split(",").map { |value| value.strip.match(/^\S+/).to_s }
           else
             attribute.value
           end
