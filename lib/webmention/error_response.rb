@@ -27,7 +27,7 @@ module Webmention
     # :nocov:
     # @return [String]
     def inspect
-      "#<#{self.class}:#{format('%#0x', object_id)} " \
+      "#<#{self.class}:#{format("%#0x", object_id)} " \
         "message: #{message}>"
     end
     # :nocov:

@@ -14,7 +14,7 @@ module Webmention
     # :nocov:
     # @return [String]
     def inspect
-      "#<#{self.class}:#{format('%#0x', object_id)} " \
+      "#<#{self.class}:#{format("%#0x", object_id)} " \
         "source_url: #{source_url} " \
         "target_url: #{target_url} " \
         "vouch_url: #{vouch_url}>"
