@@ -4,6 +4,8 @@ on:
   pull_request:
   push:
     branches: [main]
+  schedule:
+    - cron: "0 12 * * 3"
   workflow_call:
   workflow_dispatch:
 
