@@ -8,9 +8,9 @@ There are a couple ways you can help improve webmention-client-ruby:
 
 ## Getting Started
 
-webmention-client-ruby is developed using Ruby 2.7.8 and is tested against additional Ruby versions using [GitHub Actions](https://github.com/indieweb/webmention-client-ruby/actions).
+webmention-client-ruby is developed using Ruby 3.3.0 and is tested against additional Ruby versions using [GitHub Actions](https://github.com/indieweb/webmention-client-ruby/actions).
 
-Before making changes to webmention-client-ruby, you'll want to install Ruby 2.7.8. Using a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm) is recommended. Once you've installed Ruby 2.7.8 using your method of choice, install the project's gems by running:
+Before making changes to webmention-client-ruby, you'll want to install Ruby 3.3.0. Using a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm) is recommended. Once you've installed Ruby 3.3.0 using your method of choice, install the project's gems by running:
 
 ```sh
 bundle install
