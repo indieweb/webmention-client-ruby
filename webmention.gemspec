@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata = {
     "bug_tracker_uri" => "#{spec.homepage}/issues",
-    "changelog_uri" => "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md",
+    "changelog_uri" => "#{spec.homepage}/releases/tag/v#{spec.version}",
     "rubygems_mfa_required" => "true",
     "source_code_uri" => "#{spec.homepage}/tree/v#{spec.version}"
   }
