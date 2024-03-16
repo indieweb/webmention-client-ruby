@@ -1,5 +1,8 @@
 # Changelog
 
+> [!NOTE]
+> From v8.0.0, changes are documented using [GitHub Releases](https://github.com/indieweb/webmention-client-ruby/releases). For a given release, metadata on RubyGems.org will link to that version's Release page.
+
 ## 7.0.0 / 2022-11-09
 
 - Refactor HTML and JSON parser classes (ec58206 and 6818c05)
