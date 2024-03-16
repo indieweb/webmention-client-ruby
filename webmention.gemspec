@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
     "source_code_uri" => "#{spec.homepage}/tree/v#{spec.version}"
   }
 
-  spec.add_runtime_dependency "http", "~> 5.0"
-  spec.add_runtime_dependency "indieweb-endpoints", "~> 8.0"
-  spec.add_runtime_dependency "nokogiri", ">= 1.13"
+  spec.add_runtime_dependency "http", "~> 5.2"
+  spec.add_runtime_dependency "indieweb-endpoints", "~> 9.0"
+  spec.add_runtime_dependency "nokogiri", ">= 1.16"
 end
