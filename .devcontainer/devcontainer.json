@@ -1,9 +1,49 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ruby
 {
-  "name": "webmention-client-ruby",
-  "features": {},
-  "customizations": {},
-  "workspaceFolder": "/workspace",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "default",
-  "postCreateCommand": "bundle install"
+  "name": "indieweb-endpoints-ruby",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "image": "mcr.microsoft.com/devcontainers/ruby:1-3.3-bookworm",
+
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/apt-packages:1": {
+      "packages": "less,nano"
+    }
+  },
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "bundle install",
+
+  // Configure tool-specific properties.
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Set *default* container specific settings.json values on container create.
+      "settings": {
+        "rubyLsp:formatter": "none",
+        "rubyLsp.rubyVersionManager": "none"
+      },
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "Shopify.ruby-lsp"
+      ]
+    }
+  },
+
+  // Set or override environment variables for the container.
+  "containerEnv": {
+    "EDITOR": "nano",
+    "LESS": "-FMR",
+    "PAGER": "less",
+    "RUBY_DEBUG_HISTORY_FILE": "${containerWorkspaceFolder}/.rdbg_history",
+    "RUBY_DEBUG_SAVE_HISTORY": "1000",
+    "VISUAL": "code --wait"
+  }
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
 }
