@@ -54,7 +54,8 @@ response.mime_type #=> String
 response.uri       #=> HTTP::URI
 ```
 
-💡 **Note:** `Webmention::Response` objects may return a variety of status codes that will vary depending on the endpoint's capabilities and the success or failure of the request. See [the Webmention spec](https://www.w3.org/TR/webmention/) for more on status codes on their implications. A `Webmention::Response` responding affirmatively to `ok?` _may_ also have a non-successful HTTP status code (e.g. `404 Not Found`).
+> [!NOTE]
+> `Webmention::Response` objects may return a variety of status codes that will vary depending on the endpoint's capabilities and the success or failure of the request. See [the Webmention spec](https://www.w3.org/TR/webmention/) for more on status codes on their implications. A `Webmention::Response` responding affirmatively to `ok?` _may_ also have a non-successful HTTP status code (e.g. `404 Not Found`).
 
 ## Sending multiple webmentions
 
@@ -93,7 +94,8 @@ urls = Webmention.mentioned_urls("https://jgarber.example/post/100")
 
 When parsing HTML documents, webmention-client-ruby will find the first [h-entry](https://microformats.org/wiki/h-entry) and search its markup for URLs. If no h-entry is found, the parser will search the document's `<body>`.
 
-💡 **Note:** Links pointing to the supplied URL (or those with internal fragment identifiers) will be rejected. You may wish to additionally filter the results returned by `Webmention.mentioned_urls` before sending webmentions.
+> [!NOTE]
+> Links pointing to the supplied URL (or those with internal fragment identifiers) will be rejected. You may wish to additionally filter the results returned by `Webmention.mentioned_urls` before sending webmentions.
 
 ## Verifying a webmention
 
@@ -141,7 +143,8 @@ verification.verify_vouch?
 verification.vouch_mentions_source?
 ```
 
-💡 **Note:** `Webmention.verify_webmention` parses HTML documents using the same rules outlined in [Discovering mentioned URLs](#discovering-mentioned-urls).
+> [!NOTE]
+> `Webmention.verify_webmention` parses HTML documents using the same rules outlined in [Discovering mentioned URLs](#discovering-mentioned-urls).
 
 ## Exception Handling
 
