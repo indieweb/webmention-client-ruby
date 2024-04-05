@@ -29,6 +29,7 @@
       },
       "extensions": [
         "EditorConfig.EditorConfig",
+        "jasonnutter.vscode-codeowners",
         "Shopify.ruby-lsp"
       ]
     }
