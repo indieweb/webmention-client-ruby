@@ -26,7 +26,7 @@ Add webmention-client-ruby to your project's `Gemfile` and run `bundle install`:
 ```ruby
 source "https://rubygems.org"
 
-gem "webmention-client"
+gem "webmention"
 ```
 
 ## Usage
