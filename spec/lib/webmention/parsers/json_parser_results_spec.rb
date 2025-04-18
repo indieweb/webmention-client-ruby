@@ -16,7 +16,7 @@ RSpec.describe Webmention::Parsers::JsonParser, "#results" do
       [
         "https://target.example.com/post/100",
         "https://target.example.com/post/200",
-        "https://target.example.com/post/100"
+        "https://target.example.com/post/100",
       ]
     end
 

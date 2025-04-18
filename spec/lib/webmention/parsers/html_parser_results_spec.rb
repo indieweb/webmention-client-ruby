@@ -20,7 +20,7 @@ RSpec.describe Webmention::Parsers::HtmlParser, "#results" do
         "https://jgarber.example",
         "https://aaronpk.example/image.jpg",
         "https://aaronpk.example/image-1x.jpg",
-        "https://aaronpk.example/image-2x.jpg"
+        "https://aaronpk.example/image-2x.jpg",
       ]
     end
 

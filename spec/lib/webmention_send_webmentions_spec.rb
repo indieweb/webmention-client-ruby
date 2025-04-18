@@ -9,7 +9,7 @@ RSpec.describe Webmention, ".send_webmentions" do
     [
       "https://aaronpk.example/bar",
       "https://adactio.example/biz",
-      "https://tantek.example/baz"
+      "https://tantek.example/baz",
     ]
   end
 

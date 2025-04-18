@@ -50,7 +50,7 @@ RSpec.describe Webmention, ".mentioned_urls" do
         "https://aaronpk.example/image.jpg",
         "https://aaronpk.example/post/1",
         "https://aaronpk.example/post/2",
-        "https://jgarber.example"
+        "https://jgarber.example",
       ]
     end
 
@@ -71,7 +71,7 @@ RSpec.describe Webmention, ".mentioned_urls" do
       [
         "https://aaronpk.example/post/1",
         "https://aaronpk.example/post/2",
-        "https://jgarber.example/post/1"
+        "https://jgarber.example/post/1",
       ]
     end
 
