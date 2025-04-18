@@ -17,9 +17,8 @@ module Webmention
         "srcset" => ["img", "source"],
       }.freeze
 
-      CSS_SELECTORS_ARRAY = HTML_ATTRIBUTES_MAP.flat_map do |attribute, names|
-        names.map { |name| "#{name}[#{attribute}]" }
-      end.freeze
+      CSS_SELECTORS_ARRAY = HTML_ATTRIBUTES_MAP
+                              .flat_map { |attribute, names| names.map { |name| "#{name}[#{attribute}]" } }.freeze
 
       ROOT_NODE_SELECTORS_ARRAY = [".h-entry .e-content", ".h-entry", "body"].freeze
 
