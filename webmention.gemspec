@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Jason Garber"]
   spec.email = ["jason@sixtwothree.org"]
 
-  spec.summary = "Webmention notification client"
-  spec.description = "A Ruby gem for sending and verifying Webmention notifications."
+  spec.summary = "A Ruby gem for sending and verifying Webmention notifications."
+  spec.description = spec.summary
   spec.homepage = "https://github.com/indieweb/webmention-client-ruby"
   spec.license = "Apache-2.0"
 
@@ -22,6 +22,8 @@ Gem::Specification.new do |spec|
   spec.metadata = {
     "bug_tracker_uri" => "#{spec.homepage}/issues",
     "changelog_uri" => "#{spec.homepage}/releases/tag/v#{spec.version}",
+    "documentation_uri" => "https://rubydoc.info/gems/#{spec.name}/#{spec.version}",
+    "homepage_uri" => spec.homepage,
     "rubygems_mfa_required" => "true",
     "source_code_uri" => "#{spec.homepage}/tree/v#{spec.version}",
   }
