@@ -16,7 +16,6 @@
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
-require "debug"
 require "simplecov"
 require "webmock/rspec"
 
