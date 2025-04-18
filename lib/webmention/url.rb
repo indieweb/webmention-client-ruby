@@ -35,7 +35,7 @@ module Webmention
 
     # @return [String, nil]
     def webmention_endpoint
-      @webmention_endpoint ||= IndieWeb::Endpoints::Parser.new(response).results[:webmention] if response.ok?
+      @webmention_endpoint ||= IndieWeb::Endpoints::Parser.new(response).to_h[:webmention] if response.ok?
     end
 
     # @return [Boolean]
