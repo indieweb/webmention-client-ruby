@@ -62,7 +62,7 @@ module Webmention
 
       # @return [Array<Nokogiri::XML::Attr>]
       def url_attributes
-        url_nodes.flat_map(&:attribute_nodes).find_all { |attribute| HTML_ATTRIBUTES_MAP.key?(attribute.name) }
+        url_nodes.flat_map(&:attribute_nodes).select { |attribute| HTML_ATTRIBUTES_MAP.key?(attribute.name) }
       end
 
       # @return [Nokogiri::XML::NodeSet]
