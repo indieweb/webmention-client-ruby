@@ -2,9 +2,15 @@
 
 module Webmention
   class Verification
-    # @param source_url [Webmention::Url]
-    # @param target_url [Webmention::Url]
-    # @param vouch_url [Webmention::Url]
+    # Create a new {Verification}.
+    #
+    # @param source_url [Url]
+    #   An {URL} representing a source document.
+    # @param target_url [Url]
+    #   An {URL} representing a target document.
+    # @param vouch_url [Url]
+    #   An {URL} representing a document vouching for the source document.
+    #   See https://indieweb.org/Vouch for additional details.
     def initialize(source_url, target_url, vouch_url: nil)
       @source_url = source_url
       @target_url = target_url
@@ -46,27 +52,27 @@ module Webmention
 
     private
 
-    # @return [Webmention::Url]
+    # @return [Url]
     attr_reader :source_url
 
-    # @return [Webmention::Url]
+    # @return [Url]
     attr_reader :target_url
 
-    # @return [Webmention::Url]
+    # @return [Url]
     attr_reader :vouch_url
 
-    # @param response [Webmention::Response]
+    # @param response [Response]
     #
-    # @raise (see Webmention::Client#mentioned_urls)
+    # @raise (see Client#mentioned_urls)
     #
     # @return [Array<String>]
     def mentioned_domains(response)
       Set.new(mentioned_urls(response).map { |url| HTTP::URI.parse(url).host }).to_a
     end
 
-    # @param response [Webmention::Response]
+    # @param response [Response]
     #
-    # @raise (see Webmention::Client#mentioned_urls)
+    # @raise (see Client#mentioned_urls)
     #
     # @return [Array<String>]
     def mentioned_urls(response)

@@ -5,20 +5,18 @@ module Webmention
     # @return [String]
     attr_reader :message
 
-    # @return [Webmention::Request]
+    # @return [Request]
     attr_reader :request
 
-    # Create a new Webmention::ErrorResponse.
+    # Create a new {ErrorResponse}.
     #
     # Instances of this class represent HTTP requests that generated errors
     # (e.g. connection error, SSL error) or that could not locate a Webmention
-    # endpoint. The nature of the error is captured in the <code>#message</code>
-    # instance method.
+    # endpoint. The nature of the error is captured in the {#message} instance
+    # method.
     #
     # @param message [String]
-    # @param request [Webmention::Request]
-    #
-    # @return [Webmention::ErrorResponse]
+    # @param request [Request]
     def initialize(message, request)
       @message = message
       @request = request

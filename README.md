@@ -12,6 +12,7 @@
 - Perform [endpoint discovery](https://www.w3.org/TR/webmention/#sender-discovers-receiver-webmention-endpoint) on mentioned URLs.
 - Send webmentions to one or more mentioned URLs (and optionally include a [vouch](https://indieweb.org/Vouch) URL).
 - Verify that a received webmention's source URL links to a target URL (and optionally verify that a vouch URL mentions the source URL's domain).
+- Supports Ruby 2.6 and newer.
 
 ## Getting Started
 

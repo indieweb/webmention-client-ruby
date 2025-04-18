@@ -2,8 +2,10 @@
 
 module Webmention
   class Request
-    # Defaults derived from Webmention specification examples.
+    # Set defaults derived from Webmention specification examples.
+    #
     # @see https://www.w3.org/TR/webmention/#limits-on-get-requests
+    #   W3C Webmention Recommendation § 4.2 Limits on GET requests
     HTTP_CLIENT_OPTS = {
       follow: {
         max_hops: 20,
@@ -32,11 +34,11 @@ module Webmention
     # Send an HTTP GET request to the supplied URL.
     #
     # @example
-    #   Request.get('https://jgarber.example/posts/100')
+    #   Webmention::Request.get("https://jgarber.example/posts/100")
     #
     # @param url [String]
     #
-    # @return [Webmention::Response, Webmention::ErrorResponse]
+    # @return [Response, ErrorResponse]
     def self.get(url)
       new(:get, url).perform
     end
@@ -44,11 +46,11 @@ module Webmention
     # Send an HTTP POST request with form-encoded data to the supplied URL.
     #
     # @example
-    #   Request.post(
-    #     'https://aaronpk.example/webmention',
-    #     source: 'https://jgarber.examples/posts/100',
-    #     target: 'https://aaronpk.example/notes/1',
-    #     vouch: 'https://tantek.example/notes/1'
+    #   Webmention::Request.post(
+    #     "https://aaronpk.example/webmention",
+    #     source: "https://jgarber.examples/posts/100",
+    #     target: "https://aaronpk.example/notes/1",
+    #     vouch: "https://tantek.example/notes/1"
     #   )
     #
     # @param url [String]
@@ -61,18 +63,16 @@ module Webmention
     #   An absolute URL representing a document vouching for the source document.
     #   See https://indieweb.org/Vouch for additional details.
     #
-    # @return [Webmention::Response, Webmention::ErrorResponse]
+    # @return [Response, ErrorResponse]
     def self.post(url, **options)
       new(:post, url, form: options.slice(:source, :target, :vouch)).perform
     end
 
-    # Create a new Webmention::Request.
+    # Create a new {Request}.
     #
     # @param method [Symbol]
     # @param url [String]
     # @param options [Hash{Symbol => String}]
-    #
-    # @return [Webmention::Request]
     def initialize(method, url, **options)
       @method = method.to_sym
       @uri = HTTP::URI.parse(url.to_s)
@@ -88,9 +88,9 @@ module Webmention
     end
     # :nocov:
 
-    # Submit the Webmention::Request.
+    # Submit the {Request}.
     #
-    # @return [Webmention::Response, Webmention::ErrorResponse]
+    # @return [Response, ErrorResponse]
     def perform
       Response.new(client.request(method, uri, options), self)
     rescue HTTP::Error, OpenSSL::SSL::SSLError => e
@@ -99,6 +99,7 @@ module Webmention
 
     private
 
+    # @return [HTTP::Client]
     def client
       @client ||= HTTP::Client.new(HTTP_CLIENT_OPTS)
     end

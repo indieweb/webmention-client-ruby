@@ -15,9 +15,7 @@ target = "https://aaronpk.example/post/100" # A post on someone else's website
 response = Webmention.send_webmention(source, target)
 ```
 
-`Webmention.send_webmention` will return either a `Webmention::Response` or a `Webmention::ErrorResponse`. Instances of both classes respond to `ok?`. Building on the examples above:
-
-A `Webmention::ErrorResponse` may be returned when:
+`Webmention.send_webmention` will return either a `Webmention::Response` or a `Webmention::ErrorResponse`. Instances of both classes respond to `ok?`. Building on the examples above,  a `Webmention::ErrorResponse` may be returned when:
 
 1. The target URL does not advertise a Webmention endpoint.
 2. The request to the target URL raises an `HTTP::Error` or an `OpenSSL::SSL::SSLError`.
@@ -150,7 +148,4 @@ verification.vouch_mentions_source?
 
 webmention-client-ruby avoids raising exceptions when making HTTP requests. As noted above, a `Webmention::ErrorResponse` should be returned in cases where an HTTP request triggers an exception.
 
-When crawling the supplied URL, `Webmention.mentioned_urls` _may_ raise a `NoMethodError` if:
-
-- a `Webmention::ErrorResponse` is returned, or
-- the response is of an unsupported MIME type.
+When crawling the supplied URL, `Webmention.mentioned_urls` _may_ raise a `NoMethodError` if a `Webmention::ErrorResponse` is returned, or the response is of an unsupported MIME type.

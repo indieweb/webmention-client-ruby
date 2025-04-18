@@ -9,10 +9,10 @@ module Webmention
       attr_reader :registered_parsers
     end
 
-    # @return [Webmention::Url]
+    # @return [Url]
     attr_reader :source_url
 
-    # @return [Webmention::Url]
+    # @return [Url]
     attr_reader :vouch_url
 
     # @api private
@@ -20,21 +20,19 @@ module Webmention
       klass.mime_types.each { |mime_type| @registered_parsers[mime_type] = klass }
     end
 
-    # Create a new Webmention::Client.
+    # Create a new {Client}.
     #
     # @example
-    #   Webmention::Client.new('https://jgarber.example/posts/100')
+    #   Webmention::Client.new("https://jgarber.example/posts/100")
     #
     # @example
-    #   Webmention::Client.new('https://jgarber.example/posts/100', vouch: 'https://tantek.example/notes/1')
+    #   Webmention::Client.new("https://jgarber.example/posts/100", vouch: "https://tantek.example/notes/1")
     #
     # @param source [String, HTTP::URI, #to_s]
     #   An absolute URL representing a source document.
     # @param vouch [String, HTTP::URI, #to_s]
     #   An absolute URL representing a document vouching for the source document.
     #   See https://indieweb.org/Vouch for additional details.
-    #
-    # @return [Webmention::Client]
     def initialize(source, vouch: nil)
       @source_url = Url.new(source)
       @vouch_url = Url.new(vouch)
@@ -52,11 +50,11 @@ module Webmention
     # Retrieve unique URLs mentioned by this client's source URL.
     #
     # @example
-    #   client = Webmention::Client.new('https://jgarber.example/posts/100')
+    #   client = Webmention::Client.new("https://jgarber.example/posts/100")
     #   client.mentioned_urls
     #
     # @raise [NoMethodError]
-    #   Raised when response is a Webmention::ErrorResponse or response is of an
+    #   Raised when response is an {ErrorResponse} or response is of an
     #   unsupported MIME type.
     #
     # @return [Array<String>]
@@ -78,13 +76,13 @@ module Webmention
     # Send a webmention from this client's source URL to a target URL.
     #
     # @example
-    #   client = Webmention::Client.new('https://jgarber.example/posts/100')
-    #   client.send_webmention('https://aaronpk.example/notes/1')
+    #   client = Webmention::Client.new("https://jgarber.example/posts/100")
+    #   client.send_webmention("https://aaronpk.example/notes/1")
     #
     # @param target [String, HTTP::URI, #to_s]
     #   An absolute URL representing a target document.
     #
-    # @return [Webmention::Response, Webmention::ErrorResponse]
+    # @return [Response, ErrorResponse]
     def send_webmention(target)
       target_url = Url.new(target)
 
@@ -103,14 +101,14 @@ module Webmention
     # Send webmentions from this client's source URL to multiple target URLs.
     #
     # @example
-    #   client = Webmention::Client.new('https://jgarber.example/posts/100')
-    #   targets = ['https://aaronpk.example/notes/1', 'https://adactio.example/notes/1']
+    #   client = Webmention::Client.new("https://jgarber.example/posts/100")
+    #   targets = ["https://aaronpk.example/notes/1", "https://adactio.example/notes/1"]
     #   client.send_webmentions(targets)
     #
     # @param targets [Array<String, HTTP::URI, #to_s>]
     #   An array of absolute URLs representing multiple target documents.
     #
-    # @return [Array<Webmention::Response, Webmention::ErrorResponse>]
+    # @return [Array<Response, ErrorResponse>]
     def send_webmentions(*targets)
       targets.map { |target| send_webmention(target) }
     end
@@ -120,9 +118,9 @@ module Webmention
     # @param target [String, HTTP::URI, #to_s]
     #   An absolute URL representing a target document.
     #
-    # @raise (see Webmention::Client#mentioned_urls)
+    # @raise (see Client#mentioned_urls)
     #
-    # @return [Webmention::Verification]
+    # @return [Verification]
     def verify_webmention(target)
       Verification.new(source_url, Url.new(target), vouch_url: vouch_url)
     end

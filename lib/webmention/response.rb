@@ -4,7 +4,7 @@ module Webmention
   class Response
     extend Forwardable
 
-    # @return [Webmention::Request]
+    # @return [Request]
     attr_reader :request
 
     # @!method
@@ -31,16 +31,14 @@ module Webmention
     #   @return [HTTP::URI]
     def_delegator :@response, :uri
 
-    # Create a new Webmention::Response.
+    # Create a new {Response}.
     #
     # Instances of this class represent completed HTTP requests, the details
-    # of which may be accessed using the delegated <code>#code</code> and
-    # <code>#reason</code>) instance methods.
+    # of which may be accessed using the delegated {#code} and {#reason}
+    # instance methods.
     #
     # @param response [HTTP::Response]
-    # @param request [Webmention::Request]
-    #
-    # @return [Webmention::Response]
+    # @param request [Request]
     def initialize(response, request)
       @response = response
       @request = request

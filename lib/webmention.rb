@@ -22,12 +22,12 @@ module Webmention
   # Retrieve unique URLs mentioned by the provided URL.
   #
   # @example
-  #   Webmention.mentioned_urls('https://jgarber.example/posts/100')
+  #   Webmention.mentioned_urls("https://jgarber.example/posts/100")
   #
   # @param url [String, HTTP::URI, #to_s] An absolute URL.
   #
   # @raise [NoMethodError]
-  #   Raised when response is a Webmention::ErrorResponse or response is of an
+  #   Raised when response is an {ErrorResponse} or response is of an
   #   unsupported MIME type.
   #
   # @return [Array<String>]
@@ -38,14 +38,14 @@ module Webmention
   # Send a webmention from a source URL to a target URL.
   #
   # @example Send a webmention
-  #   source = 'https://jgarber.example/posts/100'
-  #   target = 'https://aaronpk.example/notes/1'
+  #   source = "https://jgarber.example/posts/100"
+  #   target = "https://aaronpk.example/notes/1"
   #   Webmention.send_webmention(source, target)
   #
   # @example Send a webmention with a vouch URL
-  #   source = 'https://jgarber.example/posts/100'
-  #   target = 'https://aaronpk.example/notes/1'
-  #   Webmention.send_webmention(source, target, vouch: 'https://tantek.example/notes/1')
+  #   source = "https://jgarber.example/posts/100"
+  #   target = "https://aaronpk.example/notes/1"
+  #   Webmention.send_webmention(source, target, vouch: "https://tantek.example/notes/1")
   #
   # @param source [String, HTTP::URI, #to_s]
   #   An absolute URL representing a source document.
@@ -55,7 +55,7 @@ module Webmention
   #   An absolute URL representing a document vouching for the source document.
   #   See https://indieweb.org/Vouch for additional details.
   #
-  # @return [Webmention::Response, Webmention::ErrorResponse]
+  # @return [Response, ErrorResponse]
   def self.send_webmention(source, target, vouch: nil)
     Client.new(source, vouch: vouch).send_webmention(target)
   end
@@ -63,14 +63,14 @@ module Webmention
   # Send webmentions from a source URL to multiple target URLs.
   #
   # @example Send multiple webmentions
-  #   source = 'https://jgarber.example/posts/100'
-  #   targets = ['https://aaronpk.example/notes/1', 'https://adactio.example/notes/1']
+  #   source = "https://jgarber.example/posts/100"
+  #   targets = ["https://aaronpk.example/notes/1", "https://adactio.example/notes/1"]
   #   Webmention.send_webmentions(source, targets)
   #
   # @example Send multiple webmentions with a vouch URL
-  #   source = 'https://jgarber.example/posts/100'
-  #   targets = ['https://aaronpk.example/notes/1', 'https://adactio.example/notes/1']
-  #   Webmention.send_webmentions(source, targets, vouch: 'https://tantek.example/notes/1')
+  #   source = "https://jgarber.example/posts/100"
+  #   targets = ["https://aaronpk.example/notes/1", "https://adactio.example/notes/1"]
+  #   Webmention.send_webmentions(source, targets, vouch: "https://tantek.example/notes/1")
   #
   # @param source [String, HTTP::URI, #to_s]
   #   An absolute URL representing a source document.
@@ -80,7 +80,7 @@ module Webmention
   #   An absolute URL representing a document vouching for the source document.
   #   See https://indieweb.org/Vouch for additional details.
   #
-  # @return [Array<Webmention::Response, Webmention::ErrorResponse>]
+  # @return [Array<Response, ErrorResponse>]
   def self.send_webmentions(source, *targets, vouch: nil)
     Client.new(source, vouch: vouch).send_webmentions(*targets)
   end
@@ -89,7 +89,7 @@ module Webmention
   #
   # @param (see Webmention.send_webmention)
   #
-  # @raise (see Webmention::Client#mentioned_urls)
+  # @raise (see Client#mentioned_urls)
   #
   # @return [Boolean]
   def self.verify_webmention(source, target, vouch: nil)

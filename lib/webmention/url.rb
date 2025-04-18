@@ -11,11 +11,9 @@ module Webmention
     #   @return [String]
     def_delegator :uri, :to_s
 
-    # Create a new Webmention::Url.
+    # Create a new {Url}.
     #
     # @param url [String, HTTP::URI, #to_s] An absolute URL.
-    #
-    # @return [Webmention::Url]
     def initialize(url)
       @uri = HTTP::URI.parse(url.to_s)
     end
@@ -28,7 +26,7 @@ module Webmention
     end
     # :nocov:
 
-    # @return [Webmention::Response, Webmention::ErrorResponse]
+    # @return [Response, ErrorResponse]
     def response
       @response ||= Request.get(uri)
     end
