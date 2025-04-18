@@ -136,7 +136,7 @@ module Webmention
       opts = {
         source: source_url,
         target: target,
-        vouch: vouch_url
+        vouch: vouch_url,
       }
 
       opts.transform_values! { |value| value.to_s.strip }

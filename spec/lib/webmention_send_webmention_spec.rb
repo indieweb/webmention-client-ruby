@@ -42,7 +42,7 @@ RSpec.describe Webmention, ".send_webmention" do
     before do
       stub_request(:get, target_url).to_return(
         headers: {
-          Link: %(<#{webmention_endpoint}>; rel="webmention")
+          Link: %(<#{webmention_endpoint}>; rel="webmention"),
         }
       )
 

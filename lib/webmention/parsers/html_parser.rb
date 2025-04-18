@@ -14,7 +14,7 @@ module Webmention
         "href" => %w[a area],
         "poster" => %w[video],
         "src" => %w[audio embed img source track video],
-        "srcset" => %w[img source]
+        "srcset" => %w[img source],
       }.freeze
 
       CSS_SELECTORS_ARRAY = HTML_ATTRIBUTES_MAP.flat_map do |attribute, names|

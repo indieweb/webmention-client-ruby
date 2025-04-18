@@ -6,16 +6,16 @@ module Webmention
     # @see https://www.w3.org/TR/webmention/#limits-on-get-requests
     HTTP_CLIENT_OPTS = {
       follow: {
-        max_hops: 20
+        max_hops: 20,
       },
       headers: {
         accept: "*/*",
-        user_agent: "Webmention Client (https://rubygems.org/gems/webmention)"
+        user_agent: "Webmention Client (https://rubygems.org/gems/webmention)",
       },
       timeout_options: {
         connect_timeout: 5,
-        read_timeout: 5
-      }
+        read_timeout: 5,
+      },
     }.freeze
 
     private_constant :HTTP_CLIENT_OPTS
