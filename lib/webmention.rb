@@ -6,8 +6,6 @@ require "http"
 require "indieweb/endpoints"
 require "nokogiri"
 
-require_relative "webmention/version"
-
 require_relative "webmention/client"
 require_relative "webmention/url"
 require_relative "webmention/request"

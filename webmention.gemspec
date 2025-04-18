@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/webmention/version"
-
 Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 3.0"
 
   spec.name = "webmention"
-  spec.version = Webmention::VERSION
+  spec.version = "8.0.0"
   spec.authors = ["Jason Garber"]
   spec.email = ["jason@sixtwothree.org"]
 
