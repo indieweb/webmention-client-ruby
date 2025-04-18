@@ -9,12 +9,12 @@ module Webmention
       Client.register_parser(self)
 
       HTML_ATTRIBUTES_MAP = {
-        "cite" => %w[blockquote del ins q],
-        "data" => %w[object],
-        "href" => %w[a area],
-        "poster" => %w[video],
-        "src" => %w[audio embed img source track video],
-        "srcset" => %w[img source],
+        "cite" => ["blockquote", "del", "ins", "q"],
+        "data" => ["object"],
+        "href" => ["a", "area"],
+        "poster" => ["video"],
+        "src" => ["audio", "embed", "img", "source", "track", "video"],
+        "srcset" => ["img", "source"],
       }.freeze
 
       CSS_SELECTORS_ARRAY = HTML_ATTRIBUTES_MAP.flat_map do |attribute, names|

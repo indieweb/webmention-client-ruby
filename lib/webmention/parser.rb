@@ -3,7 +3,7 @@
 module Webmention
   # @api private
   class Parser
-    URI_REGEXP = URI::DEFAULT_PARSER.make_regexp(%w[http https]).freeze
+    URI_REGEXP = URI::DEFAULT_PARSER.make_regexp(["http", "https"]).freeze
 
     public_constant :URI_REGEXP
 
