@@ -2,18 +2,18 @@
   [
     {
       "rels": {
-        "target": "https://target.example.com/post/100"
+        "target": "https://target.example/post/100"
       }
     },
     {
       "rels": {
-        "target": "https://target.example.com/post/200"
+        "target": "https://target.example/post/200"
       }
     }
   ],
   {
     "rels": {
-      "url": "https://target.example.com/post/100"
+      "url": "https://target.example/post/100"
     }
   },
   ["Hello", "world!"]
