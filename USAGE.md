@@ -1,6 +1,7 @@
 # Using webmention-client-ruby
 
-Before using webmention-client-ruby, please read the [Getting Started](https://github.com/indieweb/webmention-client-ruby/blob/main/README.md#getting-started) and [Installation](https://github.com/indieweb/webmention-client-ruby/blob/main/README.md#installation) sections of the project's [README.md](https://github.com/indieweb/webmention-client-ruby/blob/main/README.md).
+> [!NOTE]
+> Before using webmention-client-ruby, please read the [Getting Started](README.md#getting-started) and [Installation](README.md#installation) sections of the project's [README.md](README.md).
 
 ## Sending a webmention
 

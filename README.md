@@ -32,7 +32,7 @@ gem "webmention"
 
 ## Usage
 
-See [USAGE.md](https://github.com/indieweb/webmention-client-ruby/blob/main/USAGE.md) for documentation of webmention-client-ruby's features.
+See [USAGE.md](USAGE.md) for documentation of webmention-client-ruby's features.
 
 ## Migrating to version 6
 
