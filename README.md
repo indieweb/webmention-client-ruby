@@ -34,18 +34,6 @@ gem "webmention"
 
 See [USAGE.md](USAGE.md) for documentation of webmention-client-ruby's features.
 
-## Migrating to version 6
-
-webmention-client-ruby was completely rewritten for version 6 to better support new features and future development. Some notes on migrating to the new version:
-
-♻️ **Renamed:** for clarity and consistency, the `Webmention.send_mention` method has been renamed `Webmention.send_webmention`. Both methods use the same interface.
-
-❌ **Removed:** the `Webmention.client` method has been removed in favor of the additional module methods [noted above](#usage). While the underlying `Webmention::Client` class still exists, its interface has changed and its direct usage is generally unnecessary.
-
-❌ **Removed:** `Webmention::Client#send_all_mentions` has been removed in favor of `Webmention.send_webmentions`. Combine `Webmention.mentioned_urls` and `Webmention.send_webmentions` to achieve similar results.
-
-🛠 **Refactored:** Exception handling has been greatly improved [as noted above](#exception-handling).
-
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/indieweb/webmention-client-ruby/blob/main/CONTRIBUTING.md) for more on how to contribute to webmention-client-ruby. Your help is greatly appreciated!
