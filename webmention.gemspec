@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.7"
 
   spec.name = "webmention"
-  spec.version = "8.0.0"
+  spec.version = "9.0.0"
   spec.authors = ["Jason Garber"]
   spec.email = ["jason@sixtwothree.org"]
 
