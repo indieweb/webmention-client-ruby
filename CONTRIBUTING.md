@@ -25,7 +25,7 @@ bundle install
 2. Install development dependencies as outlined above.
 3. Create a feature branch for the code changes you're looking to make: `git checkout -b my-new-feature`.
 4. _Write some code!_
-5. If your changes would benefit from testing, add the necessary tests and verify everything passes by running `bundle exec rspec`.
+5. If your changes would benefit from testing, add the necessary tests and verify everything passes by running `bin/rspec`.
 6. Commit your changes: `git commit -am 'Add some new feature or fix some issue'`. _(See [this excellent article](https://cbea.ms/git-commit/) for tips on writing useful Git commit messages.)_
 7. Push the branch to your fork: `git push -u origin my-new-feature`.
 8. Create a new [Pull Request][pulls] and we'll review your changes.
