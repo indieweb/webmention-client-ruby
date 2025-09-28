@@ -1,6 +1,7 @@
 *.gem
 *.rbc
 /.config
+/.ruby-lsp
 /coverage/
 /InstalledFiles
 /pkg/
