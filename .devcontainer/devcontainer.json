@@ -7,8 +7,8 @@
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
-    "ghcr.io/rails/devcontainer/features/ruby:1": {
-      "version": "3.4.3"
+    "ghcr.io/rails/devcontainer/features/ruby:2": {
+      "version": "3.4.6"
     }
   },
 
