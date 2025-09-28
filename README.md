@@ -12,11 +12,11 @@
 - Perform [endpoint discovery](https://www.w3.org/TR/webmention/#sender-discovers-receiver-webmention-endpoint) on mentioned URLs.
 - Send webmentions to one or more mentioned URLs (and optionally include a [vouch](https://indieweb.org/Vouch) URL).
 - Verify that a received webmention's source URL links to a target URL (and optionally verify that a vouch URL mentions the source URL's domain).
-- Supports Ruby 2.6 and newer.
+- Supports Ruby 2.7 and newer.
 
 ## Getting Started
 
-Before installing and using webmention-client-ruby, you'll want to have [Ruby](https://www.ruby-lang.org) 2.6 (or newer) installed. Using a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm) is recommended.
+Before installing and using webmention-client-ruby, you'll want to have [Ruby](https://www.ruby-lang.org) 2.7 (or newer) installed. Using a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm) is recommended.
 
 webmention-client-ruby is developed using Ruby 3.4 and is tested against additional Ruby versions using [GitHub Actions](https://github.com/indieweb/webmention-client-ruby/actions).
 

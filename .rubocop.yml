@@ -3,3 +3,6 @@ inherit_from:
   - https://rubocop.jgarber.cc/rubocop-rspec.yml
 
 plugins: rubocop-packaging
+
+AllCops:
+  TargetRubyVersion: "2.7"
