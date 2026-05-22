@@ -1,0 +1,9 @@
+{
+  "features": {
+    "git.jgarber.cc/devcontainers/features/bundler-cache:0": {
+      "version": "0.1.0",
+      "resolved": "git.jgarber.cc/devcontainers/features/bundler-cache@sha256:03c3feece71953fe4262ba67829d17671cb7dcb4286ed0367941b28c43a0b703",
+      "integrity": "sha256:03c3feece71953fe4262ba67829d17671cb7dcb4286ed0367941b28c43a0b703"
+    }
+  }
+}

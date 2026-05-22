@@ -1,35 +1,17 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/ruby
 {
   "name": "webmention-client-ruby",
-  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-  "image": "mcr.microsoft.com/devcontainers/base:1-bookworm",
-
-  // Features to add to the dev container. More info: https://containers.dev/features.
+  "image": "git.jgarber.cc/devcontainers/images/ruby:4.0.5",
   "features": {
-    "ghcr.io/rails/devcontainer/features/ruby:2": {
-      "version": "3.4.6"
-    }
+    "git.jgarber.cc/devcontainers/features/bundler-cache:0": {}
   },
-
-  // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  // "forwardPorts": [],
-
-  // An array of Docker CLI arguments that should be used when running the container.
   "runArgs": ["--name", "webmention-client-ruby"],
-
-  // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": ".devcontainer/setup.sh",
-
-  // Configure tool-specific properties.
+  "updateContentCommand": "bundle install",
   "customizations": {
     "vscode": {
       "extensions": [
-        "EditorConfig.EditorConfig"
+        "EditorConfig.EditorConfig",
+        "shopify.ruby-lsp"
       ]
     }
   }
-
-  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-  // "remoteUser": "root"
 }
