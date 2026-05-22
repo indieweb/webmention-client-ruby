@@ -16,7 +16,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - run: bin/rubocop --color
+      - run: bin/rubocop --color --format github
   test:
     name: Test (Ruby ${{ matrix.ruby }})
     runs-on: ubuntu-latest
