@@ -10,7 +10,7 @@ module Webmention
 
       # @return [Array<String>] An array of absolute URLs.
       def results
-        @results ||= URI::DEFAULT_PARSER.extract(response_body, ["http", "https"])
+        @results ||= URI_PARSER.extract(response_body, ["http", "https"])
       end
     end
   end
