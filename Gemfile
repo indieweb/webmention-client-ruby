@@ -2,17 +2,17 @@
 
 source "https://rubygems.org"
 
-# Specify gem's dependencies in webmention.gemspec
 gemspec
+
+source "https://beta.gem.coop/@jgarber" do
+  gem "dryer_lint"
+  gem "dryer_lint-rspec"
+end
 
 gem "irb"
 gem "rake"
 gem "rspec"
-gem "rubocop"
 gem "rubocop-packaging"
-gem "rubocop-performance"
-gem "rubocop-rake"
-gem "rubocop-rspec"
 gem "simplecov"
 gem "simplecov-console"
 gem "webmock"
