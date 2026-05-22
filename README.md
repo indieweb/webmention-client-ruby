@@ -1,6 +1,6 @@
 # webmention-client-ruby
 
-**A Ruby gem for sending and verifying [Webmention](https://indieweb.org/Webmention) notifications.**
+A Ruby gem for sending and verifying [Webmention](https://indieweb.org/Webmention) notifications.
 
 [![Gem](https://img.shields.io/gem/v/webmention.svg?logo=rubygems&style=for-the-badge)](https://rubygems.org/gems/webmention)
 [![Downloads](https://img.shields.io/gem/dt/webmention.svg?logo=rubygems&style=for-the-badge)](https://rubygems.org/gems/webmention)
@@ -48,4 +48,4 @@ To learn more about Webmention, see [indieweb.org/Webmention](https://indieweb.o
 
 ## License
 
-webmention-client-ruby is freely available under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html). See [LICENSE](https://github.com/indieweb/webmention-client-ruby/blob/main/LICENSE) for more details.
+This project is freely available under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html). See [LICENSE](https://github.com/indieweb/webmention-client-ruby/blob/main/LICENSE) for more details.
