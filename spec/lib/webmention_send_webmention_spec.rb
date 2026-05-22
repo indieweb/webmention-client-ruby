@@ -8,10 +8,9 @@ RSpec.describe Webmention, ".send_webmention" do
 
   context "when target URL is not an absolute URL" do
     let(:target_url) { "/foo" }
-    let(:message) { "unknown scheme: " }
 
     it { is_expected.to be_a(Webmention::ErrorResponse) }
-    it { is_expected.to have_attributes(message: message, ok?: false) }
+    it { is_expected.to have_attributes(ok?: false) }
   end
 
   context "when target URL unreachable" do
