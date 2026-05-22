@@ -21,6 +21,8 @@ jobs:
     name: Test (Ruby ${{ matrix.ruby }})
     runs-on: ubuntu-latest
     needs: lint
+    env:
+      BUNDLE_GEMFILE: gemfiles/test.gemfile
     strategy:
       fail-fast: false
       matrix:
