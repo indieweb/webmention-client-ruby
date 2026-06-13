@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 gemspec
 
-source "https://beta.gem.coop/@jgarber" do
+source "https://gem.coop/@jgarber" do
   gem "dryer_lint"
   gem "dryer_lint-rspec"
 end

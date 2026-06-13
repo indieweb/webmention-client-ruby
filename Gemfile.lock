@@ -7,7 +7,7 @@ PATH
       nokogiri (>= 1.14)
 
 GEM
-  remote: https://beta.gem.coop/@jgarber/
+  remote: https://gem.coop/@jgarber/
   specs:
     dryer_lint (0.2.0)
       lint_roller
