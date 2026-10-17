@@ -59,7 +59,7 @@ module Webmention
 
       urls.reject! { |url| url.match(/^#{response.uri}(?:#.*)?$/) }
 
-      urls.to_a.sort
+      urls.sort
     end
 
     # Send a webmention from this client's source URL to a target URL.
