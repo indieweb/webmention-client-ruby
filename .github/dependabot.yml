@@ -7,6 +7,12 @@ updates:
       interval: "monthly"
     assignees:
       - "jgarber623"
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    assignees:
+      - "jgarber623"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
