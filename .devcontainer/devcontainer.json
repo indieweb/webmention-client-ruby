@@ -1,6 +1,6 @@
 {
   "name": "webmention-client-ruby",
-  "image": "git.jgarber.cc/devcontainers/images/ruby:4.0.5",
+  "image": "git.jgarber.cc/devcontainers/images/ruby:4.0.7",
   "features": {
     "git.jgarber.cc/devcontainers/features/bundler-cache:0": {}
   },
