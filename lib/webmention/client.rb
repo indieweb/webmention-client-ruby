@@ -39,25 +39,20 @@ module Webmention
     #   client = Webmention::Client.new("https://jgarber.example/posts/100")
     #   client.mentioned_urls
     #
+    # @raise [Burly::UnsupportedMimeType]
+    #   Raised when response is of an unsupported MIME type.
     # @raise [NoMethodError]
-    #   Raised when response is an {ErrorResponse} or response is of an
-    #   unsupported MIME type.
+    #   Raised when response is an {ErrorResponse}.
     #
     # @return [Array<String>]
     def mentioned_urls
       response = source_url.response
 
-      parser =
-        Parsers::Base
-          .descendants
-          .find { |parser| parser.mime_types.include?(response.mime_type) }
-          .new(response.body, context: [".h-entry .e-content", ".h-entry", "body"])
-
       urls = Set.new(
-        parser
-        .parse
+        Burly
+        .parse(response.body, context: [".h-entry .e-content", ".h-entry", "body"], mime_type: response.mime_type)
         .map { |url| response.uri.join(url).to_s }
-        .grep(parser.__send__(:uri_regexp))
+        .grep(URI::RFC2396_Parser.new.make_regexp(["http", "https"]))
       )
 
       urls.reject! { |url| url.match(/^#{response.uri}(?:#.*)?$/) }

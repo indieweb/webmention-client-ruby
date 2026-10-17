@@ -2,6 +2,7 @@
 
 require "json"
 
+require "burly"
 require "http"
 require "indieweb/endpoints"
 require "nokogiri"
@@ -13,11 +14,6 @@ require_relative "webmention/response"
 require_relative "webmention/error_response"
 require_relative "webmention/verification"
 
-require_relative "webmention/parsers/base"
-require_relative "webmention/parsers/html"
-require_relative "webmention/parsers/json"
-require_relative "webmention/parsers/plaintext"
-
 module Webmention
   # Retrieve unique URLs mentioned by the provided URL.
   #
@@ -26,9 +22,10 @@ module Webmention
   #
   # @param url [String, HTTP::URI, #to_s] An absolute URL.
   #
+  # @raise [Burly::UnsupportedMimeType]
+  #   Raised when response is of an unsupported MIME type.
   # @raise [NoMethodError]
-  #   Raised when response is an {ErrorResponse} or response is of an
-  #   unsupported MIME type.
+  #   Raised when response is an {ErrorResponse}.
   #
   # @return [Array<String>]
   def self.mentioned_urls(url)

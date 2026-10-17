@@ -149,4 +149,4 @@ verification.vouch_mentions_source?
 
 webmention-client-ruby avoids raising exceptions when making HTTP requests. As noted above, a `Webmention::ErrorResponse` should be returned in cases where an HTTP request triggers an exception.
 
-When crawling the supplied URL, `Webmention.mentioned_urls` _may_ raise a `NoMethodError` if a `Webmention::ErrorResponse` is returned, or the response is of an unsupported MIME type.
+When crawling the supplied URL, `Webmention.mentioned_urls` _may_ raise `NoMethodError` if a `Webmention::ErrorResponse` is returned or `Burly::UnsupportedMimeType` if the response is of an unsupported MIME type.
