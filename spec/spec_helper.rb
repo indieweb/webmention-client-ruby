@@ -17,6 +17,8 @@
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require "simplecov"
+SimpleCov.start
+
 require "webmock/rspec"
 
 require "webmention"
