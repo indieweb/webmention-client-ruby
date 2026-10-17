@@ -79,14 +79,12 @@ module Webmention
       @options = options
     end
 
-    # :nocov:
     # @return [String]
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
         "method: #{method.upcase}, " \
         "url: #{uri}>"
     end
-    # :nocov:
 
     # Submit the {Request}.
     #

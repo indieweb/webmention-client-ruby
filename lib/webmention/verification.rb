@@ -17,7 +17,6 @@ module Webmention
       @vouch_url = vouch_url
     end
 
-    # :nocov:
     # @return [String]
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
@@ -25,7 +24,6 @@ module Webmention
         "target_url: #{target_url} " \
         "vouch_url: #{vouch_url}>"
     end
-    # :nocov:
 
     # @return [Boolean]
     def source_mentions_target?

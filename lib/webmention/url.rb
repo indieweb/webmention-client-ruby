@@ -18,13 +18,11 @@ module Webmention
       @uri = HTTP::URI.parse(url.to_s)
     end
 
-    # :nocov:
     # @return [String]
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
         "uri: #{uri}>"
     end
-    # :nocov:
 
     # @return [Response, ErrorResponse]
     def response

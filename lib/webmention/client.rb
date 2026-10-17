@@ -38,14 +38,12 @@ module Webmention
       @vouch_url = Url.new(vouch)
     end
 
-    # :nocov:
     # @return [String]
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
         "source_url: #{source_url} " \
         "vouch_url: #{vouch_url}>"
     end
-    # :nocov:
 
     # Retrieve unique URLs mentioned by this client's source URL.
     #
