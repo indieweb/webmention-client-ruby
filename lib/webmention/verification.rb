@@ -75,9 +75,11 @@ module Webmention
     # @return [Array<String>]
     def mentioned_urls(response)
       Set.new(
-        Client.registered_parsers[response.mime_type]
-              .new(response.body, response.uri)
-              .results
+        Parsers::Base
+          .descendants
+          .find { |parser| parser.mime_types.include?(response.mime_type) }
+          .new(response.body, response.uri)
+          .parse
       ).to_a
     end
   end

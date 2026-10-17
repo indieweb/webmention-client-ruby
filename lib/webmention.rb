@@ -13,10 +13,10 @@ require_relative "webmention/response"
 require_relative "webmention/error_response"
 require_relative "webmention/verification"
 
-require_relative "webmention/parser"
-require_relative "webmention/parsers/html_parser"
-require_relative "webmention/parsers/json_parser"
-require_relative "webmention/parsers/plaintext_parser"
+require_relative "webmention/parsers/base"
+require_relative "webmention/parsers/html"
+require_relative "webmention/parsers/json"
+require_relative "webmention/parsers/plaintext"
 
 module Webmention
   # Retrieve unique URLs mentioned by the provided URL.

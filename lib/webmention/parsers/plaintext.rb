@@ -3,14 +3,14 @@
 module Webmention
   module Parsers
     # @api private
-    class PlaintextParser < Parser
+    class Plaintext < Base
       @mime_types = ["text/plain"]
 
-      Client.register_parser(self)
-
+      # Parse a plaintext document for absolute URLs.
+      #
       # @return [Array<String>] An array of absolute URLs.
-      def results
-        @results ||= URI_PARSER.extract(response_body, ["http", "https"])
+      def parse
+        uri_parser.extract(response_body, ["http", "https"])
       end
     end
   end

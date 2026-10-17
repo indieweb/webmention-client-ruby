@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe Webmention::Parsers::HtmlParser, "#results" do
-  subject(:results) { described_class.new(response_body, "https://jgarber.example/foo").results }
+RSpec.describe Webmention::Parsers::Html, "#parse" do
+  subject(:parse) { described_class.new(response_body, "https://jgarber.example/foo").parse }
 
   context "when response body contains no URLs" do
     let(:response_body) { load_fixture(:sample_post_no_links) }

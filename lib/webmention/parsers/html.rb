@@ -3,38 +3,40 @@
 module Webmention
   module Parsers
     # @api private
-    class HtmlParser < Parser
+    class Html < Base
       @mime_types = ["text/html"]
 
-      Client.register_parser(self)
-
-      HTML_ATTRIBUTES_MAP = {
-        "cite" => ["blockquote", "del", "ins", "q"],
-        "data" => ["object"],
-        "href" => ["a", "area"],
+      # A map of HTML URL attributes and their associated element names.
+      #
+      # @see https://html.spec.whatwg.org/#attributes-3 HTML Standard § Attributes
+      #
+      # rubocop:disable-next Layout/HashAlignment
+      URL_ATTRIBUTES_MAP = {
+        "cite"   => ["blockquote", "del", "ins", "q"],
+        "data"   => ["object"],
+        "href"   => ["a", "area"],
         "poster" => ["video"],
-        "src" => ["audio", "embed", "img", "source", "track", "video"],
+        "src"    => ["audio", "embed", "img", "source", "track", "video"],
         "srcset" => ["img", "source"],
       }.freeze
 
-      CSS_SELECTORS_ARRAY = HTML_ATTRIBUTES_MAP
-                              .flat_map { |attribute, names| names.map { |name| "#{name}[#{attribute}]" } }.freeze
-
-      ROOT_NODE_SELECTORS_ARRAY = [".h-entry .e-content", ".h-entry", "body"].freeze
-
-      private_constant :HTML_ATTRIBUTES_MAP
-      private_constant :CSS_SELECTORS_ARRAY
-      private_constant :ROOT_NODE_SELECTORS_ARRAY
+      private_constant :URL_ATTRIBUTES_MAP
 
       # @return [Array<String>] An array of absolute URLs.
-      def results
-        @results ||=
+      def parse
+        @parse ||=
           extract_urls_from(*url_attributes)
             .map { |url| response_uri.join(url).to_s }
-            .grep(Parser::URI_REGEXP)
+            .grep(uri_regexp)
       end
 
       private
+
+      def css_selectors_from_url_attributes_map
+        URL_ATTRIBUTES_MAP.each_with_object([]) do |(attribute, names), css_selectors|
+          css_selectors.concat(names.map { |name| "#{name}[#{attribute}]" })
+        end
+      end
 
       # @return [Nokogiri::HTML5::Document]
       def doc
@@ -56,17 +58,17 @@ module Webmention
 
       # @return [Nokogiri::XML::Element]
       def root_node
-        doc.at_css(*ROOT_NODE_SELECTORS_ARRAY)
+        doc.at_css(".h-entry .e-content", ".h-entry", "body")
       end
 
       # @return [Array<Nokogiri::XML::Attr>]
       def url_attributes
-        url_nodes.flat_map(&:attribute_nodes).select { |attribute| HTML_ATTRIBUTES_MAP.key?(attribute.name) }
+        url_nodes.flat_map(&:attribute_nodes).select { |attribute| URL_ATTRIBUTES_MAP.key?(attribute.name) }
       end
 
       # @return [Nokogiri::XML::NodeSet]
       def url_nodes
-        root_node.css(*CSS_SELECTORS_ARRAY)
+        root_node.css(*css_selectors_from_url_attributes_map)
       end
     end
   end

@@ -4,21 +4,11 @@ module Webmention
   class Client
     @registered_parsers = {}
 
-    class << self
-      # @api private
-      attr_reader :registered_parsers
-    end
-
     # @return [Url]
     attr_reader :source_url
 
     # @return [Url]
     attr_reader :vouch_url
-
-    # @api private
-    def self.register_parser(klass)
-      klass.mime_types.each { |mime_type| @registered_parsers[mime_type] = klass }
-    end
 
     # Create a new {Client}.
     #
@@ -60,10 +50,11 @@ module Webmention
       response = source_url.response
 
       urls = Set.new(
-        self.class
-            .registered_parsers[response.mime_type]
-            .new(response.body, response.uri)
-            .results
+        Parsers::Base
+          .descendants
+          .find { |parser| parser.mime_types.include?(response.mime_type) }
+          .new(response.body, response.uri)
+          .parse
       )
 
       urls.reject! { |url| url.match(/^#{response.uri}(?:#.*)?$/) }
