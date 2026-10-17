@@ -16,9 +16,9 @@ A Ruby gem for sending and verifying [Webmention](https://indieweb.org/Webmentio
 
 ## Getting Started
 
-Before installing and using webmention-client-ruby, you'll want to have [Ruby](https://www.ruby-lang.org) 2.7 (or newer) installed. Using a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm) is recommended.
+Before installing and using webmention-client-ruby, you'll want to have [Ruby](https://www.ruby-lang.org) 2.7 (or newer) installed. Using a Ruby version managment tool like [rv](https://github.com/spinel-coop/rv) or [rbenv](https://github.com/rbenv/rbenv) is recommended.
 
-webmention-client-ruby is developed using Ruby 3.4 and is tested against additional Ruby versions using [GitHub Actions](https://github.com/indieweb/webmention-client-ruby/actions).
+webmention-client-ruby is developed using Ruby 4.0 and is tested against additional Ruby versions using [GitHub Actions](https://github.com/indieweb/webmention-client-ruby/actions).
 
 ## Installation
 
