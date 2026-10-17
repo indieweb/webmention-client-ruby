@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe Webmention::Parsers::Html, "#parse" do
-  subject(:parse) { described_class.new(response_body, "https://jgarber.example/foo").parse }
+  subject(:parse) { described_class.new(response_body, context: context).parse }
+
+  let(:context) { [".h-entry .e-content", ".h-entry", "body"] }
 
   context "when response body contains no URLs" do
     let(:response_body) { load_fixture(:sample_post_no_links) }
@@ -18,6 +20,7 @@ RSpec.describe Webmention::Parsers::Html, "#parse" do
         "https://aaronpk.example/post/2",
         "https://aaronpk.example/post/2",
         "https://jgarber.example",
+        "mailto:email@jgarber.example",
         "https://aaronpk.example/image.jpg",
         "https://aaronpk.example/image-1x.jpg",
         "https://aaronpk.example/image-2x.jpg",

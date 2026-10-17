@@ -14,11 +14,9 @@ module Webmention
         ObjectSpace.each_object(Class).select { |klass| klass < self }
       end
 
-      # @param response_body [HTTP::Response::Body, String, #to_s]
-      # @param response_uri [String, HTTP::URI, #to_s]
-      def initialize(response_body, response_uri)
-        @response_body = response_body.to_s
-        @response_uri = HTTP::URI.parse(response_uri.to_s)
+      # @param document [HTTP::Response::Body, String, #to_s]
+      def initialize(document, **_kwargs)
+        @document = document.to_s
       end
 
       # @raise [NotImplementedError]
@@ -27,12 +25,6 @@ module Webmention
       end
 
       private
-
-      # @return [String]
-      attr_reader :response_body
-
-      # @return [HTTP::URI]
-      attr_reader :response_uri
 
       def uri_parser
         @uri_parser ||= URI::RFC2396_Parser.new

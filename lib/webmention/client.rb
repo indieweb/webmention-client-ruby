@@ -2,8 +2,6 @@
 
 module Webmention
   class Client
-    @registered_parsers = {}
-
     # @return [Url]
     attr_reader :source_url
 
@@ -49,16 +47,20 @@ module Webmention
     def mentioned_urls
       response = source_url.response
 
-      urls = Set.new(
+      parser =
         Parsers::Base
           .descendants
           .find { |parser| parser.mime_types.include?(response.mime_type) }
-          .new(response.body, response.uri)
-          .parse
+          .new(response.body, context: [".h-entry .e-content", ".h-entry", "body"])
+
+      urls = Set.new(
+        parser
+        .parse
+        .map { |url| response.uri.join(url).to_s }
+        .grep(parser.__send__(:uri_regexp))
       )
 
       urls.reject! { |url| url.match(/^#{response.uri}(?:#.*)?$/) }
-
       urls.sort
     end
 

@@ -6,6 +6,11 @@ module Webmention
     class Html < Base
       @mime_types = ["text/html"]
 
+      # An array of HTML +srcset+ attributes.
+      #
+      # @see https://html.spec.whatwg.org/#srcset-attributes HTML Standard § 4.8.4.2.1 Srcset attributes
+      SRCSET_ATTRIBUTES = ["imagesrcset", "srcset"].freeze
+
       # A map of HTML URL attributes and their associated element names.
       #
       # @see https://html.spec.whatwg.org/#attributes-3 HTML Standard § Attributes
@@ -20,55 +25,50 @@ module Webmention
         "srcset" => ["img", "source"],
       }.freeze
 
-      private_constant :URL_ATTRIBUTES_MAP
+      # @param document [HTTP::Response::Body, String, #to_s]
+      # @param context [String, Array<String>]
+      def initialize(document, context: nil)
+        @context = context
 
+        super
+      end
+
+      # Parse an HTML document for absolute or relative URLs.
+      #
       # @return [Array<String>] An array of absolute URLs.
       def parse
         @parse ||=
-          extract_urls_from(*url_attributes)
-            .map { |url| response_uri.join(url).to_s }
-            .grep(uri_regexp)
+          context_node
+            .xpath(*xpaths_from_url_attributes_map)
+            .lazy
+            .flat_map { |node| parse_attribute_node(node) }
+            .to_a
       end
 
       private
 
-      def css_selectors_from_url_attributes_map
-        URL_ATTRIBUTES_MAP.each_with_object([]) do |(attribute, names), css_selectors|
-          css_selectors.concat(names.map { |name| "#{name}[#{attribute}]" })
-        end
+      # @return [Nokogiri::XML::Element]
+      def context_node
+        @context_node ||= doc.search(*Array(@context)).first || doc
       end
 
       # @return [Nokogiri::HTML5::Document]
       def doc
-        Nokogiri.HTML5(response_body)
+        Nokogiri.HTML5(@document)
       end
 
-      # @param attributes [Array<Nokogiri::XML::Attr>]
-      #
+      # @return [String, Array<String>]
+      def parse_attribute_node(node)
+        return node.value.strip unless SRCSET_ATTRIBUTES.include?(node.name)
+
+        node.value.split(/\s*,\s*/).lazy.flat_map { |value| value.strip.split(/\s|$/)[0] }
+      end
+
       # @return [Array<String>]
-      def extract_urls_from(*attributes)
-        attributes.flat_map do |attribute|
-          if attribute.name == "srcset"
-            attribute.value.split(",").map { |value| value.strip.match(/^\S+/).to_s }
-          else
-            attribute.value
-          end
+      def xpaths_from_url_attributes_map
+        URL_ATTRIBUTES_MAP.each_with_object([]) do |(attribute, names), xpaths|
+          xpaths.concat(names.map { |name| ".//#{name}/@#{attribute}" })
         end
-      end
-
-      # @return [Nokogiri::XML::Element]
-      def root_node
-        doc.at_css(".h-entry .e-content", ".h-entry", "body")
-      end
-
-      # @return [Array<Nokogiri::XML::Attr>]
-      def url_attributes
-        url_nodes.flat_map(&:attribute_nodes).select { |attribute| URL_ATTRIBUTES_MAP.key?(attribute.name) }
-      end
-
-      # @return [Nokogiri::XML::NodeSet]
-      def url_nodes
-        root_node.css(*css_selectors_from_url_attributes_map)
       end
     end
   end

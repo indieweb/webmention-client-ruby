@@ -10,7 +10,7 @@ module Webmention
       #
       # @return [Array<String>] An array of absolute URLs.
       def parse
-        uri_parser.extract(response_body, ["http", "https"])
+        uri_parser.extract(@document, ["http", "https"])
       end
     end
   end

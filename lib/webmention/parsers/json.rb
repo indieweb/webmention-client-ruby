@@ -10,7 +10,7 @@ module Webmention
       #
       # @return [Array<String>] An array of absolute URLs.
       def parse
-        recursive_parse(JSON.parse(response_body)).to_a.compact
+        recursive_parse(JSON.parse(@document)).to_a.compact
       end
 
       private

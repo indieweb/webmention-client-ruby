@@ -20,14 +20,14 @@ module Webmention
     # @return [String]
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
-        "source_url: #{source_url} " \
-        "target_url: #{target_url} " \
-        "vouch_url: #{vouch_url}>"
+        "source_url: #{@source_url} " \
+        "target_url: #{@target_url} " \
+        "vouch_url: #{@vouch_url}>"
     end
 
     # @return [Boolean]
     def source_mentions_target?
-      @source_mentions_target ||= mentioned_urls(source_url.response).any?(target_url.to_s)
+      @source_mentions_target ||= mentioned_urls(@source_url.response).any?(@target_url.to_s)
     end
 
     # @return [Boolean]
@@ -39,25 +39,16 @@ module Webmention
 
     # @return [Boolean]
     def verify_vouch?
-      !vouch_url.nil? && !vouch_url.to_s.strip.empty?
+      !@vouch_url.nil? && !@vouch_url.to_s.strip.empty?
     end
 
     # @return [Boolean]
     def vouch_mentions_source?
       @vouch_mentions_source ||=
-        verify_vouch? && mentioned_domains(vouch_url.response).any?(source_url.uri.host)
+        verify_vouch? && mentioned_domains(@vouch_url.response).any?(@source_url.uri.host)
     end
 
     private
-
-    # @return [Url]
-    attr_reader :source_url
-
-    # @return [Url]
-    attr_reader :target_url
-
-    # @return [Url]
-    attr_reader :vouch_url
 
     # @param response [Response]
     #
@@ -74,12 +65,17 @@ module Webmention
     #
     # @return [Array<String>]
     def mentioned_urls(response)
-      Set.new(
+      parser =
         Parsers::Base
           .descendants
           .find { |parser| parser.mime_types.include?(response.mime_type) }
-          .new(response.body, response.uri)
+          .new(response.body, context: [".h-entry .e-content", ".h-entry", "body"])
+
+      Set.new(
+        parser
           .parse
+          .map { |url| response.uri.join(url).to_s }
+          .grep(parser.__send__(:uri_regexp))
       ).to_a
     end
   end
