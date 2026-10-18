@@ -27,7 +27,7 @@ module Webmention
 
     # @return [Boolean]
     def source_mentions_target?
-      @source_mentions_target ||= mentioned_urls(@source_url.response).any?(@target_url.to_s)
+      @source_mentions_target ||= @source_url.response.mentioned_urls.any?(@target_url.to_s)
     end
 
     # @return [Boolean]
@@ -44,33 +44,7 @@ module Webmention
 
     # @return [Boolean]
     def vouch_mentions_source?
-      @vouch_mentions_source ||=
-        verify_vouch? && mentioned_domains(@vouch_url.response).any?(@source_url.uri.host)
-    end
-
-    private
-
-    # @param response [Response]
-    #
-    # @raise (see Client#mentioned_urls)
-    #
-    # @return [Array<String>]
-    def mentioned_domains(response)
-      Set.new(mentioned_urls(response).map { |url| HTTP::URI.parse(url).host }).to_a
-    end
-
-    # @param response [Response]
-    #
-    # @raise (see Client#mentioned_urls)
-    #
-    # @return [Array<String>]
-    def mentioned_urls(response)
-      Set.new(
-        Burly
-          .parse(response.body, context: [".h-entry .e-content", ".h-entry", "body"], mime_type: response.mime_type)
-          .map { |url| response.uri.join(url).to_s }
-          .grep(URI::RFC2396_Parser.new.make_regexp(["http", "https"]))
-      ).to_a
+      @vouch_mentions_source ||= verify_vouch? && @vouch_url.response.mentioned_hosts.any?(@source_url.uri.host)
     end
   end
 end
