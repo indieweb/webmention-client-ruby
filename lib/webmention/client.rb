@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Webmention
+  # A client interface to send and verify Webmention notifications.
   class Client
     # @return [Url]
     attr_reader :source_url
@@ -16,18 +17,18 @@ module Webmention
     # @example
     #   Webmention::Client.new("https://jgarber.example/posts/100", vouch: "https://tantek.example/notes/1")
     #
+    # @see https://indieweb.org/Vouch
+    #
     # @param source [String, HTTP::URI, #to_s]
     #   An absolute URL representing a source document.
     # @param vouch [String, HTTP::URI, #to_s]
     #   An absolute URL representing a document vouching for the source document.
-    #   See https://indieweb.org/Vouch for additional details.
     def initialize(source, vouch: nil)
       @source_url = Url.new(source)
       @vouch_url = Url.new(vouch)
     end
 
-    # @return [String]
-    #
+    # @!visibility private
     # simplecov:disable
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
@@ -36,7 +37,7 @@ module Webmention
     end
     # simplecov:enable
 
-    # Retrieve unique URLs mentioned by this client's source URL.
+    # Unique URLs mentioned by {source_url}.
     #
     # @example
     #   client = Webmention::Client.new("https://jgarber.example/posts/100")
@@ -56,7 +57,7 @@ module Webmention
         .sort
     end
 
-    # Send a webmention from this client's source URL to a target URL.
+    # Send a webmention from this client's {source_url} to a target URL.
     #
     # @example
     #   client = Webmention::Client.new("https://jgarber.example/posts/100")
@@ -81,7 +82,7 @@ module Webmention
       ErrorResponse.new("No Webmention endpoint found for target URL #{target}", response.request)
     end
 
-    # Send webmentions from this client's source URL to multiple target URLs.
+    # Send webmentions from {source_url} to multiple target URLs.
     #
     # @example
     #   client = Webmention::Client.new("https://jgarber.example/posts/100")
@@ -96,10 +97,9 @@ module Webmention
       targets.map { |target| send_webmention(target) }
     end
 
-    # Verify that this client's source URL links to a target URL.
+    # Verify that {source_url} links to a target URL.
     #
-    # @param target [String, HTTP::URI, #to_s]
-    #   An absolute URL representing a target document.
+    # @param target (see #send_webmention)
     #
     # @raise (see Client#mentioned_urls)
     #
@@ -110,7 +110,7 @@ module Webmention
 
     private
 
-    # @param target [String, HTTP::URI, #to_s]
+    # @param target (see #send_webmention)
     #
     # @return [Hash{Symbol => String}]
     def request_options_for(target)

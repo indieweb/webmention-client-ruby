@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Webmention
+  # An interface for executing HTTP requests and generating {Response}s and
+  # {ErrorResponse}s.
+  #
   # @api private
   class Request
     # Set defaults derived from Webmention specification examples.
@@ -48,24 +51,24 @@ module Webmention
     #     },
     #   )
     #
+    # @see https://indieweb.org/Vouch
+    #
     # @param method [Symbol]
     # @param url [String]
-    # @param options [Hash{Symbol => String}]
-    # @option options [String] :source
-    #   An absolute URL representing a source document.
-    # @option options [String] :target
-    #   An absolute URL representing a target document.
-    # @option options [String] :vouch
-    #   An absolute URL representing a document vouching for the source document.
-    #   See https://indieweb.org/Vouch for additional details.
-    def initialize(method, url, **options)
+    # @param source (see Client#initialize)
+    # @param target (see Client#send_webmention)
+    # @param vouch (see Client#initialize)
+    def initialize(method, url, source: nil, target: nil, vouch: nil)
       @method = method.to_sym
       @uri = HTTP::URI.parse(url.to_s)
-      @options = options
+      @options = {
+        source: source,
+        target: target,
+        vouch: vouch,
+      }
     end
 
-    # @return [String]
-    #
+    # @!visibility private
     # simplecov:disable
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
@@ -74,7 +77,7 @@ module Webmention
     end
     # simplecov:enable
 
-    # Submit the {Request}.
+    # Execute the {Request}.
     #
     # @return [Response, ErrorResponse]
     def perform

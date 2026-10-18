@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 module Webmention
+  # Verify that a source URL links to a target URL.
   class Verification
     # Create a new {Verification}.
     #
     # @api private
+    #
+    # @see https://indieweb.org/Vouch
     #
     # @param source_url [Url]
     #   An {URL} representing a source document.
@@ -12,15 +15,13 @@ module Webmention
     #   An {URL} representing a target document.
     # @param vouch_url [Url]
     #   An {URL} representing a document vouching for the source document.
-    #   See https://indieweb.org/Vouch for additional details.
     def initialize(source_url, target_url, vouch_url: nil)
       @source_url = source_url
       @target_url = target_url
       @vouch_url = vouch_url
     end
 
-    # @return [String]
-    #
+    # @!visibility private
     # simplecov:disable
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \

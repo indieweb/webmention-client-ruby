@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Webmention
+  # An interface representing a parsed URL and its {Response}.
+  #
   # @api private
   class Url
     extend Forwardable
@@ -19,8 +21,7 @@ module Webmention
       @uri = HTTP::URI.parse(url.to_s)
     end
 
-    # @return [String]
-    #
+    # @!visibility private
     # simplecov:disable
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \

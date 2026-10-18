@@ -14,6 +14,9 @@ require_relative "webmention/response"
 require_relative "webmention/error_response"
 require_relative "webmention/verification"
 
+# Send and verify Webmention notifications.
+#
+# @see https://indieweb.org/Webmention
 module Webmention
   # Retrieve unique URLs mentioned by the provided URL.
   #
@@ -22,10 +25,9 @@ module Webmention
   #
   # @param url [String, HTTP::URI, #to_s] An absolute URL.
   #
-  # @raise [Burly::UnsupportedMimeType]
-  #   Raised when response is of an unsupported MIME type.
+  # @raise (see Client#mentioned_urls)
   #
-  # @return [Array<String>]
+  # @return (see Client#mentioned_urls)
   def self.mentioned_urls(url)
     Client.new(url).mentioned_urls
   end
@@ -42,15 +44,13 @@ module Webmention
   #   target = "https://aaronpk.example/notes/1"
   #   Webmention.send_webmention(source, target, vouch: "https://tantek.example/notes/1")
   #
-  # @param source [String, HTTP::URI, #to_s]
-  #   An absolute URL representing a source document.
-  # @param target [String, HTTP::URI, #to_s]
-  #   An absolute URL representing a target document.
-  # @param vouch [String, HTTP::URI, #to_s]
-  #   An absolute URL representing a document vouching for the source document.
-  #   See https://indieweb.org/Vouch for additional details.
+  # @see https://indieweb.org/Vouch
   #
-  # @return [Response, ErrorResponse]
+  # @param source (see Client#initialize)
+  # @param target (see Client#send_webmention)
+  # @param vouch (see Client#initialize)
+  #
+  # @return (see Client#send_webmention)
   def self.send_webmention(source, target, vouch: nil)
     Client.new(source, vouch: vouch).send_webmention(target)
   end
@@ -67,13 +67,9 @@ module Webmention
   #   targets = ["https://aaronpk.example/notes/1", "https://adactio.example/notes/1"]
   #   Webmention.send_webmentions(source, targets, vouch: "https://tantek.example/notes/1")
   #
-  # @param source [String, HTTP::URI, #to_s]
-  #   An absolute URL representing a source document.
-  # @param targets [Array<String, HTTP::URI, #to_s>]
-  #   An array of absolute URLs representing multiple target documents.
-  # @param vouch [String, HTTP::URI, #to_s]
-  #   An absolute URL representing a document vouching for the source document.
-  #   See https://indieweb.org/Vouch for additional details.
+  # @see https://indieweb.org/Vouch
+  #
+  # @param (see .send_webmention)
   #
   # @return [Array<Response, ErrorResponse>]
   def self.send_webmentions(source, *targets, vouch: nil)
@@ -82,7 +78,7 @@ module Webmention
 
   # Verify that a source URL links to a target URL.
   #
-  # @param (see Webmention.send_webmention)
+  # @param (see .send_webmention)
   #
   # @raise (see Client#mentioned_urls)
   #

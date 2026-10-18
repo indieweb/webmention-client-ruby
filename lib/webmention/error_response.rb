@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module Webmention
+  # An interface to instances of the {Request} class.
+  #
+  # An {ErrorResponse} represents {Request}s that generated errors (e.g.
+  # connection error, SSL error) or that could not locate a Webmention endpoint.
+  # The nature of the error is captured in the {#message} instance method.
   class ErrorResponse
     # @return [String]
     attr_reader :message
@@ -9,11 +14,6 @@ module Webmention
     attr_reader :request
 
     # Create a new {ErrorResponse}.
-    #
-    # Instances of this class represent HTTP requests that generated errors
-    # (e.g. connection error, SSL error) or that could not locate a Webmention
-    # endpoint. The nature of the error is captured in the {#message} instance
-    # method.
     #
     # @api private
     #
@@ -24,8 +24,7 @@ module Webmention
       @request = request
     end
 
-    # @return [String]
-    #
+    # @!visibility private
     # simplecov:disable
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
@@ -33,12 +32,16 @@ module Webmention
     end
     # simplecov:enable
 
+    # An {ErrorResponse} has no mentioned URLs.
+    #
     # @return [Set]
     def mentioned_urls
       Set.new
     end
 
-    # @return [Boolean]
+    # An {ErrorResponse} is never okay!
+    #
+    # @return [false]
     def ok?
       false
     end
