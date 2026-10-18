@@ -41,22 +41,16 @@ module Webmention
     #
     # @raise [Burly::UnsupportedMimeType]
     #   Raised when response is of an unsupported MIME type.
-    # @raise [NoMethodError]
-    #   Raised when response is an {ErrorResponse}.
     #
     # @return [Array<String>]
     def mentioned_urls
       response = source_url.response
 
-      urls = Set.new(
-        Burly
-        .parse(response.body, context: [".h-entry .e-content", ".h-entry", "body"], mime_type: response.mime_type)
-        .map { |url| response.uri.join(url).to_s }
-        .grep(URI::RFC2396_Parser.new.make_regexp(["http", "https"]))
-      )
-
-      urls.reject! { |url| url.match(/^#{response.uri}(?:#.*)?$/) }
-      urls.sort
+      response
+        .mentioned_urls
+        .lazy
+        .reject { |url| url.match(/^#{response.uri}(?:#.*)?$/) }
+        .sort
     end
 
     # Send a webmention from this client's source URL to a target URL.
