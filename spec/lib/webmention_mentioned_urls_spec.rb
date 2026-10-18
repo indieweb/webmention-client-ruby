@@ -10,9 +10,7 @@ RSpec.describe Webmention, ".mentioned_urls" do
       stub_request(:get, source_url).to_raise(OpenSSL::SSL::SSLError)
     end
 
-    it "raises a NoMethodError" do
-      expect { mentioned_urls }.to raise_error(NoMethodError)
-    end
+    it { is_expected.to eq([]) }
   end
 
   context "when response is of unsupported MIME type" do
