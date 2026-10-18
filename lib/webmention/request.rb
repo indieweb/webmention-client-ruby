@@ -55,17 +55,13 @@ module Webmention
     #
     # @param method [Symbol]
     # @param url [String]
-    # @param source (see Client#initialize)
-    # @param target (see Client#send_webmention)
-    # @param vouch (see Client#initialize)
-    def initialize(method, url, source: nil, target: nil, vouch: nil)
+    # @param options [Hash{Symbol => Hash{Symbol => String}}]
+    # @option options [Hash{Symbol => String}] :form
+    #   A Hash of options to serialize as form-encoded.
+    def initialize(method, url, **options)
       @method = method.to_sym
       @uri = HTTP::URI.parse(url.to_s)
-      @options = {
-        source: source,
-        target: target,
-        vouch: vouch,
-      }
+      @options = options
     end
 
     # @!visibility private
