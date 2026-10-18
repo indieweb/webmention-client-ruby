@@ -28,6 +28,11 @@ module Webmention
         "message: #{message}>"
     end
 
+    # @return [Set]
+    def mentioned_urls
+      Set.new
+    end
+
     # @return [Boolean]
     def ok?
       false

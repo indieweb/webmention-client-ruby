@@ -4,6 +4,12 @@ module Webmention
   class Response
     extend Forwardable
 
+    PARSE_CONTEXT = [".h-entry .e-content", ".h-entry", "body"].freeze
+    URI_REGEXP = URI::RFC2396_Parser.new.make_regexp(["http", "https"]).freeze
+
+    private_constant :PARSE_CONTEXT
+    private_constant :URI_REGEXP
+
     # @return [Request]
     attr_reader :request
 
@@ -50,6 +56,26 @@ module Webmention
         "code: #{code.inspect}, " \
         "reason: #{reason}, " \
         "url: #{request.uri}>"
+    end
+
+    # Parse the response body for unique host names.
+    #
+    # @return [Set<String>]
+    def mentioned_hosts
+      @mentioned_hosts ||= Set.new(mentioned_urls.map { |url| HTTP::URI.parse(url).host })
+    end
+
+    # Parse the response body for mentioned URLs.
+    #
+    # @return [Set<String>]
+    def mentioned_urls
+      @mentioned_urls ||=
+        Set.new(
+          Burly
+            .parse(@response.body, context: PARSE_CONTEXT, mime_type: @response.mime_type)
+            .map { |url| @response.uri.join(url).to_s }
+            .grep(URI_REGEXP)
+        )
     end
 
     # @return [Boolean]
