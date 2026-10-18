@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    webmention (10.0.1)
+    webmention (10.1.0)
       burly (~> 0.4)
       http (>= 5.3)
       indieweb-endpoints (~> 10.1)
@@ -247,7 +247,7 @@ CHECKSUMS
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
   unicode-display_width (3.3.0) sha256=4b7aa66a4b11db50f6f7e98411215cd0dd10eaecb665d36eec5bcacb3fa0b613
   unicode-emoji (4.3.0) sha256=11c02fa73290378c066bb0562cd4c87d8e1b706fbbe0059ca12746a4244de8ce
-  webmention (10.0.1)
+  webmention (10.1.0)
   webmock (3.34.0) sha256=72eed29dc8c00148d592acaedaaa6b869e2e397de57dfc8602b84aa834f46b33
 
 BUNDLED WITH
