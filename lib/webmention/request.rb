@@ -16,7 +16,7 @@ module Webmention
       },
       headers: {
         accept: "*/*",
-        user_agent: "Webmention Client (https://rubygems.org/gems/webmention)",
+        user_agent: "Mozilla/5.0 (compatible; WebmentionClient/1.0; +https://rubygems.org/gems/webmention)",
       },
       timeout_options: {
         connect_timeout: 5,
