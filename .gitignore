@@ -1,5 +1,6 @@
 .bash_history
 .irb_history
+.yardoc
 *.gem
 /.ruby-lsp/
 /checksums/

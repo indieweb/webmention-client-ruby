@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.license = "Apache-2.0"
 
   spec.files = Dir["lib/**/*"].reject { |f| File.directory?(f) }
-  spec.files += ["LICENSE", "CHANGELOG.md", "CONTRIBUTING.md", "README.md", "USAGE.md"]
+  spec.files += [".yardopts", "LICENSE", "CHANGELOG.md", "CONTRIBUTING.md", "README.md", "USAGE.md"]
   spec.files += ["webmention.gemspec"]
 
   spec.require_paths = ["lib"]
