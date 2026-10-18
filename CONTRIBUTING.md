@@ -8,12 +8,12 @@ There are a couple ways you can help improve webmention-client-ruby:
 
 ## Getting Started
 
-webmention-client-ruby is developed using Ruby 3.4 and is tested against additional Ruby versions using [GitHub Actions](https://github.com/indieweb/webmention-client-ruby/actions).
+webmention-client-ruby is developed using Ruby 4.0 and is tested against additional Ruby versions using [GitHub Actions](https://github.com/indieweb/webmention-client-ruby/actions).
 
 > [!TIP]
 > This project is configured with a [Dev Container](https://containers.dev) which includes everything you'd need to contribute to webmention-client-ruby. If you use a supported code editor or IDE, you're encouraged to use the existing Dev Container setup.
 
-Before making changes to webmention-client-ruby, you'll want to install Ruby 3.4. Using a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm) is recommended. Once you've installed Ruby 3.4 using your method of choice, install the project's gems by running:
+Before making changes to webmention-client-ruby, you'll want to install Ruby 4.0. Using a Ruby version managment tool like [rv](https://github.com/spinel-coop/rv) or [rbenv](https://github.com/rbenv/rbenv) is recommended. Once you've installed Ruby 4.0 using your method of choice, install the project's gems by running:
 
 ```sh
 bundle install

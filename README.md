@@ -36,7 +36,7 @@ See [USAGE.md](USAGE.md) for documentation of webmention-client-ruby's features.
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/indieweb/webmention-client-ruby/blob/main/CONTRIBUTING.md) for more on how to contribute to webmention-client-ruby. Your help is greatly appreciated!
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more on how to contribute to webmention-client-ruby. Your help is greatly appreciated!
 
 By contributing to and participating in the development of webmention-client-ruby, you acknowledge that you have read and agree to the [IndieWeb Code of Conduct](https://indieweb.org/code-of-conduct).
 

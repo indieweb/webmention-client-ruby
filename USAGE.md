@@ -29,7 +29,7 @@ response.class
 #=> Webmention::ErrorResponse
 
 response.message
-#=> "No webmention endpoint found for target URL https://aaronpk.example/post/100"
+#=> "No Webmention endpoint found for target URL https://aaronpk.example/post/100"
 ```
 
 A `Webmention::Response` will be returned in all other cases.
@@ -147,6 +147,4 @@ verification.vouch_mentions_source?
 
 ## Exception Handling
 
-webmention-client-ruby avoids raising exceptions when making HTTP requests. As noted above, a `Webmention::ErrorResponse` should be returned in cases where an HTTP request triggers an exception.
-
-When crawling the supplied URL, `Webmention.mentioned_urls` _may_ raise `NoMethodError` if a `Webmention::ErrorResponse` is returned or `Burly::UnsupportedMimeType` if the response is of an unsupported MIME type.
+webmention-client-ruby avoids raising exceptions when making HTTP requests. As noted above, a `Webmention::ErrorResponse` should be returned in cases where an HTTP request triggers an exception. `Webmention.mentioned_urls` will raise a `Burly::UnsupportedMimeType` exception when the response is of an unsupported MIME type, though.
