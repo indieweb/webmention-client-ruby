@@ -20,10 +20,13 @@ module Webmention
     end
 
     # @return [String]
+    #
+    # simplecov:disable
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
         "uri: #{uri}>"
     end
+    # simplecov:enable
 
     # @return [Response, ErrorResponse]
     def response

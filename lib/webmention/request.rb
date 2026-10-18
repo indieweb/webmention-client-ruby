@@ -65,11 +65,14 @@ module Webmention
     end
 
     # @return [String]
+    #
+    # simplecov:disable
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
         "method: #{method.upcase}, " \
         "url: #{uri}>"
     end
+    # simplecov:enable
 
     # Submit the {Request}.
     #

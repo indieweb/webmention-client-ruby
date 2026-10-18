@@ -25,10 +25,13 @@ module Webmention
     end
 
     # @return [String]
+    #
+    # simplecov:disable
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
         "message: #{message}>"
     end
+    # simplecov:enable
 
     # @return [Set]
     def mentioned_urls

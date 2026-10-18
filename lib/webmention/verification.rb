@@ -20,12 +20,15 @@ module Webmention
     end
 
     # @return [String]
+    #
+    # simplecov:disable
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
         "source_url: #{@source_url} " \
         "target_url: #{@target_url} " \
         "vouch_url: #{@vouch_url}>"
     end
+    # simplecov:enable
 
     # @return [Boolean]
     def source_mentions_target?

@@ -53,12 +53,15 @@ module Webmention
     end
 
     # @return [String]
+    #
+    # simplecov:disable
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
         "code: #{code.inspect}, " \
         "reason: #{reason}, " \
         "url: #{request.uri}>"
     end
+    # simplecov:enable
 
     # Parse the response body for unique host names.
     #

@@ -27,11 +27,14 @@ module Webmention
     end
 
     # @return [String]
+    #
+    # simplecov:disable
     def inspect
       "#<#{self.class}:#{format("%#0x", object_id)} " \
         "source_url: #{source_url} " \
         "vouch_url: #{vouch_url}>"
     end
+    # simplecov:enable
 
     # Retrieve unique URLs mentioned by this client's source URL.
     #
