@@ -75,7 +75,7 @@ module Webmention
       return target_url.response unless target_url.response.ok?
 
       # No Webmention endpoint exists. Return a new ErrorResponse.
-      ErrorResponse.new("No webmention endpoint found for target URL #{target}", target_url.response.request)
+      ErrorResponse.new("No Webmention endpoint found for target URL #{target}", target_url.response.request)
     end
 
     # Send webmentions from this client's source URL to multiple target URLs.

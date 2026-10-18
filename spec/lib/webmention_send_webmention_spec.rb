@@ -25,7 +25,7 @@ RSpec.describe Webmention, ".send_webmention" do
   end
 
   context "when target URL does not advertise a Webmention endpoint" do
-    let(:message) { "No webmention endpoint found for target URL #{target_url}" }
+    let(:message) { "No Webmention endpoint found for target URL #{target_url}" }
 
     before do
       stub_request(:get, target_url).to_return(body: load_fixture(:sample_post))
