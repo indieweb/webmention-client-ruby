@@ -43,6 +43,8 @@ module Webmention
     # of which may be accessed using the delegated {#code} and {#reason}
     # instance methods.
     #
+    # @api private
+    #
     # @param response [HTTP::Response]
     # @param request [Request]
     def initialize(response, request)

@@ -15,6 +15,8 @@ module Webmention
     # endpoint. The nature of the error is captured in the {#message} instance
     # method.
     #
+    # @api private
+    #
     # @param message [String]
     # @param request [Request]
     def initialize(message, request)

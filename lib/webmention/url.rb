@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Webmention
+  # @api private
   class Url
     extend Forwardable
 
@@ -26,17 +27,12 @@ module Webmention
 
     # @return [Response, ErrorResponse]
     def response
-      @response ||= Request.get(uri)
+      @response ||= Request.new(:get, uri).perform
     end
 
     # @return [String, nil]
     def webmention_endpoint
       @webmention_endpoint ||= IndieWeb::Endpoints::Parser.new(response).to_h[:webmention] if response.ok?
-    end
-
-    # @return [Boolean]
-    def webmention_endpoint?
-      !webmention_endpoint.nil?
     end
   end
 end

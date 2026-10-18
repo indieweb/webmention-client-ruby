@@ -65,17 +65,17 @@ module Webmention
     # @return [Response, ErrorResponse]
     def send_webmention(target)
       target_url = Url.new(target)
+      endpoint = target_url.webmention_endpoint
+      response = target_url.response
 
       # A Webmention endpoint exists. Send the request and return the response.
-      if target_url.webmention_endpoint?
-        return Request.post(target_url.webmention_endpoint, **request_options_for(target))
-      end
+      return Request.new(:post, endpoint, **request_options_for(target)).perform unless endpoint.nil?
 
       # An error was encountered fetching the target URL. Return the response.
-      return target_url.response unless target_url.response.ok?
+      return response unless response.ok?
 
       # No Webmention endpoint exists. Return a new ErrorResponse.
-      ErrorResponse.new("No Webmention endpoint found for target URL #{target}", target_url.response.request)
+      ErrorResponse.new("No Webmention endpoint found for target URL #{target}", response.request)
     end
 
     # Send webmentions from this client's source URL to multiple target URLs.
@@ -120,7 +120,7 @@ module Webmention
       opts.transform_values! { |value| value.to_s.strip }
       opts.reject! { |_, value| value.empty? }
 
-      opts
+      { form: opts }
     end
   end
 end

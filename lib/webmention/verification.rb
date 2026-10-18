@@ -4,6 +4,8 @@ module Webmention
   class Verification
     # Create a new {Verification}.
     #
+    # @api private
+    #
     # @param source_url [Url]
     #   An {URL} representing a source document.
     # @param target_url [Url]

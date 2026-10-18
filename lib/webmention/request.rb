@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Webmention
+  # @api private
   class Request
     # Set defaults derived from Webmention specification examples.
     #
@@ -31,28 +32,23 @@ module Webmention
     # @return [Hash]
     attr_reader :options
 
-    # Send an HTTP GET request to the supplied URL.
+    # Create a new {Request}.
     #
     # @example
-    #   Webmention::Request.get("https://jgarber.example/posts/100")
-    #
-    # @param url [String]
-    #
-    # @return [Response, ErrorResponse]
-    def self.get(url)
-      new(:get, url).perform
-    end
-
-    # Send an HTTP POST request with form-encoded data to the supplied URL.
+    #   Webmention::Request.new(:get, "https://jgarber.example/posts/100")
     #
     # @example
-    #   Webmention::Request.post(
+    #   Webmention::Request.new(
+    #     :post,
     #     "https://aaronpk.example/webmention",
-    #     source: "https://jgarber.examples/posts/100",
-    #     target: "https://aaronpk.example/notes/1",
-    #     vouch: "https://tantek.example/notes/1"
+    #     form: {
+    #       source: "https://jgarber.examples/posts/100",
+    #       target: "https://aaronpk.example/notes/1",
+    #       vouch: "https://tantek.example/notes/1",
+    #     },
     #   )
     #
+    # @param method [Symbol]
     # @param url [String]
     # @param options [Hash{Symbol => String}]
     # @option options [String] :source
@@ -62,17 +58,6 @@ module Webmention
     # @option options [String] :vouch
     #   An absolute URL representing a document vouching for the source document.
     #   See https://indieweb.org/Vouch for additional details.
-    #
-    # @return [Response, ErrorResponse]
-    def self.post(url, **options)
-      new(:post, url, form: options.slice(:source, :target, :vouch)).perform
-    end
-
-    # Create a new {Request}.
-    #
-    # @param method [Symbol]
-    # @param url [String]
-    # @param options [Hash{Symbol => String}]
     def initialize(method, url, **options)
       @method = method.to_sym
       @uri = HTTP::URI.parse(url.to_s)
