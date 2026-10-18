@@ -32,14 +32,14 @@ module Webmention
 
     # @return [Boolean]
     def verified?
-      return source_mentions_target? unless verify_vouch?
+      return source_mentions_target? && vouch_mentions_source? if verify_vouch?
 
-      source_mentions_target? && vouch_mentions_source?
+      source_mentions_target?
     end
 
     # @return [Boolean]
     def verify_vouch?
-      !@vouch_url.nil? && !@vouch_url.to_s.strip.empty?
+      !@vouch_url.to_s.strip.empty?
     end
 
     # @return [Boolean]
