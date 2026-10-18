@@ -24,8 +24,6 @@ module Webmention
   #
   # @raise [Burly::UnsupportedMimeType]
   #   Raised when response is of an unsupported MIME type.
-  # @raise [NoMethodError]
-  #   Raised when response is an {ErrorResponse}.
   #
   # @return [Array<String>]
   def self.mentioned_urls(url)
