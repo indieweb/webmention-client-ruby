@@ -48,4 +48,4 @@ To learn more about Webmention, see [indieweb.org/Webmention](https://indieweb.o
 
 ## License
 
-This project is freely available under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html). See [LICENSE](https://github.com/indieweb/webmention-client-ruby/blob/main/LICENSE) for more details.
+This project is freely available under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html). See [LICENSE](LICENSE) for more details.
