@@ -19,7 +19,7 @@ jobs:
       - run: bin/rubocop --color --format github
   test:
     name: Test (Ruby ${{ matrix.ruby }})
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: lint
     env:
       BUNDLE_GEMFILE: gemfiles/test.gemfile
