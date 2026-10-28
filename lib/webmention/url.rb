@@ -36,7 +36,17 @@ module Webmention
 
     # @return [String, nil]
     def webmention_endpoint
-      @webmention_endpoint ||= IndieWeb::Endpoints::Parser.new(response).to_h[:webmention] if response.ok?
+      @webmention_endpoint ||=
+        if response.ok?
+          IndieWeb::Endpoints::Parser
+            .new(
+              body: response.body,
+              headers: response.headers.get("link"),
+              mime_type: response.mime_type,
+              uri: response.uri
+            )
+            .to_h[:webmention]
+        end
     end
   end
 end

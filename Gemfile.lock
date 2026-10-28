@@ -4,7 +4,7 @@ PATH
     webmention (10.1.0)
       burly (~> 0.4)
       http (>= 5.3)
-      indieweb-endpoints (~> 10.1)
+      indieweb-endpoints (~> 10.3)
       nokogiri (>= 1.14)
 
 GEM
@@ -41,8 +41,8 @@ GEM
       llhttp (~> 0.6.1)
     http-cookie (1.1.6)
       domain_name (~> 0.5)
-    indieweb-endpoints (10.1.0)
-      http (>= 5.3)
+    indieweb-endpoints (10.3.0)
+      addressable (~> 2.9)
       link-header-parser (~> 7.0, >= 7.0.1)
       nokogiri-html-ext (~> 1.7)
     io-console (0.9.4)
@@ -197,7 +197,7 @@ CHECKSUMS
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
   http (6.0.4) sha256=3768f902489ea8309424f1881c668af8d3ca73675648a755dfe2cb0030d42d26
   http-cookie (1.1.6) sha256=ba4b82be64de61dc281243dac70e3c382c45142f20268ed9276a3670c93feaa9
-  indieweb-endpoints (10.1.0) sha256=905a728319d5776763fddc353ea900a5e70375d919706f48aed6a1960848c2ac
+  indieweb-endpoints (10.3.0) sha256=92c75d758501f9630c118bba7272915442382bd2a44893763aea55e22829c15d
   io-console (0.9.4) sha256=a403304f32928ee85e56d457b4612ca43f2703b561a3258844992bd24085fbb1
   irb (1.18.0) sha256=de9454a0703a54704b9811a5ef31a60c86949fbf4013fcf244fabc7c775248e3
   json (3.1.0) sha256=3ce7ccf8fde58960177a3a756c31f292a4c1e1dedee884547096a5b0604e3bd8
